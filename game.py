@@ -16,7 +16,10 @@ def clear():
 
 class character:
 
-    health = 100;
+    maxHealth = None
+    meleeDamage = None
+    rangedDamage = None
+    magicDamage = None
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -57,11 +60,13 @@ class character:
         else:
             return baseValue
 
-    def __init__(self, health):
+    def __init__(self, health, melee_damage, ranged_damage, magic_damage):
 
-        self.health = self.dificultyModifier(health, dificulty, False)
+        self.maxHealth = self.dificultyModifier(health, dificulty, False)
 
-    
+        self.meleeDamage = self.dificultyModifier(melee_damage, dificulty, False)
+        self.rangedDamage = self.dificultyModifier(ranged_damage, dificulty, False)
+        self.magicDamage = self.dificultyModifier(magic_damage, dificulty, False)
 
 # dificulty select
 
@@ -93,22 +98,41 @@ clear()
 
 # choose starter weapon
 
-characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage")
+characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>> ")
 
 if characterSelect == "1":
 
-    character = character(150)
+    character = character(150, 55, 5, 0)
 
 elif characterSelect == "2":
 
-    character = character(120)
+    character = character(120, 45, 15, 0)
 
 elif characterSelect == "3":
 
-    character = character(80)
+    character = character(80, 5, 55, 0)
     
 elif characterSelect == "4":
 
-    character = character(60)
+    character = character(60, 10, 10, 40)
 
-print(character.health)
+
+sleep(2)
+clear()
+
+print(character.maxHealth)
+print(character.meleeDamage)
+print(character.rangedDamage)
+print(character.magicDamage)
+
+print ('''
+                                  _
+                      .=========.%88,
+                     /_,-.___.-._\88%
+                   o8| [_]/o\[_] |7'
+               i=I8%@|____|_|____|I=I=I=i
+              |/,*`*,*`**'/ \      ,-'`.\|
+             |/          /...\   (__.-._)\|
+             ||||||||||||TTTTT|||||||||||||
+             """"""""""""HHHHH"""""""""""""
+''')
