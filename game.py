@@ -93,7 +93,7 @@ clear()
 
 # choose starter weapon
 
-characterSelect = input("select player class\n1 for knight\n2 for archer\n3 for wizard")
+characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage")
 
 if characterSelect == "1":
 
@@ -106,5 +106,9 @@ elif characterSelect == "2":
 elif characterSelect == "3":
 
     character = character(80)
+    
+elif characterSelect == "4":
+
+    character = character(60)
 
 print(character.health)
