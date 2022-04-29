@@ -16,11 +16,16 @@ def clear():
 
 class character:
 
+    Type = None
     maxHealth = None
+
     meleeDamage = None
     rangedDamage = None
     magicDamage = None
-    Type = None
+
+    meleeDefence = None
+    rangedDefence = None
+    magicDefence = None
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -61,15 +66,19 @@ class character:
         else:
             return baseValue
 
-    def __init__(self, Type, health, melee_damage, ranged_damage, magic_damage):
+    def __init__(self, Type, health, damage, defence):
 
         self.Type = Type
 
+        self.meleeDefence = defence[0]
+        self.rangedDefence = defence[1]
+        self.magicDefence = defence[2]
+
         self.maxHealth = self.dificultyModifier(health, dificulty, False)
 
-        self.meleeDamage = self.dificultyModifier(melee_damage, dificulty, False)
-        self.rangedDamage = self.dificultyModifier(ranged_damage, dificulty, False)
-        self.magicDamage = self.dificultyModifier(magic_damage, dificulty, False)
+        self.meleeDamage = self.dificultyModifier(damage[0], dificulty, False)
+        self.rangedDamage = self.dificultyModifier(damage[1], dificulty, False)
+        self.magicDamage = self.dificultyModifier(damage[2], dificulty, False)
 
 # dificulty select
 
@@ -105,19 +114,19 @@ characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 f
 
 if characterSelect == "1":
 
-    character = character(" knight", 150, 55, 5, 0)
+    character = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1))
 
 elif characterSelect == "2":
 
-    character = character(" barbarian", 120, 45, 15, 0)
+    character = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1))
 
 elif characterSelect == "3":
 
-    character = character("n archer", 80, 5, 55, 0)
+    character = character("n archer", 80, (5, 55, 0), (1.3, 0.9, 1))
     
 elif characterSelect == "4":
 
-    character = character(" mage", 60, 10, 10, 40)
+    character = character(" mage", 60, (0, 0, 70), (1, 1, 1))
 
 
 sleep(2)
@@ -128,15 +137,23 @@ print(character.meleeDamage)
 print(character.rangedDamage)
 print(character.magicDamage)
 
+print(character.meleeDefence)
+print(character.rangedDefence)
+print(character.magicDefence)
+
 print (f'''
                                   _
-                      .=========.%88,
-                     /_,-.___.-._\88%
-                   o8| [_]/o\[_] |7'
-               i=I8%@|____|_|____|I=I=I=i
+                      .=========., |
+                     /_,-.___.-._\ |
+                     | [_]/o\[_] |7'
+               i=I=I=|____|_|____|I=I=I=i
               |/,*`*,*`**'/ \      ,-'`.\|
              |/          /...\   (__.-._)\|
              ||||||||||||TTTTT|||||||||||||
              """"""""""""HHHHH"""""""""""""
-             your journey as a{character.Type} begins
+            your journey as a{character.Type} begins
+               in your grandmothers house
 ''')
+
+sleep(4)
+
