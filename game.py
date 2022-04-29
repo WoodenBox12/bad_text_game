@@ -1,7 +1,6 @@
 from random import randint
 from os import system, name
 from time import sleep
-import bad_text_game.classes.py as mymodule
 
 def clear():
   
