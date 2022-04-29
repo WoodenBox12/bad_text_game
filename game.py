@@ -14,12 +14,12 @@ def clear():
 
 # characters
 
-class knight:
+class character:
 
     health = 100;
 
     def dificultyModifier(self, baseValue, dificulty, increase):
-        print("work1")
+
         if increase == True :
             
             if dificulty == 1 :
@@ -38,7 +38,7 @@ class knight:
                 return int(round(baseValue * 1.1, 0))
 
         elif increase == False :
-            print("work2")
+
             if dificulty == 1 :
                 return baseValue
 
@@ -57,9 +57,9 @@ class knight:
         else:
             return baseValue
 
-    def __init__(self):
+    def __init__(self, health):
 
-        self.health = self.dificultyModifier(self.health, dificulty, False)
+        self.health = self.dificultyModifier(health, dificulty, False)
 
     
 
@@ -93,8 +93,18 @@ clear()
 
 # choose starter weapon
 
-starterWeapon = input("select player class\n1 for knight\n2 for archer\n")
+characterSelect = input("select player class\n1 for knight\n2 for archer\n3 for wizard")
 
-character = knight()
+if characterSelect == "1":
+
+    character = character(150)
+
+elif characterSelect == "2":
+
+    character = character(120)
+
+elif characterSelect == "3":
+
+    character = character(80)
 
 print(character.health)
