@@ -1,1 +1,1 @@
-# Very-bad-text-based-game
+# bad-text-game
