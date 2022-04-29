@@ -20,6 +20,7 @@ class character:
     meleeDamage = None
     rangedDamage = None
     magicDamage = None
+    Type = None
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -60,7 +61,9 @@ class character:
         else:
             return baseValue
 
-    def __init__(self, health, melee_damage, ranged_damage, magic_damage):
+    def __init__(self, Type, health, melee_damage, ranged_damage, magic_damage):
+
+        self.Type = Type
 
         self.maxHealth = self.dificultyModifier(health, dificulty, False)
 
@@ -102,19 +105,19 @@ characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 f
 
 if characterSelect == "1":
 
-    character = character(150, 55, 5, 0)
+    character = character(" knight", 150, 55, 5, 0)
 
 elif characterSelect == "2":
 
-    character = character(120, 45, 15, 0)
+    character = character(" barbarian", 120, 45, 15, 0)
 
 elif characterSelect == "3":
 
-    character = character(80, 5, 55, 0)
+    character = character("n archer", 80, 5, 55, 0)
     
 elif characterSelect == "4":
 
-    character = character(60, 10, 10, 40)
+    character = character(" mage", 60, 10, 10, 40)
 
 
 sleep(2)
@@ -125,7 +128,7 @@ print(character.meleeDamage)
 print(character.rangedDamage)
 print(character.magicDamage)
 
-print ('''
+print (f'''
                                   _
                       .=========.%88,
                      /_,-.___.-._\88%
@@ -135,4 +138,5 @@ print ('''
              |/          /...\   (__.-._)\|
              ||||||||||||TTTTT|||||||||||||
              """"""""""""HHHHH"""""""""""""
+             your journey as a{character.Type} begins
 ''')
