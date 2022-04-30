@@ -16,6 +16,8 @@ def clear():
 
 class character:
 
+    inventory = []
+
     Type = None
     maxHealth = None
     currentHealth = None
@@ -27,6 +29,10 @@ class character:
     meleeDefence = None
     rangedDefence = None
     magicDefence = None
+
+    def inventory():
+
+        print("hello")
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -67,15 +73,18 @@ class character:
         else:
             return baseValue
 
-    def __init__(self, Type, health, damage, defence):
+    def __init__(self, Type, health, damage, defence, startingItems):
+
+        for i in range(len(startingItems)):
+
+            self.inventory[i] = startingItems[i]
 
         self.Type = Type
 
-        self.meleeDefence = defence[0]
-        self.rangedDefence = defence[1]
-        self.magicDefence = defence[2]
+        self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
 
-        self.maxHealth = self.dificultyModifier(health, dificulty, False)
+        self.currentHealth = self.maxHealth = self.dificultyModifier(health, dificulty, False)
+
 
         self.meleeDamage = self.dificultyModifier(damage[0], dificulty, False)
         self.rangedDamage = self.dificultyModifier(damage[1], dificulty, False)
@@ -96,28 +105,27 @@ class enemys:
     rangedDefence = None
     magicDefence = None
 
-    def dificultyIncrease(self, boss):
+    distance = None
 
-        if boss == False:
+    def displayRange(self, slotNum):
 
-            maxHealth = int(round(maxHealth * round(randint(10,15)/10, 1), 0))
+        if slotNum == self.distance:
 
-        else:
-
-            maxHealth = int(round(maxHealth * round(randint(10,25)/10, 1), 0))
-
-    def meleeIncrease():
-
-        if boss == False:
-
-            meleeDamage = int(round(meleeDamage * round(randint(10,15)/10, 1), 0))
+            return "\033[1;31;40mX\033[0m"
 
         else:
 
-            meleeDamage = int(round(meleeDamage * round(randint(10,25)/10, 1), 0))
+            return " "
 
-    def __init__(self):
-        print("woah")
+    def __init__(self, health, damage, defence, startRange):
+        
+        self.distance = startRange
+
+        self.currentHealth = self.maxHealth = health
+
+        self.meleeDamage, self.rangedDamage, self.magicDamage = damage[0], damage[1], damage[2]
+
+        self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
 
 # dificulty select
 
@@ -153,6 +161,10 @@ characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 f
 
 if characterSelect == "1":
 
+    knightLoadout = [
+        ["biff's sword", ["weapon", 15] ],
+        ]
+
     player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1))
 
 elif characterSelect == "2":
@@ -170,35 +182,74 @@ elif characterSelect == "4":
 sleep(2)
 clear()
 
-print(player.maxHealth)
-print(player.meleeDamage)
-print(player.rangedDamage)
-print(player.magicDamage)
-
-print(player.meleeDefence)
-print(player.rangedDefence)
-print(player.magicDefence)
-
 print (f'''
-                                  _
-                      .=========., |
-                     /_,-.___.-._\ |
-                     | [_]/o\[_] |7'
-               i=I=I=|____|_|____|I=I=I=i
-              |/,*`*,*`**'/ \      ,-'`.\|
-             |/          /...\   (__.-._)\|
-             ||||||||||||TTTTT|||||||||||||
-             """"""""""""HHHHH"""""""""""""
-            your journey as a{player.Type} begins
-               in your grandmothers house
-''')
+                     _
+         .=========., |
+        /_,-.___.-._\ |
+        | [_]/o\[_] |7'
+  i=I=I=|____|_|____|I=I=I=i
+ |/,*`*,*`**'/ \      ,-'`.\|
+|/          /...\   (__.-._)\|
+||||||||||||TTTTT|||||||||||||
+""""""""""""HHHHH"""""""""""""
+your journey as a{player.Type} begins
+in your grandmothers house''')
 
 sleep(4)
 clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")
-sleep(2.5)
+
+grandmother = enemys(100, (20, 20, 0), (1, 1, 1), 0)
+sleep(1.5)
+
 print("YOUR GRANDMOTHER")
 
-print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"` \n')
+sleep(1)
 
+while True:
+
+    clear()
+
+    print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
+
+    choice = input(f"""+-----------------------+
+| 0 = player, \033[1;31;40mX\033[0m = enemy | your health: {player.currentHealth}    their health: {grandmother.currentHealth}
+|      ___________      |
+|     /   _____   \     |
+|    /   /     \   \    |
+|   |   |   0 {grandmother.displayRange(0)} | {grandmother.displayRange(1)} | {grandmother.displayRange(2)} |
+|    \   \_____/   /    |
+|     \___________/     |
+|                       |
++-----------------------+
+|  a/away to move away  |
+|t/toward to move toward|
+|    i for inventory    |
++-----------------------+
+>>""")
+    if choice.lower() == "t" or choice.lower() == "toward":
+        
+        if grandmother.distance == 0:
+
+            print("cannot move any closer")
+            sleep(2)
+            continue
+
+        else:
+
+            grandmother.distance -= 1
+            continue
+
+    elif choice.lower() == "a" or choice.lower() == "away":
+        
+        if grandmother.distance == 2:
+
+            print("you attempt to run away but a mysterious force is preventing you")
+            sleep(2)
+            continue
+
+        else:
+
+            grandmother.distance += 1
+            continue
