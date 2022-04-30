@@ -30,8 +30,9 @@ class character:
     rangedDefence = None
     magicDefence = None
     
-    #def Inventory(self):
+    def Inventory(self):
 
+        print("hello world")
         #for i in range(len(self.inventory)):
 
             #for j in range(len(self.inventory))[i]:
