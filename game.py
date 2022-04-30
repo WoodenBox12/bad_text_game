@@ -16,12 +16,12 @@ def clear():
 
 class character:
 
-    inventory = []
+    inventory = None
 
     Type = None
     maxHealth = None
     currentHealth = None
-
+    
     meleeDamage = None
     rangedDamage = None
     magicDamage = None
@@ -29,10 +29,21 @@ class character:
     meleeDefence = None
     rangedDefence = None
     magicDefence = None
+    
+    def Inventory(self):
 
-    def inventory():
+        #for i in range(len(self.inventory)):
 
-        print("hello")
+            #for j in range(len(self.inventory))[i]:
+
+                #if i == 0:
+
+                    #print("")
+
+                #print(self.inventory[i][j])
+
+
+
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -75,9 +86,7 @@ class character:
 
     def __init__(self, Type, health, damage, defence, startingItems):
 
-        for i in range(len(startingItems)):
-
-            self.inventory[i] = startingItems[i]
+        self.inventory = startingItems
 
         self.Type = Type
 
@@ -162,10 +171,11 @@ characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 f
 if characterSelect == "1":
 
     knightLoadout = [
-        ["biff's sword", ["weapon", 15] ],
+        # name, item type, d/heal, crit%, crit multiplier
+        ["biff's sword", "weapon", 25, 0.05, 2],
         ]
 
-    player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1))
+    player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1), knightLoadout)
 
 elif characterSelect == "2":
 
@@ -253,3 +263,8 @@ while True:
 
             grandmother.distance += 1
             continue
+
+    elif choice.lower() == "i":
+    
+        player.Inventory()
+        continue
