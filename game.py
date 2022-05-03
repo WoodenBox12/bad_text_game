@@ -32,7 +32,7 @@ class character:
     
     def Inventory(self):
 
-        print("hello world")
+        input("hello world")
         #for i in range(len(self.inventory)):
 
             #for j in range(len(self.inventory))[i]:
@@ -212,7 +212,7 @@ clear()
 print("level 1\n\nas you walk out the house you come across an enemy\n")
 
 grandmother = enemys(100, (20, 20, 0), (1, 1, 1), 0)
-sleep(1.5)
+sleep(2)
 
 print("YOUR GRANDMOTHER")
 
