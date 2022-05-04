@@ -32,17 +32,13 @@ class character:
     
     def Inventory(self):
 
-        input("hello world")
-        #for i in range(len(self.inventory)):
+        print("items in backpack:")
 
-            #for j in range(len(self.inventory))[i]:
+        for i in range(len(self.inventory)):
 
-                #if i == 0:
+            print(self.inventory[i])
 
-                    #print("")
-
-                #print(self.inventory[i][j])
-
+        input()
 
 
 
@@ -173,22 +169,37 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["biff's sword", "weapon", 25, 0.05, 2],
+        ["Biff's sword", "melee-weapon", "melee",  25, 0.05, 2],
         ]
 
     player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1), knightLoadout)
 
 elif characterSelect == "2":
 
-    player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1))
+    barbarianLoadout = [
+        # name, item type, d/heal, crit%, crit multiplier
+        ["Nate's battleaxe", "melee-weapon",  25, 0.05, 2],
+        ]
+
+    player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1), barbarianLoadout)
 
 elif characterSelect == "3":
 
-    player = character("n archer", 80, (5, 55, 0), (1.3, 0.9, 1))
+    archerLoadout = [
+        # name, item type, d/heal, crit%, crit multiplier
+        ["Bens bow", "ranged-weapon",  25, 0.05, 2],
+        ]
+
+    player = character("n archer", 80, (5, 55, 0), (1.3, 0.9, 1), archerLoadout)
     
 elif characterSelect == "4":
 
-    player = character(" mage", 60, (0, 0, 70), (1, 1, 1))
+    mageLoadout = [
+        # name, item type, d/heal, crit%, crit multiplier
+        ["fireball spell", "spell",  25, 0.05, 2],
+        ]
+
+    player = character(" mage", 60, (0, 0, 70), (1, 1, 1), mageLoadout)
 
 sleep(2)
 clear()
