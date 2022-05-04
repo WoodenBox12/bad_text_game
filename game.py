@@ -12,6 +12,10 @@ def clear():
     else:
         _ = system('clear')
 
+def red(string):
+
+    return f"\033[1;31;40m{string}\033[0m"
+
 # character
 
 class character:
@@ -117,11 +121,11 @@ class enemys:
 
     distance = None
 
-    def displayRange(self, slotNum):
+    def Range(self, slotNum):
 
         if slotNum == self.distance:
 
-            return "\033[1;31;40mX\033[0m"
+            return red("X")
 
         else:
 
@@ -225,11 +229,11 @@ while True:
     print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 
     choice = input(f"""+-----------------------+
-| 0 = player, \033[1;31;40mX\033[0m = enemy | your health: {player.currentHealth}    their health: {grandmother.currentHealth}
+| 0 = player, {red("X")} = enemy | your health: {player.currentHealth}    their health: {grandmother.currentHealth}
 |      ___________      |
 |     /   _____   \     |
 |    /   /     \   \    |
-|   |   |   0 {grandmother.displayRange(0)} | {grandmother.displayRange(1)} | {grandmother.displayRange(2)} |
+|   |   |   0 {grandmother.Range(0)} | {grandmother.Range(1)} | {grandmother.Range(2)} |
 |    \   \_____/   /    |
 |     \___________/     |
 |                       |
