@@ -2,6 +2,16 @@ from random import randint
 from os import system, name
 from time import sleep
 
+
+
+#game made by woodenbox12
+
+# todo 
+
+# quantity count for inventory
+# make attacking work
+# make infinite eventially
+
 jimmyStick = ["Jimmy's Stick", "ranged-weapon", 250, 50, 3]
 
 elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
