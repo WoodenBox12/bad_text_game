@@ -23,9 +23,12 @@ def clear():
         _ = system('clear')
         
 def red(string):
-
     return f"\033[1;31;40m{string}\033[0m"
 
+def removeChars(string, badChars):
+    for char in badChars:
+	    string = string.replace(char, "")
+    return string
 # character
 
 class character:
@@ -46,10 +49,12 @@ class character:
     magicDefence = None
     
     def Inventory(self):
+
+        clear()
             
         weaponTypes = ("    item type: ", "    damage: ", "    crit %: ", "    crit multiplier: ", "")
 
-        print("items in backpack:")
+        print("items in backpack:\n")
 
         for i in range(len(self.inventory)):
 
@@ -59,9 +64,10 @@ class character:
 
                     print(self.inventory[i][j], end=weaponTypes[j])
 
-        print()
+            print()
 
-        choice = input("""
+        choice = input(f"""
+main weapon is {self.mainWeapon}
 +----------------------------------------------------+
 | to change your main weapon type:    mw weapon-name |
 | to use a heal type:                  use item-name |
@@ -69,8 +75,20 @@ class character:
 >>""").lower()
 
         if "mw" in choice:
-            print("hello world")
 
+            choice = choice[3:]
+
+            choice = removeChars(choice, "' ")
+
+            for i in range(len(self.inventory)):
+
+                name = removeChars(self.inventory[i][0].lower(), "' ")
+
+                if choice == name:
+                    
+                    self.mainWeapon = self.inventory[i]
+
+        input(f"main weapon is now {self.mainWeapon[0]}")
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -211,6 +229,7 @@ elif characterSelect == "2":
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["Nate's battle axe", "melee-weapon",  30, 1, 2],
+        ["Nate's battle axe2", "melee-weapon",  30, 1, 2],
         ]
 
     player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1), barbarianLoadout)
