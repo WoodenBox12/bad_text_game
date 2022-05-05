@@ -39,10 +39,6 @@ class character:
     Type = None
     maxHealth = None
     currentHealth = None
-    
-    meleeDamage = None
-    rangedDamage = None
-    magicDamage = None
 
     meleeDefence = None
     rangedDefence = None
@@ -52,22 +48,36 @@ class character:
 
         clear()
             
-        weaponTypes = ("    item type: ", "    damage: ", "    crit %: ", "    crit multiplier: ", "")
+        weaponTypes = ("    damage type: ", "    damage: ", "    crit %: ", "    crit multiplier: ", "")
 
         print("items in backpack:\n")
 
         for i in range(len(self.inventory)):
 
-            for j in range(len(self.inventory[i])):
+            if self.inventory[i][1] != "heal":
 
-                if self.inventory[i][1] != "heal":
+                for j in range(len(self.inventory[i])):
+
+
+                    if j == 5:
+                        break
 
                     print(self.inventory[i][j], end=weaponTypes[j])
 
-            print()
+                print()
+
+        print("\nheals:\n")
+
+        for i in range(len(self.inventory)):
+
+            if self.inventory[i][1] == "heal":
+
+                print(self.inventory[i][0], end="    ")
+                print(f"health gain: {self.inventory[i][2]}")
+            
 
         choice = input(f"""
-main weapon is {self.mainWeapon}
+main weapon is {self.mainWeapon[0]}
 +----------------------------------------------------+
 | to change your main weapon type:    mw weapon-name |
 | to use a heal type:                  use item-name |
@@ -88,7 +98,7 @@ main weapon is {self.mainWeapon}
                     
                     self.mainWeapon = self.inventory[i]
 
-        input(f"main weapon is now {self.mainWeapon[0]}")
+            input(f"main weapon is now {self.mainWeapon[0]}")
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -129,7 +139,7 @@ main weapon is {self.mainWeapon}
         else:
             return baseValue
 
-    def __init__(self, Type, health, damage, defence, startingItems):
+    def __init__(self, Type, health, defence, startingItems):
 
         self.inventory = startingItems
 
@@ -140,11 +150,6 @@ main weapon is {self.mainWeapon}
         self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
 
         self.currentHealth = self.maxHealth = self.dificultyModifier(health, dificulty, False)
-
-
-        self.meleeDamage = self.dificultyModifier(damage[0], dificulty, False)
-        self.rangedDamage = self.dificultyModifier(damage[1], dificulty, False)
-        self.magicDamage = self.dificultyModifier(damage[2], dificulty, False)
 
 # enemys
 
@@ -222,17 +227,18 @@ if characterSelect == "1":
         ["Biff's sword", "melee-weapon", 25, 5, 2],
         ]
 
-    player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1), knightLoadout)
+    player = character(" knight", 150, (0.7, 1.1, 1), knightLoadout)
 
 elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["Nate's battle axe", "melee-weapon",  30, 1, 2],
-        ["Nate's battle axe2", "melee-weapon",  30, 1, 2],
+        ["foobar3", "melee-weapon",  30, 1, 2],
+        ["apple", "heal", 40, ],
         ]
 
-    player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1), barbarianLoadout)
+    player = character(" barbarian", 120, (0.9, 1.1, 1), barbarianLoadout)
 
 elif characterSelect == "3":
 
@@ -241,7 +247,7 @@ elif characterSelect == "3":
         ["Bens bow", "ranged-weapon",  22, 8, 2.5],
         ]
 
-    player = character("n archer", 80, (5, 55, 0), (1.3, 0.9, 1), archerLoadout)
+    player = character("n archer", 80, (1.3, 0.9, 1), archerLoadout)
     
 elif characterSelect == "4":
 
@@ -250,7 +256,7 @@ elif characterSelect == "4":
         ["fire bolt spell", "magic-weapon",  20, 12, 2.2],
         ]
 
-    player = character(" mage", 60, (0, 0, 70), (1, 1, 1), mageLoadout)
+    player = character(" mage", 60, (1, 1, 1), mageLoadout)
 
 sleep(2)
 clear()
