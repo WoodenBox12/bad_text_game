@@ -2,6 +2,16 @@ from random import randint
 from os import system, name
 from time import sleep
 
+jimmyStick = ["Jimmy's Stick", "ranged-weapon", 250, 50, 3]
+
+elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
+
+rishabhsorb = ["Rishabh's Orb", "magic-weapon", 75, 60, 1.2]
+
+deviousBlade = ["Devious Blade", "melee-weapon", 1000, 50, 69] # cheats only
+
+riosHeel = ["Rio's High Heel", "melee-weapon", 50, 5, 2]
+
 def clear():
   
     # for windows
@@ -11,7 +21,7 @@ def clear():
     # for mac and linux(here, os.name is 'posix')
     else:
         _ = system('clear')
-
+        
 def red(string):
 
     return f"\033[1;31;40m{string}\033[0m"
@@ -40,12 +50,17 @@ class character:
 
         for i in range(len(self.inventory)):
 
-            print(self.inventory[i][0])
+            for j in range(len(self.inventory[i])):
+
+                print(self.inventory[i][j], end=" ")
+
+        print()
 
         choice = input("""
-        to change your main weapon type     mw weapon-name
-        to use a heal type    use item name
-        >>""")
++----------------------------------------------------+
+| to change your main weapon type:    mw weapon-name |
+| to use a heal type:                  use item-name |
+>>""")
 
 
 
@@ -176,7 +191,7 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Biff's sword", "melee-weapon", 25, 0.05, 2],
+        ["Biff's sword", "melee-weapon", 25, 5, 2],
         ]
 
     player = character(" knight", 150, (45, 5, 0), (0.7, 1.1, 1), knightLoadout)
@@ -185,7 +200,7 @@ elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battleaxe", "melee-weapon",  30, 0.01, 2],
+        ["Nate's battleaxe", "melee-weapon",  30, 1, 2],
         ]
 
     player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1), barbarianLoadout)
@@ -194,7 +209,7 @@ elif characterSelect == "3":
 
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Bens bow", "ranged-weapon",  22, 0.08, 2.5],
+        ["Bens bow", "ranged-weapon",  22, 8, 2.5],
         ]
 
     player = character("n archer", 80, (5, 55, 0), (1.3, 0.9, 1), archerLoadout)
@@ -203,7 +218,7 @@ elif characterSelect == "4":
 
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["fire bolt spell", "magic-weapon",  20, 0.2, 2.2],
+        ["fire bolt spell", "magic-weapon",  20, 12, 2.2],
         ]
 
     player = character(" mage", 60, (0, 0, 70), (1, 1, 1), mageLoadout)
