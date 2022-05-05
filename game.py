@@ -31,6 +31,7 @@ def red(string):
 class character:
 
     inventory = None
+    mainWeapon = None
 
     Type = None
     maxHealth = None
@@ -45,6 +46,8 @@ class character:
     magicDefence = None
     
     def Inventory(self):
+            
+        weaponTypes = ("    item type: ", "    damage: ", "    crit %: ", "    crit multiplier: ", "")
 
         print("items in backpack:")
 
@@ -52,7 +55,9 @@ class character:
 
             for j in range(len(self.inventory[i])):
 
-                print(self.inventory[i][j], end=" ")
+                if self.inventory[i][1] != "heal":
+
+                    print(self.inventory[i][j], end=weaponTypes[j])
 
         print()
 
@@ -60,8 +65,11 @@ class character:
 +----------------------------------------------------+
 | to change your main weapon type:    mw weapon-name |
 | to use a heal type:                  use item-name |
->>""")
++----------------------------------------------------+
+>>""").lower()
 
+        if "mw" in choice:
+            print("hello world")
 
 
     def dificultyModifier(self, baseValue, dificulty, increase):
@@ -108,6 +116,8 @@ class character:
         self.inventory = startingItems
 
         self.Type = Type
+
+        self.mainWeapon = self.inventory[0]
 
         self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
 
@@ -200,7 +210,7 @@ elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battleaxe", "melee-weapon",  30, 1, 2],
+        ["Nate's battle axe", "melee-weapon",  30, 1, 2],
         ]
 
     player = character(" barbarian", 120, (35, 15, 0), (0.9, 1.1, 1), barbarianLoadout)
