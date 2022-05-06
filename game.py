@@ -1,6 +1,7 @@
-from random import randint
+from random import randint, random
 from os import system, name
 from time import sleep
+from typing import Container
 
 
 
@@ -315,6 +316,9 @@ while True:
 |  a/away to move away  |
 |t/toward to move toward|
 |    i for inventory    |
+|                       |
+|   melee/ranged/magic  |
+|       for attack      |
 +-----------------------+
 >>""")
     if choice.lower() == "t" or choice.lower() == "toward":
@@ -347,3 +351,97 @@ while True:
     
         player.Inventory()
         continue
+
+    elif choice.lower() == "melee":
+
+        if grandmother.distance == 0:
+
+            damage = player.mainWeapon[2]
+            crit = False
+
+            if randint(1,100) <= player.mainWeapon[3]:
+
+                damage *= round(player.mainWeapon[4])
+                crit = True
+
+            print(f"{damage} damage dealt", end="    ")
+
+            if crit:
+                print("Critical hit!")
+
+            grandmother.currentHealth -= damage
+
+            print()
+            sleep(2)
+
+        elif grandmother.distance == 1:
+
+            damage = rpund(player.mainWeapon[2] * (randint(8, 12) / 10))
+            crit = False
+
+            if randint(1,100) <= player.mainWeapon[3]:
+
+                damage *= round(player.mainWeapon[4])
+                crit = True
+
+            print(f"{damage} damage dealt", end="    ")
+
+            if crit:
+                print("Critical hit!")
+
+            grandmother.currentHealth -= damage
+
+            print()
+            sleep(2)
+
+        else:
+
+            print("too far away")
+            sleep(2)
+
+    elif choice.lower() == "ranged":
+
+        if grandmother.distance == 1:
+
+            damage = player.mainWeapon[2]
+            crit = False
+
+            if randint(1,100) <= player.mainWeapon[3]:
+
+                damage *= round(player.mainWeapon[4])
+                crit = True
+
+            print(f"{damage} damage dealt", end="    ")
+
+            if crit:
+                print("Critical hit!")
+
+            grandmother.currentHealth -= damage
+
+            print()
+            sleep(2)
+
+        elif grandmother.distance == 2:
+
+            damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
+            crit = False
+
+            if randint(1,100) <= player.mainWeapon[3]:
+
+                damage *= round(player.mainWeapon[4])
+                crit = True
+
+            print(f"{damage} damage dealt", end="    ")
+
+            if crit:
+                print("Critical hit!")
+
+            grandmother.currentHealth -= damage
+
+            print()
+            sleep(2)
+
+        else:
+
+            print("too close")
+            sleep(2)
