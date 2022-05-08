@@ -98,7 +98,6 @@ main weapon is {self.mainWeapon[0]}
         if "mw" in choice:
 
             choice = choice[3:]
-
             choice = removeChars(choice, "' ")
 
             for i in range(len(self.inventory)):
@@ -110,6 +109,14 @@ main weapon is {self.mainWeapon[0]}
                     self.mainWeapon = self.inventory[i]
 
             input(f"main weapon is now {self.mainWeapon[0]}")
+
+        elif "use" in choice:
+
+            choice = choice[4:]
+            choice = removeChars(choice, "' ")
+
+
+
 
     def dificultyModifier(self, baseValue, dificulty, increase):
 
@@ -245,7 +252,6 @@ elif characterSelect == "2":
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["Nate's battle axe", "melee-weapon",  30, 1, 2],
-        ["foobar3", "melee-weapon",  30, 1, 2],
         ["apple", "heal", 40, ],
         ]
 
