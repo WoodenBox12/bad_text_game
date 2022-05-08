@@ -376,7 +376,7 @@ while True:
 
         elif grandmother.distance == 1:
 
-            damage = rpund(player.mainWeapon[2] * (randint(8, 12) / 10))
+            damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
             crit = False
 
             if randint(1,100) <= player.mainWeapon[3]:
