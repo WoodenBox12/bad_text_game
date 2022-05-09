@@ -29,6 +29,14 @@ mattsshortbarreler = ["Matt's Short Barreler", "ranged-weapon", 44, 4, 4]
 
 jacksrifle = ["Jack's Left Handed Rifle", "ranged-weapon", 100, 50, -1]
 
+ollyscube = ["Olly's GAN", "magic-weapon", 60, 20, 3]
+
+lillyspersonality = ["Lilly's Personality", "magic-weapon", 40, 60, 2]
+
+liamsfry = ["Liams Frying Pan", "melee-weapon", 35, 5, 3]
+
+
+
 
 def clear():
   
