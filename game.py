@@ -15,33 +15,33 @@ from typing import Container
 
 # early weapon
 
-riosHeel = ["Rio's High Heel", "melee-weapon", 50, 5, 2]
+riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2]
 
-walshxacker = ["Walsh Whacker", "melee-weapon", 40, 10, 3]
+walshxacker = ["Walsh Whacker", "melee", 40, 10, 3]
 
-mattsshortbarreler = ["Matt's Short Barreler", "ranged-weapon", 44, 4, 4]
+mattsshortbarreler = ["Matt's Short Barreler", "ranged", 44, 4, 4]
 
-jacksrifle = ["Jack's Left Handed Rifle", "ranged-weapon", 100, 50, -1]
+jacksrifle = ["Jack's Left Handed Rifle", "melee/ranged", 100, 50, -1]
 
-ollyscube = ["Olly's GAN", "magic-weapon", 60, 20, 3]
+ollyscube = ["Olly's GAN", "melee/magic", 60, 20, 3]
 
-lillyspersonality = ["Lilly's Personality", "magic-weapon", 40, 60, 2]
+lillyspersonality = ["Lilly's Personality", "magic", 40, 60, 2]
 
-liamsfry = ["Liams Frying Pan", "melee-weapon", 35, 5, 3]
+liamsfry = ["Liams Frying Pan", "melee", 35, 5, 3]
 
 
 #mid game
 
 
-jimmyStick = ["Jimmy's Stick", "ranged-weapon", 250, 50, 3]
+jimmyStick = ["Jimmy's Stick", "melee/ranged", 250, 50, 3]
 
-elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
+elliottscalculator = ["Elliott's Calculator", "magic", 50, 10, 42]
 
-rishabhsorb = ["Rishabh's Orb", "magic-weapon", 75, 60, 1.2]
+rishabhsorb = ["Rishabh's Orb", "magic", 75, 60, 1.2]
 
-deviousBlade = ["Devious Blade", "melee-weapon", 420, 50, 69] # cheats only
+deviousBlade = ["Devious Blade", "melee/ranged/magic", 420, 50, 69] # cheats only
 
-dan = ["Dan's Weapon", "ranged-weapon", 0, 0, 0]
+dan = ["Dan's Weapon", "ranged", 0, 0, 0]
 
 
 def clear():
@@ -142,7 +142,16 @@ main weapon is {self.mainWeapon[0]}
 
                 if choice == name:
                     
-                    input("word")
+                    if self.currentHealth + self.inventory[i][2] > self.maxHealth:
+
+                        self.currentHealth = self.maxHealth
+                        
+                    else:
+
+                        self.currentHealth += self.inventory[i][2]
+                    self.inventory.pop(i)
+                    print(f"now on {self.currentHealth}/{self.maxHealth}")
+                    sleep(2)
 
 
 
@@ -271,7 +280,7 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Biff's sword", "melee-weapon", 25, 5, 2],
+        ["Biff's sword", "melee", 25, 5, 2],
         ["apple", "heal", 40, ],
         ]
 
@@ -281,7 +290,7 @@ elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battle axe", "melee-weapon",  30, 1, 2],
+        ["Nate's battle axe", "melee",  30, 1, 2],
         ["apple", "heal", 40, ],
         ]
 
@@ -291,7 +300,7 @@ elif characterSelect == "3":
 
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Bens bow", "ranged-weapon",  22, 8, 2.5],
+        ["Bens bow", "ranged",  22, 8, 2.5],
         ["apple", "heal", 40, ],
         ]
 
@@ -301,7 +310,7 @@ elif characterSelect == "4":
 
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["fire bolt spell", "magic-weapon",  20, 12, 2.2],
+        ["fire bolt spell", "magic",  20, 12, 2.2],
         ["spotty apple", "heal", 40, ],
         ]
 
@@ -311,7 +320,7 @@ elif characterSelect == "rio gets none":
 
     devLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Devious Blade", "melee-weapon", 420, 50, 69],
+        deviousBlade,
         ["spotty apple", "heal", 40, ],
         ]
 
@@ -352,7 +361,7 @@ while True:
     print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 
     choice = input(f"""+-----------------------+
-| 0 = player, {red("X")} = enemy | your health: {player.currentHealth}    their health: {grandmother.currentHealth}
+| 0 = player, {red("X")} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {grandmother.currentHealth}/{grandmother.maxHealth}
 |      ___________      |
 |     /   _____   \     |
 |    /   /     \   \    |
