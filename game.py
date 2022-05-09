@@ -13,13 +13,7 @@ from typing import Container
 # make attacking work
 # make infinite eventially
 
-jimmyStick = ["Jimmy's Stick", "ranged-weapon", 250, 50, 3]
-
-elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
-
-rishabhsorb = ["Rishabh's Orb", "magic-weapon", 75, 60, 1.2]
-
-deviousBlade = ["Devious Blade", "melee-weapon", 420, 50, 69] # cheats only
+# early weapon
 
 riosHeel = ["Rio's High Heel", "melee-weapon", 50, 5, 2]
 
@@ -36,6 +30,18 @@ lillyspersonality = ["Lilly's Personality", "magic-weapon", 40, 60, 2]
 liamsfry = ["Liams Frying Pan", "melee-weapon", 35, 5, 3]
 
 
+#mid game
+
+
+jimmyStick = ["Jimmy's Stick", "ranged-weapon", 250, 50, 3]
+
+elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
+
+rishabhsorb = ["Rishabh's Orb", "magic-weapon", 75, 60, 1.2]
+
+deviousBlade = ["Devious Blade", "melee-weapon", 420, 50, 69] # cheats only
+
+dan = ["Dan's Weapon", "ranged-weapon", 0, 0, 0]
 
 
 def clear():
