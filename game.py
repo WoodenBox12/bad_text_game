@@ -130,6 +130,14 @@ main weapon is {self.mainWeapon[0]}
             choice = choice[4:]
             choice = removeChars(choice, "' ")
 
+            for i in range(len(self.inventory)):
+
+                name = removeChars(self.inventory[i][0].lower(), "' ")
+
+                if choice == name:
+                    
+                    print("word")
+
 
 
 
@@ -258,6 +266,7 @@ if characterSelect == "1":
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["Biff's sword", "melee-weapon", 25, 5, 2],
+        ["apple", "heal", 40, ],
         ]
 
     player = character(" knight", 150, (0.7, 1.1, 1), knightLoadout)
@@ -277,6 +286,7 @@ elif characterSelect == "3":
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["Bens bow", "ranged-weapon",  22, 8, 2.5],
+        ["apple", "heal", 40, ],
         ]
 
     player = character("n archer", 80, (1.3, 0.9, 1), archerLoadout)
@@ -286,6 +296,7 @@ elif characterSelect == "4":
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         ["fire bolt spell", "magic-weapon",  20, 12, 2.2],
+        ["spotty apple", "heal", 40, ],
         ]
 
     player = character(" mage", 60, (1, 1, 1), mageLoadout)
