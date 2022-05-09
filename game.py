@@ -349,18 +349,21 @@ clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")
 
-grandmother = enemys(100, (20, 20, 0), (1, 1, 1), 0)
+grandmother = enemys(100, (20, 15, 0), (1, 1, 1), 0)
 sleep(2)
 
 print("YOUR GRANDMOTHER")
 
 sleep(1)
+clear()
+print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
+
 
 while True:
 
     clear()
 
-    print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
+    print("log")
 
     choice = input(f"""+-----------------------+
 | 0 = player, {red("X")} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {grandmother.currentHealth}/{grandmother.maxHealth}
@@ -386,12 +389,10 @@ while True:
 
             print("cannot move any closer")
             sleep(2)
-            continue
 
         else:
 
             grandmother.distance -= 1
-            continue
 
     elif choice.lower() == "a" or choice.lower() == "away":
         
@@ -399,18 +400,16 @@ while True:
 
             print("you attempt to run away but a mysterious force is preventing you")
             sleep(2)
-            continue
 
         else:
 
             grandmother.distance += 1
-            continue
 
     elif choice.lower() == "i":
     
         player.Inventory()
         continue
-
+   
     elif choice.lower() == "melee":
 
         if "melee" in player.mainWeapon[1]:
@@ -463,6 +462,7 @@ while True:
         else:
             print("melee weapon not selected")
             sleep(2)
+            continue
 
     elif choice.lower() == "ranged":
 
@@ -517,6 +517,7 @@ while True:
 
             print("ranged weapon not selected")
             sleep(2)
+            continue
 
     elif choice.lower() == "magic" and player.Type == " mage":
 
@@ -584,5 +585,39 @@ while True:
 
         else:
 
-            print("ranged weapon not selected")
+            print("magic weapon not selected")
             sleep(2)
+            continue
+
+    
+    # enemy turn 
+
+    if grandmother.distance == 0:
+        
+        print("your grandmother beat you with her rolling pin")
+        playerDamage = round(grandmother.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+
+    elif grandmother.distance == 1:
+
+        z = randint(0,1)
+
+        if z == 0:
+
+            print("your grandmother beat you with her rolling pin")
+            playerDamage = round(grandmother.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+
+        else:
+
+            print("your grandmother threw cookies at you")
+            playerDamage = round(grandmother.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+
+    elif grandmother.distance == 2:
+        
+        print("your grandmother threw cookies at you")
+        playerDamage = round(grandmother.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+    
+
+    print(f"{playerDamage} damage dealt to player")
+
+    player.currentHealth -= playerDamage
+    sleep(2)
