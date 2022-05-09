@@ -142,14 +142,19 @@ main weapon is {self.mainWeapon[0]}
 
                 if choice == name:
                     
-                    if self.currentHealth + self.inventory[i][2] > self.maxHealth:
+                    if self.currentHealth == self.maxHealth:
+                        print("silly")
+
+                    elif self.currentHealth + self.inventory[i][2] > self.maxHealth:
 
                         self.currentHealth = self.maxHealth
+                        self.inventory.pop(i)
                         
                     else:
 
                         self.currentHealth += self.inventory[i][2]
-                    self.inventory.pop(i)
+                        self.inventory.pop(i)
+
                     print(f"now on {self.currentHealth}/{self.maxHealth}")
                     sleep(2)
 
