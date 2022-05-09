@@ -142,7 +142,7 @@ main weapon is {self.mainWeapon[0]}
 
                 if choice == name:
                     
-                    print("word")
+                    input("word")
 
 
 
@@ -265,7 +265,7 @@ clear()
 
 # choose starter weapon
 
-characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>> ")
+characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>>")
 
 if characterSelect == "1":
 
@@ -306,6 +306,16 @@ elif characterSelect == "4":
         ]
 
     player = character(" mage", 60, (1, 1, 1), mageLoadout)
+
+elif characterSelect == "rio gets none":
+
+    devLoadout = [
+        # name, item type, d/heal, crit%, crit multiplier
+        ["Devious Blade", "melee-weapon", 420, 50, 69],
+        ["spotty apple", "heal", 40, ],
+        ]
+
+    player = character(" Dev", 500, (0.5, 0.5, 0.5), devLoadout)
 
 sleep(2)
 clear()
