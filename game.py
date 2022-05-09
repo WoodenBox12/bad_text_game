@@ -63,6 +63,42 @@ def removeChars(string, badChars):
     return string
 # character
 
+def dificultyModifier( baseValue, dificulty, increase):
+
+        if increase == True :
+            
+            if dificulty == 1 :
+                return baseValue
+
+            elif dificulty == 5 :
+                return int(round(baseValue * 1.2, 0))
+
+            elif dificulty == 4 :
+                return int(round(baseValue * 1.15, 0))
+
+            elif dificulty == 3 :
+                return int(round(baseValue * 1.1, 0))
+
+            elif dificulty == 2 :
+                return int(round(baseValue * 1.05, 0))
+
+        elif increase == False :
+
+            if dificulty == 1 :
+                return baseValue
+
+            elif dificulty == 5 :
+                return int(round(baseValue * 0.6, 0))
+
+            elif dificulty == 4 :
+                return int(round(baseValue * 0.7, 0))
+
+            elif dificulty == 3 :
+                return int(round(baseValue * 0.8, 0))
+
+            elif dificulty == 2 :
+                return int(round(baseValue * 0.9, 0))
+
 class character:
 
     inventory = None
@@ -143,7 +179,7 @@ main weapon is {self.mainWeapon[0]}
                 if choice == name:
                     
                     if self.currentHealth == self.maxHealth:
-                        print("silly")
+                        break
 
                     elif self.currentHealth + self.inventory[i][2] > self.maxHealth:
 
@@ -158,48 +194,6 @@ main weapon is {self.mainWeapon[0]}
                     print(f"now on {self.currentHealth}/{self.maxHealth}")
                     sleep(2)
 
-
-
-
-    def dificultyModifier(self, baseValue, dificulty, increase):
-
-        if increase == True :
-            
-            if dificulty == 1 :
-                return baseValue
-
-            elif dificulty == 5 :
-                return int(round(baseValue * 1.4, 0))
-
-            elif dificulty == 4 :
-                return int(round(baseValue * 1.3, 0))
-
-            elif dificulty == 3 :
-                return int(round(baseValue * 1.2, 0))
-
-            elif dificulty == 2 :
-                return int(round(baseValue * 1.1, 0))
-
-        elif increase == False :
-
-            if dificulty == 1 :
-                return baseValue
-
-            elif dificulty == 5 :
-                return int(round(baseValue * 0.6, 0))
-
-            elif dificulty == 4 :
-                return int(round(baseValue * 0.7, 0))
-
-            elif dificulty == 3 :
-                return int(round(baseValue * 0.8, 0))
-
-            elif dificulty == 2 :
-                return int(round(baseValue * 0.9, 0))
-
-        else:
-            return baseValue
-
     def __init__(self, Type, health, defence, startingItems):
 
         self.inventory = startingItems
@@ -210,7 +204,7 @@ main weapon is {self.mainWeapon[0]}
 
         self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
 
-        self.currentHealth = self.maxHealth = self.dificultyModifier(health, dificulty, False)
+        self.currentHealth = self.maxHealth = dificultyModifier(health, dificulty, False)
 
 # enemys
 
@@ -239,7 +233,7 @@ class enemys:
 
             return " "
 
-    def __init__(self, health, damage, defence, startRange):
+    def __init__(self, health, damage, defence, startRange=None):
         
         self.distance = startRange
 
