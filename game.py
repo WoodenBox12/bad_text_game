@@ -19,9 +19,16 @@ elliottscalculator = ["Elliott's Calculator", "magic-weapon", 50, 10, 42]
 
 rishabhsorb = ["Rishabh's Orb", "magic-weapon", 75, 60, 1.2]
 
-deviousBlade = ["Devious Blade", "melee-weapon", 1000, 50, 69] # cheats only
+deviousBlade = ["Devious Blade", "melee-weapon", 420, 50, 69] # cheats only
 
 riosHeel = ["Rio's High Heel", "melee-weapon", 50, 5, 2]
+
+walshxacker = ["Walsh Whacker", "melee-weapon", 40, 10, 3]
+
+mattsshortbarreler = ["Matt's Short Barreler", "ranged-weapon", 44, 4, 4]
+
+jacksrifle = ["Jack's Left Handed Rifle", "ranged-weapon", 100, 50, -1]
+
 
 def clear():
   
