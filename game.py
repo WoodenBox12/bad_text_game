@@ -9,6 +9,8 @@ from sys import exit
 
 # make args for fighting (easy - medium)
 # make enemys drop items usinng function args (easy - medium)
+# make targeting a seperate function so it can be changed for different attacks
+# make enemy move closer sometimes
 
 # early weapon
 
@@ -337,7 +339,7 @@ clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")
 
-opponent = enemys(100, (20, 15, 0), (1, 1, 1), 0)
+opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
 sleep(2)
 
 print("YOUR GRANDMOTHER")
@@ -555,6 +557,13 @@ def fight():
 
 fight()
 
+clear()
+print("level 2\na viscous dog")
 
-opponent = enemys(100, (20, 15, 0), (1, 1, 1), 0)
+
+
+
+
+
+opponent = enemys(115, (35, 0, 0), (1, 1, 1), 1)
 fight()
