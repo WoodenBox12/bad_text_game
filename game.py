@@ -363,7 +363,7 @@ def fight():
 
         print("log")
 
-        choice = input(f"+-----------------------+ \n| 0 = player, {red("X")} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {grandmother.currentHealth}/{grandmother.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {grandmother.Range(0)} | {grandmother.Range(1)} | {grandmother.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
+        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {grandmother.currentHealth}/{grandmother.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {grandmother.Range(0)} | {grandmother.Range(1)} | {grandmother.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
         if choice.lower() == "t" or choice.lower() == "toward":
         
@@ -571,7 +571,6 @@ def fight():
                 sleep(2)
                 continue
 
-    
         # enemy turn 
 
         if grandmother.distance == 0:
