@@ -165,7 +165,7 @@ class character:
                 print(self.inventory[i][0], end="    ")
                 print(f"health gain: {self.inventory[i][2]}")
             
-        choice = input(f"main weapon is {self.mainWeapon[0]} \n+----------------------------------------------------+ \n| to change your main weapon type:    mw weapon-name | \n| to use a heal type:                  use item-name | \n+----------------------------------------------------+ \n>>").lower()
+        choice = input(f"\nmain weapon is {self.mainWeapon[0]} \n+----------------------------------------------------+ \n| to change your main weapon type:    mw weapon-name | \n| to use a heal type:                  use item-name | \n+----------------------------------------------------+ \n>>").lower()
 
         if "mw" in choice:
 
@@ -281,7 +281,7 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Biff's sword", "melee", 25, 5, 2],
+        ["Biff's sword", "melee", 22, 5, 2],
         ["apple", "heal", 40, ],
         ]
 
@@ -291,33 +291,33 @@ elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battle axe", "melee",  30, 1, 2],
+        ["Nate's battle axe", "melee/ranged",  38, 5, 2],
         ["apple", "heal", 40, ],
         ]
 
-    player = character(" barbarian", 120, (0.9, 1.1, 1), barbarianLoadout)
+    player = character(" barbarian", 120, (0.9, 0.8, 1), barbarianLoadout)
 
 elif characterSelect == "3":
 
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Bens bow", "ranged",  22, 8, 2.5],
+        ["Bens bow", "ranged",  30, 10, 2.5],
         ["apple", "heal", 40, ],
         ]
 
-    player = character("n archer", 80, (1.3, 0.9, 1), archerLoadout)
+    player = character("n archer", 80, (1.2, 0.7, 1), archerLoadout)
     
 elif characterSelect == "4":
 
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["fire bolt spell", "magic",  20, 12, 2.2],
+        ["fire bolt spell", "magic",  35, 12, 2.2],
         ["spotty apple", "heal", 40, ],
         ]
 
-    player = character(" mage", 60, (1, 1, 1), mageLoadout)
+    player = character(" mage", 60, (1, 1, 0.8), mageLoadout)
 
-elif characterSelect == "rio gets none":
+elif characterSelect == "golly golly gosh":
 
     devLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
@@ -330,24 +330,14 @@ elif characterSelect == "rio gets none":
 sleep(2)
 clear()
 
-print (f'''                     _
-         .=========., |
-        /_,-.___.-._\ |
-        | [_]/o\[_] |7'
-  i=I=I=|____|_|____|I=I=I=i
- |/,*`*,*`**'/ \      ,-'`.\|
-|/          /...\   (__.-._)\|
-||||||||||||TTTTT|||||||||||||
-""""""""""""HHHHH"""""""""""""
-your journey as a{player.Type} begins
-in your grandmothers house''')
+print (f'''                     _ \n         .=========., | \n        /_,-.___.-._\ | \n        | [_]/o\[_] |7' \n  i=I=I=|____|_|____|I=I=I=i \n |/,*`*,*`**'/ \      ,-'`.\| \n|/          /...\   (__.-._)\| \n||||||||||||TTTTT||||||||||||| \n""""""""""""HHHHH""""""""""""" \nyour journey as a{player.Type} begins \nin your grandmothers house''')
 
 sleep(4)
 clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")
 
-opponent = enemys(1000, (20, 15, 0), (1, 1, 1), 0)
+opponent = enemys(100, (20, 15, 0), (1, 1, 1), 0)
 sleep(2)
 
 print("YOUR GRANDMOTHER")
