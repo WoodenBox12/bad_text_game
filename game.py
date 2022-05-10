@@ -581,6 +581,15 @@ def fight():
 
         else:
             continue
+
+        # logic to see if enemy dies goes here
+
+        #if grandmother.currentHealth <= 0
+
+
+
+
+
         # enemy turn 
 
         if grandmother.distance == 0:
@@ -607,9 +616,8 @@ def fight():
             print("your grandmother threw cookies at you")
             playerDamage = round(grandmother.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
     
-
         print(f"{playerDamage} damage dealt to player")
-
+        
         player.currentHealth -= playerDamage
         sleep(2)
 
