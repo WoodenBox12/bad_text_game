@@ -7,9 +7,8 @@ from sys import exit
 
 # todo 
 
-# quantity count for inventory
-# make attacking work
-# make infinite eventially
+# simplify attack system (easy)
+# make args for fighting (easy - medium)
 
 # early weapon
 
@@ -592,10 +591,7 @@ def fight():
         else:
             continue
 
-
-
-
-        # logic to see if enemy dies goes here
+        # logic to see if enemy dies
 
         if opponent.currentHealth <= 0:
 
@@ -646,4 +642,4 @@ def fight():
 
 fight()
 
-print("new bosses to be added in the futre")
+fight()
