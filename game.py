@@ -501,76 +501,86 @@ def fight():
                 sleep(2)
                 continue
 
-        elif choice.lower() == "magic" and player.Type == " mage":
+        elif choice.lower() == "magic":
 
-            if "magic" in player.mainWeapon[1]:
+            if player.Type == " mage":
 
-                if grandmother.distance == 0:
+                if "magic" in player.mainWeapon[1]:
 
-                    damage = player.mainWeapon[2]
-                    crit = False
+                    if grandmother.distance == 0:
 
-                    if randint(1,100) <= player.mainWeapon[3]:
+                        damage = player.mainWeapon[2]
+                        crit = False
 
-                        damage *= round(player.mainWeapon[4])
-                        crit = True
+                        if randint(1,100) <= player.mainWeapon[3]:
 
-                    print(f"{damage} damage dealt", end="    ")
+                            damage *= round(player.mainWeapon[4])
+                            crit = True
 
-                    if crit:
-                        print("Critical hit!")
+                        print(f"{damage} damage dealt", end="    ")
 
-                    grandmother.currentHealth -= damage
+                        if crit:
+                            print("Critical hit!")
 
-                    print()
-                    sleep(2)
+                        grandmother.currentHealth -= damage
 
-                elif grandmother.distance == 1:
+                        print()
+                        sleep(2)
 
-                    damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
-                    crit = False
+                    elif grandmother.distance == 1:
 
-                    if randint(1,100) <= player.mainWeapon[3]:
+                        damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
+                        crit = False
+
+                        if randint(1,100) <= player.mainWeapon[3]:
    
-                        damage *= round(player.mainWeapon[4])
-                        crit = True
+                            damage *= round(player.mainWeapon[4])
+                            crit = True
 
-                    print(f"{damage} damage dealt", end="    ")
+                        print(f"{damage} damage dealt", end="    ")
 
-                    if crit:
-                        print("Critical hit!")
+                        if crit:
+                            print("Critical hit!")
 
-                    grandmother.currentHealth -= damage
+                        grandmother.currentHealth -= damage
 
-                    print()
-                    sleep(2)
+                        print()
+                        sleep(2)
 
-                elif grandmother.distance == 2:
+                    elif grandmother.distance == 2:
 
-                    damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
-                    crit = False
+                        damage = round(player.mainWeapon[2] * (randint(8, 12) / 10))
+                        crit = False
 
-                    if randint(1,100) <= player.mainWeapon[3]:
+                        if randint(1,100) <= player.mainWeapon[3]:
    
-                        damage *= round(player.mainWeapon[4])
-                        crit = True
+                            damage *= round(player.mainWeapon[4])
+                            crit = True
 
-                    print(f"{damage} damage dealt", end="    ")
+                        print(f"{damage} damage dealt", end="    ")
 
-                    if crit:
-                        print("Critical hit!")
+                        if crit:
+                            print("Critical hit!")
 
-                    grandmother.currentHealth -= damage
+                        grandmother.currentHealth -= damage
 
-                    print()
-                    sleep(2)
+                        print()
+                        sleep(2)
+
+                    else:
+
+                        print("magic weapon not selected")
+                        sleep(2)
+                        continue
 
             else:
 
-                print("magic weapon not selected")
+                print("you have no magical powers")
                 sleep(2)
                 continue
 
+        else:
+            continue
         # enemy turn 
 
         if grandmother.distance == 0:
