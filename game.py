@@ -42,7 +42,6 @@ deviousBlade = ["Devious Blade", "melee/ranged/magic", 420, 50, 69] # cheats onl
 
 dan = ["Dan's Weapon", "ranged", 0, 0, 0]
 
-
 def clear():
   
     # for windows
@@ -227,6 +226,37 @@ class enemys:
 
     distance = None
 
+    def enemyAttack(self,enemyName, attackMsg):
+
+        if self.distance == 0:
+        
+            print(attackMsg[0])
+            playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+
+        elif self.distance == 1:
+
+            z = randint(0,1)
+
+            if z == 0:
+
+                print(attackMsg[0])
+                playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+
+            else:
+
+                print(attackMsg[1])
+                playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+
+        elif self.distance == 2:
+        
+            print(attackMsg[1])
+            playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+        
+        print(f"{enemyName} dealt {playerDamage} damage")
+        
+        player.currentHealth -= playerDamage
+        sleep(2)
+
     def Range(self, slotNum):
 
         if slotNum == self.distance:
@@ -349,7 +379,7 @@ clear()
 print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 sleep(2)
 
-def fight(enemyName):
+def fight(enemyName, enemyAttackMsg):
 
     while True:
 
@@ -516,38 +546,11 @@ def fight(enemyName):
             sleep(2)
             return
 
-        # enemy turn 
+        # enemy turn
 
         else:
 
-            if opponent.distance == 0:
-        
-                print("your grandmother beat you with her rolling pin")
-                playerDamage = round(opponent.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
-
-            elif opponent.distance == 1:
-
-                z = randint(0,1)
-
-                if z == 0:
-
-                    print("your grandmother beat you with her rolling pin")
-                    playerDamage = round(opponent.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
-
-                else:
-
-                    print("your grandmother threw cookies at you")
-                    playerDamage = round(opponent.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
-
-            elif opponent.distance == 2:
-        
-                print("your grandmother threw cookies at you")
-                playerDamage = round(opponent.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
-    
-            print(f"{playerDamage} damage dealt to player")
-        
-            player.currentHealth -= playerDamage
-            sleep(2)
+            opponent.enemyAttack(enemyName, enemyAttackMsg)
 
         if player.currentHealth <= 0:
 
@@ -555,7 +558,7 @@ def fight(enemyName):
             sleep(2)
             exit()
 
-fight("your grandmother")
+fight("your grandmother", ("your grandmother batters you with a rolling pin", "your grandmother throws cookies at you", "your grandmother attacks you with her elderly wisdom"))
 
 clear()
 print("level 2\na vicious dog")
@@ -566,4 +569,4 @@ sleep(2)
 
 
 opponent = enemys(115, (35, 0, 0), (1, 1, 1), 1)
-fight("a vicious dog")
+fight("a vicious dog", ("the vicious dog swipes at you with its paw", "the vicious dog violently spits at you", "the dog opened its third eye and blasted you with a mystical beam of pure energy"))
