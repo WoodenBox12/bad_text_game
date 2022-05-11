@@ -3,14 +3,13 @@ from os import system, name
 from time import sleep
 from sys import exit
 
-#game made by woodenbox12
+#game made by woodenbox12   v1.3
 
-# todo 
+# todo # the big error was my spelling ramged
 
 # make args for fighting (easy - medium)
 # make enemys drop items usinng function args (easy - medium) sometimes
 # make enemy move closer sometimes
-# make enemy attack function have arguments to show what attacks at different ranges
 # custom crit messages
 # make overhealed with decay possible
 
@@ -227,12 +226,74 @@ class enemys:
 
     distance = None
 
-    def enemyAttack(self,enemyName, attackMsg):
+    def enemyAttack(self,enemyName, attackMsg, distance0, distance1, distance2):
 
+        if self.distance == 0:
+
+            closeAttack = distance0[randint(0,len(distance0)-1)]   # returns random from the list
+            
+            if closeAttack == "melee":
+
+                playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+                print(attackMsg[0] %(playerDamage))
+
+            elif closeAttack == "ranged":
+
+                playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+                print(attackMsg[1] %(playerDamage))
+
+            elif closeAttack == "magic":
+
+                playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
+                print(attackMsg[2] %(playerDamage))
+
+
+        if self.distance == 1:
+
+            midAttack = distance1[randint(0,len(distance1)-1)]   # returns random from the list
+            
+            print(midAttack)
+
+            if midAttack == "melee":
+
+                playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+                print(attackMsg[0] %(playerDamage))
+
+            elif midAttack == "ranged":
+
+                playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+                print(attackMsg[1] %(playerDamage))
+
+            elif midAttack == "magic":
+
+                playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
+                print(attackMsg[2] %(playerDamage))
+
+
+        if self.distance == 2:
+
+            farAttack = distance2[randint(0,len(distance2)-1)]   # returns random from the list
+            
+            if farAttack == "melee":
+
+                playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+                print(attackMsg[0] %(playerDamage))
+
+            elif farAttack == "ranged":
+
+                playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+                print(attackMsg[1] %(playerDamage))
+
+            elif farAttack == "magic":
+
+                playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
+                print(attackMsg[2] %(playerDamage))
+
+        """
         if self.distance == 0:
         
             playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
-            print(attackMsg[0] %playerDamage)
+            print(melee %(playerDamage))
 
         elif self.distance == 1:
 
@@ -252,7 +313,7 @@ class enemys:
         
             playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
             print(attackMsg[1] %playerDamage)
-        
+        """
         player.currentHealth -= playerDamage
         sleep(2)
 
@@ -378,7 +439,7 @@ clear()
 print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 sleep(2)
 
-def fight(enemyName, enemyAttackMsg):
+def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
 
     while True:
 
@@ -552,14 +613,14 @@ def fight(enemyName, enemyAttackMsg):
 
         else:
 
-            opponent.enemyAttack(enemyName, enemyAttackMsg)
+            opponent.enemyAttack(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks)
 
         if player.currentHealth <= 0:
 
             print(f"\n\nsoo close buddy enemy {1} was only on {opponent.currentHealth} health")
             exit()
 
-fight("your grandmother", ("your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"))
+fight("your grandmother", ("your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"), ("melee",), ("melee", "ranged"), ("ranged",))
 
 clear()
 print("level 2\na vicious dog")
@@ -570,4 +631,4 @@ sleep(2)
 
 
 opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
-fight("a vicious dog", ("the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"))
+fight("a vicious dog", ("the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"), ("melee",), ("melee", "ranged"), ("magic",))
