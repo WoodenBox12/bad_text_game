@@ -11,35 +11,33 @@ from sys import exit
 # make enemys drop items usinng function args (easy - medium) sometimes
 # make enemy move closer sometimes
 # make enemy attack function have arguments to show what attacks at different ranges
-# custom attack messages
+# custom crit messages
+# make overhealed with decay possible
 
 # early weapon
 
-riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2, ["you attempt to cave in %s skull dealing %s damage", "you throw Rio's high heel into %s forehead dealing %s damage"]]
+riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2, ["you attempt to cave in %s's skull dealing %s damage", "you throw Rio's high heel into %s's forehead dealing %s damage"]]
 
-cavemanClub = ["caveman club", "melee", 40, 10, 3]
+cavemanClub = ["caveman club", "melee", 40, 10, 3, ["you attempt to cave in %s's skull dealing %s damage"]]
 
-mattsshortbarreler = ["Matt's Short Barreler", "ranged", 44, 4, 4]
+mattsshortbarreler = ["Matt's Short Barreler", "ranged", 44, 4, 4, ["", "you shoot %s dealing %s damage"]]
 
-jacksrifle = ["Jack's Rifle", "melee/ranged", 80, 50, -1]
+jacksrifle = ["Jack's Rifle", "melee/ranged", 100, 50, -10, ["you stabbed %s with your bayonet dealing %s damage", "you shoot %s dealing %s damage"]]
 
-ollyscube = ["Olly's GAN", "melee/magic", 60, 20, 3]
+ollyscube = ["Olly's GAN", "melee/magic", 60, 15, 3, ["you whack %s's head dealing %s damage", "", "nobody knows how but somehow %s took %s damage"]]
 
-lillyspersonality = ["Lilly's Personality", "magic", 40, 60, 2]
+liamsfry = ["Liams Frying Pan", "melee", 35, 5, 3, ["you whack %s's head dealing %s damage"]]
 
-liamsfry = ["Liams Frying Pan", "melee", 35, 5, 3]
-
+elliottscalculator = ["Elliott's Calculator", "magic", 50, 10, 2, ["", "", "nobody knows how but somehow %s took %s damage"]]
 
 #mid game
 
 
 jimmyStick = ["Jimmy's Stick", "melee/ranged", 250, 50, 3]
 
-elliottscalculator = ["Elliott's Calculator", "magic", 50, 10, 42]
-
 rishabhsorb = ["Rishabh's Orb", "magic", 75, 60, 1.2]
 
-deviousBlade = ["Devious Blade", "melee/ranged/magic", 420, 50, 69] # cheats only
+deviousBlade = ["Devious Blade", "melee/ranged/magic", 420, 50, 50, ["you slice %s's head in half with the Devious Blade dealing %s damage", "you throw the Devious Blade at %s's Skull causing it to break like an egg dealing %s damage", "the Devious Blade summoned a mystical creature to attack %s, they dealt %s damage"]] # cheats only
 
 dan = ["Dan's Weapon", "ranged", 0, 0, 0]
 
@@ -110,12 +108,13 @@ class character:
     rangedDefence = None
     magicDefence = None
 
-    def heal(self, healAmount, pop=False , i=None):
+    def heal(self, healAmount, pop=False , i=None, display=False):
 
         if self.currentHealth == self.maxHealth:
 
-            print("cannot heal    already on max health")
-            sleep(2)
+            if display:
+                print("cannot heal    already on max health")
+            return
 
         elif self.currentHealth + healAmount > self.maxHealth:
 
@@ -133,8 +132,8 @@ class character:
 
                 self.inventory.pop(i)
 
+        if display:
             print(f"now on {self.currentHealth}/{self.maxHealth}")
-            sleep(2)
     
     def Inventory(self):
 
@@ -195,7 +194,8 @@ class character:
 
                 if choice == name:
                     
-                    self.heal(self.inventory[i][2], True, i)
+                    self.heal(self.inventory[i][2], True, i, True)
+                    sleep(2)
                     break
 
     def __init__(self, Type, health, defence, startingItems):
@@ -322,7 +322,7 @@ elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battle axe", "melee/ranged",  38, 5, 2],
+        ["Nate's battle axe", "melee/ranged",  38, 5, 2, ["you swing at %s dealing %s damage", "you throw your battle axe at %s dealing %s damage"]],
         ["apple", "heal", 40, ],
         ]
 
@@ -332,7 +332,7 @@ elif characterSelect == "3":
 
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Bens bow", "ranged",  30, 10, 2.5],
+        ["Bens bow", "ranged",  30, 10, 2.5, ["", "you fire arrows at %s dealing %s damage"]],
         ["apple", "heal", 40, ],
         ]
 
@@ -342,7 +342,7 @@ elif characterSelect == "4":
 
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["fire bolt spell", "magic",  35, 12, 2.2],
+        ["fire bolt spell", "magic",  35, 12, 2.2, ["", "", "fire bolts are blasted towards %s dealing %s damage"]],
         ["spotty apple", "heal", 40, ],
         ]
 
@@ -353,7 +353,7 @@ elif characterSelect == "golly golly gosh":
     devLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         deviousBlade,
-        ["spotty apple", "heal", 40, ],
+        ["dev's apple", "heal", 500, ],
         ]
 
     player = character(" Dev", 500, (0.5, 0.5, 0.5), devLoadout)
@@ -447,8 +447,6 @@ def fight(enemyName, enemyAttackMsg):
                         print("\n")
 
                     opponent.currentHealth -= damage
-
-                    print()
                     sleep(2)
 
             else:
@@ -479,14 +477,15 @@ def fight(enemyName, enemyAttackMsg):
                         damage *= round(player.mainWeapon[4])
                         crit = True
 
-                    print(f"{damage} damage dealt", end="    ")
+                    print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
 
                     if crit:
                         print("Critical hit!")
 
-                    opponent.currentHealth -= damage
+                    else:
+                        print("\n")
 
-                    print()
+                    opponent.currentHealth -= damage
                     sleep(1)
 
             else:
@@ -513,15 +512,16 @@ def fight(enemyName, enemyAttackMsg):
                             damage *= round(player.mainWeapon[4])
                             crit = True
 
-                        print(f"{damage} damage dealt", end="    ")
+                        print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
 
                         if crit:
                             print("Critical hit!")
 
-                        opponent.currentHealth -= damage
+                        else:
+                            print("\n")
 
-                        print()
-                        sleep(1)
+                        opponent.currentHealth -= damage
+                        sleep(2)
 
                 else:
 
@@ -544,7 +544,7 @@ def fight(enemyName, enemyAttackMsg):
 
             player.heal(-opponent.currentHealth)
 
-            print(f"you defeated {'grandmother'} and gained {-opponent.currentHealth} health")
+            print(f"you defeated {enemyName} and gained {-opponent.currentHealth} health")
             sleep(2)
             return
 
