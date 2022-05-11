@@ -8,19 +8,20 @@ from sys import exit
 # todo 
 
 # make args for fighting (easy - medium)
-# make enemys drop items usinng function args (easy - medium)
-# make targeting a seperate function so it can be changed for different attacks
+# make enemys drop items usinng function args (easy - medium) sometimes
 # make enemy move closer sometimes
+# make enemy attack function have arguments to show what attacks at different ranges
+# custom attack messages
 
 # early weapon
 
-riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2]
+riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2, ["you attempt to cave in %s skull dealing %s damage", "you throw Rio's high heel into %s forehead dealing %s damage"]]
 
-walshxacker = ["Walsh Whacker", "melee", 40, 10, 3]
+cavemanClub = ["caveman club", "melee", 40, 10, 3]
 
 mattsshortbarreler = ["Matt's Short Barreler", "ranged", 44, 4, 4]
 
-jacksrifle = ["Jack's Rifle", "melee/ranged", 100, 50, -1]
+jacksrifle = ["Jack's Rifle", "melee/ranged", 80, 50, -1]
 
 ollyscube = ["Olly's GAN", "melee/magic", 60, 20, 3]
 
@@ -230,8 +231,8 @@ class enemys:
 
         if self.distance == 0:
         
-            print(attackMsg[0])
             playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+            print(attackMsg[0] %playerDamage)
 
         elif self.distance == 1:
 
@@ -239,20 +240,18 @@ class enemys:
 
             if z == 0:
 
-                print(attackMsg[0])
                 playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
+                print(attackMsg[0] %playerDamage)
 
             else:
 
-                print(attackMsg[1])
                 playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
+                print(attackMsg[1] %playerDamage)
 
         elif self.distance == 2:
         
-            print(attackMsg[1])
             playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
-        
-        print(f"{enemyName} dealt {playerDamage} damage")
+            print(attackMsg[1] %playerDamage)
         
         player.currentHealth -= playerDamage
         sleep(2)
@@ -313,7 +312,7 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Biff's sword", "melee", 22, 5, 2],
+        ["Biff's sword", "melee", 22, 5, 2, ["you swing at %s dealing %s damage"]],
         ["apple", "heal", 40, ],
         ]
 
@@ -439,15 +438,18 @@ def fight(enemyName, enemyAttackMsg):
                         damage *= round(player.mainWeapon[4])
                         crit = True
 
-                    print(f"{damage} damage dealt", end="    ")
+                    print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
 
                     if crit:
                         print("Critical hit!")
 
+                    else:
+                        print("\n")
+
                     opponent.currentHealth -= damage
 
                     print()
-                    sleep(1)
+                    sleep(2)
 
             else:
                 print("melee weapon not selected")
@@ -555,10 +557,9 @@ def fight(enemyName, enemyAttackMsg):
         if player.currentHealth <= 0:
 
             print(f"\n\nsoo close buddy enemy {1} was only on {opponent.currentHealth} health")
-            sleep(2)
             exit()
 
-fight("your grandmother", ("your grandmother batters you with a rolling pin", "your grandmother throws cookies at you", "your grandmother attacks you with her elderly wisdom"))
+fight("your grandmother", ("your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"))
 
 clear()
 print("level 2\na vicious dog")
@@ -568,5 +569,5 @@ sleep(2)
 
 
 
-opponent = enemys(115, (35, 0, 0), (1, 1, 1), 1)
-fight("a vicious dog", ("the vicious dog swipes at you with its paw", "the vicious dog violently spits at you", "the dog opened its third eye and blasted you with a mystical beam of pure energy"))
+opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
+fight("a vicious dog", ("the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"))
