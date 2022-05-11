@@ -12,6 +12,7 @@ from sys import exit
 # make enemy move closer sometimes
 # custom crit messages
 # make overhealed with decay possible
+# enemy crit chance
 
 # early weapon
 
