@@ -349,7 +349,7 @@ clear()
 print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 sleep(2)
 
-def fight():
+def fight(enemyName):
 
     while True:
 
@@ -512,7 +512,7 @@ def fight():
 
             player.heal(-opponent.currentHealth)
 
-            print(f"you defeated {'grandmother'} and gained {-opponent.currentHealth}")
+            print(f"you defeated {'grandmother'} and gained {-opponent.currentHealth} health")
             sleep(2)
             return
 
@@ -555,15 +555,15 @@ def fight():
             sleep(2)
             exit()
 
-fight()
+fight("your grandmother")
 
 clear()
-print("level 2\na viscous dog")
-
+print("level 2\na vicious dog")
+sleep(2)
 
 
 
 
 
 opponent = enemys(115, (35, 0, 0), (1, 1, 1), 1)
-fight()
+fight("a vicious dog")
