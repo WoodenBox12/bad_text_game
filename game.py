@@ -1,5 +1,5 @@
 from random import choice,randint
-from os import system, name
+from os import system, name, path
 from time import sleep
 from sys import exit
 from files import *
@@ -14,33 +14,15 @@ from files import *
 # custom crit messages
 # make overhealed with decay possible
 # enemy crit chance
+# end credits contain elliott and ben
 
-# early weapon
+itemsPath = path.abspath("items.json")
 
-riosHeel = ["Rio's High Heel", "melee/ranged", 50, 5, 2, ["you attempt to cave in %s's skull dealing %s damage", "you throw Rio's high heel into %s's forehead dealing %s damage"]]
-
-cavemanClub = ["caveman club", "melee", 40, 10, 3, ["you attempt to cave in %s's skull dealing %s damage"]]
-
-mattsshortbarreler = ["Matt's Short Barreler", "ranged", 44, 4, 4, ["", "you shoot %s dealing %s damage"]]
-
-jacksrifle = ["Jack's Rifle", "melee/ranged", 100, 50, -10, ["you stabbed %s with your bayonet dealing %s damage", "you shoot %s dealing %s damage"]]
-
-ollyscube = ["Olly's GAN", "melee/magic", 60, 15, 3, ["you whack %s's head dealing %s damage", "", "nobody knows how but somehow %s took %s damage"]]
-
-liamsfry = ["Liams Frying Pan", "melee", 35, 5, 3, ["you whack %s's head dealing %s damage"]]
-
-elliottscalculator = ["Elliott's Calculator", "magic", 50, 10, 2, ["", "", "nobody knows how but somehow %s took %s damage"]]
-
-#mid game
+weapons = readjs(itemsPath)[0]
+heals = readjs(itemsPath)[1]
 
 
-jimmyStick = ["Jimmy's Stick", "melee/ranged", 250, 50, 3]
 
-rishabhsorb = ["Rishabh's Orb", "magic", 75, 60, 1.2]
-
-deviousBlade = ["Dev-10us Blade", "melee/ranged/magic", 420, 50, 50, ["you slice %s's head in half with the Dev-10us Blade dealing %s damage", "you throw the Dev-10us Blade at %s's Skull causing it to break like an egg dealing %s damage", "the Dev-10us Blade summoned a mystical creature to attack %s, they dealt %s damage"]] # cheats only
-
-dan = ["Dan's Weapon", "ranged", 0, 0, 0]
 
 def clear():
   
@@ -342,6 +324,8 @@ else:
 sleep(2)
 clear()
 
+
+
 # choose starter weapon
 
 characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>>")
@@ -350,51 +334,51 @@ if characterSelect == "1":
 
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Biff's sword", "melee", 22, 5, 2, ["you swing at %s dealing %s damage"]],
+        weapons["Biff's Sword"],
         ["apple", "heal", 40, ],
         ]
 
-    player = character(" knight", 150, (0.7, 1.1, 1), knightLoadout)
+    player = character(" knight", 150, [0.7, 1.1, 1], knightLoadout)
 
 elif characterSelect == "2":
 
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Nate's battle axe", "melee/ranged",  38, 5, 2, ["you swing at %s dealing %s damage", "you throw your battle axe at %s dealing %s damage"]],
+        weapons["Nate's Battle Axe"],
         ["apple", "heal", 40, ],
         ]
 
-    player = character(" barbarian", 120, (0.9, 0.8, 1), barbarianLoadout)
+    player = character(" barbarian", 120, [0.9, 0.8, 1], barbarianLoadout)
 
 elif characterSelect == "3":
 
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["Bens bow", "ranged",  30, 10, 2.5, ["", "you fire arrows at %s dealing %s damage"]],
+        weapons["Ben's Bow"],
         ["apple", "heal", 40, ],
         ]
 
-    player = character("n archer", 80, (1.2, 0.7, 1), archerLoadout)
+    player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)
     
 elif characterSelect == "4":
 
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        ["fire bolt spell", "magic",  35, 12, 2.2, ["", "", "fire bolts are blasted towards %s dealing %s damage"]],
+        weapons["Fire Bolt Spell"],
         ["spotty apple", "heal", 40, ],
         ]
 
-    player = character(" mage", 60, (1, 1, 0.8), mageLoadout)
+    player = character(" mage", 60, [1, 1, 0.8], mageLoadout)
 
 elif characterSelect == "golly golly gosh":
 
     devLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
-        deviousBlade,
+        weapons["Dev-10s Blade"],
         ["dev's apple", "heal", 500, ],
         ]
 
-    player = character(" Dev", 500, (0.5, 0.5, 0.5), devLoadout)
+    player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
 
 sleep(2)
 clear()
@@ -600,7 +584,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
 
 
 opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
-fight("your grandmother", ("your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"), ("melee",), ("melee", "ranged"), ("ranged",))
+fight("your grandmother", ["your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"], ["melee"], ["melee", "ranged"], ["ranged"])
 
 clear()
 print("level 2\na vicious dog")
@@ -611,4 +595,4 @@ sleep(2)
 
 
 opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
-fight("a vicious dog", ("the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"), ("melee",), ("melee", "ranged"), ("magic",))
+fight("a vicious dog", ["the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"], ["melee"], ["melee", "ranged"], ["magic"])

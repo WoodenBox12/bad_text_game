@@ -1,28 +1,154 @@
-{
-  "Rio's Heel": [
-    "Rio's High Heel",
-    "melee/ranged",
-    50,
-    5,
-    2,
-    [ "you attempt to cave in %s's skull dealing %s damage", "you throw Rio's high heel into %s's forehead dealing %s damage" ]
-  ],
+[
+  {
+    // starter weapons
 
-  "Caveman Club": [
-    "caveman club",
-    "melee",
-    40,
-    10,
-    3,
-    [ "you attempt to cave in %s's skull dealing %s damage" ]
-  ],
+    "Rio's Heel": [
+      "Rio's High Heel",
+      "melee/ranged",
+      50,
+      5,
+      2,
+      [ "you attempt to cave in %s's skull dealing %s damage", "you throw Rio's high heel into %s's forehead dealing %s damage" ]
+    ],
 
-  "Matt's Short Barrel": [
-    "Matt's Short Barreler",
-    "ranged",
-    44,
-    4,
-    4,
-    [ "", "you shoot %s dealing %s damage" ]
-  ]
-}
+    "Caveman Club": [
+      "caveman club",
+      "melee",
+      40,
+      10,
+      3,
+      [ "you attempt to cave in %s's skull dealing %s damage" ]
+    ],
+
+    "Matt's Short Barrel": [
+      "Matt's Short Barreler",
+      "ranged",
+      44,
+      4,
+      4,
+      [ "", "you shoot %s dealing %s damage" ]
+    ],
+
+    "Jacks's Rifle": [
+      "Jack's Rifle",
+      "melee/ranged",
+      100,
+      50,
+      -10,
+      [ "you stabbed %s with your bayonet dealing %s damage", "you shoot %s dealing %s damage" ]
+    ],
+
+    "Olly's Cube": [
+      "Olly's GAN",
+      "melee/magic",
+      60,
+      15,
+      3,
+      [ "you whack %s's head dealing %s damage", "", "nobody knows how but somehow %s took %s damage" ]
+    ],
+
+    "Liam's Fry": [
+      "Liams Frying Pan",
+      "melee",
+      40,
+      5,
+      3,
+      [ "you whack %s's head dealing %s damage" ]
+    ],
+
+    "Elliott's Calculator": [
+      "Elliott's Calculator",
+      "magic",
+      50,
+      10,
+      2,
+      [ "", "", "the fact that 5 x 4 = 4 made %s take %s damage" ]
+    ],
+
+    "The Orb": [
+      "Rishabh's Orb",
+      "magic",
+      75,
+      60,
+      1.2
+    ],
+
+    // starting classes weapons
+
+    "Biff's Sword": [
+      "Biff's Sword",
+      "melee",
+      22,
+      5,
+      2,
+      [ "you swing at %s dealing %s damage" ]
+    ],
+
+    "Nate's Battle Axe": [
+      "Nate's Battle Axe",
+      "melee/ranged",
+      38,
+      5,
+      2,
+      [ "you swing at %s dealing %s damage", "you throw your battle axe at %s dealing %s damage" ]
+    ],
+
+    "Ben's Bow": [
+      "Bens Bow",
+      "ranged",
+      30,
+      10,
+      2.5,
+      [ "", "you fire arrows at %s dealing %s damage" ]
+    ],
+
+    "Fire Bolt Spell": [
+      "Fire Bolt Spell",
+      "magic",
+      35,
+      12,
+      2.2,
+      [ "", "", "fire bolts are blasted towards %s dealing %s damage" ]
+    ],
+
+    "Dev-10s Blade": [
+      "Dev-10us Blade",
+      "melee/ranged/magic",
+      420,
+      50,
+      50,
+      [ "you slice %s's head in half with the Dev-10us Blade dealing %s damage", "you throw the Dev-10us Blade at %s's Skull causing it to break like an egg dealing %s damage", "the Dev-10us Blade summoned a mystical creature to attack %s, they dealt %s damage" ]
+    ],
+
+
+    // mid game weapons
+
+    "Jimmy's Stick": [
+      "Jimmy's Stick",
+      "melee/ranged",
+      250,
+      50,
+      3
+    ]
+  },
+
+  {
+    "Apple": [
+      "Apple",
+      "heal",
+      40
+    ],
+
+    "Spotty Apple": [
+      "Spotty Apple",
+      "heal",
+      40
+    ],
+
+    "Dev Apple": [
+      "dev's apple",
+      "heal",
+      500
+    ]
+  }
+]
