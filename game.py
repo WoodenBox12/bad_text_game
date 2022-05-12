@@ -8,11 +8,9 @@ from files import *
 
 # todo # the big error was my spelling ramged
 
-# make args for fighting (easy - medium)
-# make enemys drop items usinng function args (easy - medium) sometimes
 # make enemy move closer sometimes
 # custom crit messages
-# make overhealed with decay possible
+# make overhealed with decay possible   if magical 
 # enemy crit chance
 # end credits contain elliott and ben
 
@@ -20,8 +18,6 @@ itemsPath = path.abspath("items.json")
 
 weapons = readjs(itemsPath)[0]
 heals = readjs(itemsPath)[1]
-
-
 
 
 def clear():
@@ -210,7 +206,43 @@ class enemys:
 
     distance = None
 
-    def enemyAttack(self,enemyName, attackMsg, distance0, distance1, distance2):
+    def itemDrop(self, drops, numOfDrops):
+
+        totalWeight = 0
+        items = []
+        weightPos = []
+        currentPos = 0
+        drop = []
+        nextItem = False
+
+        for i in range(len(drops)):
+
+            totalWeight += drops[i][1]
+
+            items.append(drops[i][0])
+            weightPos.append(drops[i][1])
+
+        for i in range(numOfDrops):
+
+            selector = randint(1, totalWeight)
+
+            for j in range(len(weightPos)):
+
+                currentPos += weightPos[j]
+
+                if selector < currentPos:
+
+                    drop.append(items[j])
+                    nextItem = True
+                    break
+
+            if nextItem:
+
+                break
+
+        return drop
+
+    def enemyAttack(self, attackMsg, distance0, distance1, distance2):
 
         if self.distance == 0:
 
@@ -231,12 +263,9 @@ class enemys:
                 playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
                 print(attackMsg[2] %(playerDamage))
 
-
         if self.distance == 1:
 
             midAttack = choice(distance1)   # returns random from the list
-            
-            print(midAttack)
 
             if midAttack == "melee":
 
@@ -252,7 +281,6 @@ class enemys:
 
                 playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
                 print(attackMsg[2] %(playerDamage))
-
 
         if self.distance == 2:
 
@@ -335,7 +363,7 @@ if characterSelect == "1":
     knightLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         weapons["Biff's Sword"],
-        ["apple", "heal", 40, ],
+        heals["Apple"],
         ]
 
     player = character(" knight", 150, [0.7, 1.1, 1], knightLoadout)
@@ -345,7 +373,7 @@ elif characterSelect == "2":
     barbarianLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         weapons["Nate's Battle Axe"],
-        ["apple", "heal", 40, ],
+        heals["Apple"],
         ]
 
     player = character(" barbarian", 120, [0.9, 0.8, 1], barbarianLoadout)
@@ -355,7 +383,7 @@ elif characterSelect == "3":
     archerLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         weapons["Ben's Bow"],
-        ["apple", "heal", 40, ],
+        heals["Apple"],
         ]
 
     player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)
@@ -365,7 +393,7 @@ elif characterSelect == "4":
     mageLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         weapons["Fire Bolt Spell"],
-        ["spotty apple", "heal", 40, ],
+        heals["Spotty Apple"],
         ]
 
     player = character(" mage", 60, [1, 1, 0.8], mageLoadout)
@@ -375,7 +403,7 @@ elif characterSelect == "golly golly gosh":
     devLoadout = [
         # name, item type, d/heal, crit%, crit multiplier
         weapons["Dev-10s Blade"],
-        ["dev's apple", "heal", 500, ],
+        heals["Dev's Apple"],
         ]
 
     player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
@@ -399,7 +427,11 @@ clear()
 print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 sleep(2)
 
-def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
+enemyNum = 0
+def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possibleLoot, lootAmount):
+
+    global enemyNum 
+    enemyNum += 1
 
     while True:
 
@@ -567,6 +599,14 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
 
             player.heal(-opponent.currentHealth)
 
+            newItems = opponent.itemDrop(possibleLoot, lootAmount)
+
+            for i in range(len(newItems)):
+
+                player.inventory.append(newItems[i])
+                print(f"you found {newItems[i]} on the floor next to {enemyName}'s carcus so you pick it up")
+                sleep(1)
+
             print(f"you defeated {enemyName} and gained {-opponent.currentHealth} health")
             sleep(2)
             return
@@ -575,16 +615,18 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
 
         else:
 
-            opponent.enemyAttack(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks)
+            opponent.enemyAttack( enemyAttackMsg, closeAttacks, midAttacks, farAttacks)
 
         if player.currentHealth <= 0:
 
-            print(f"\n\nsoo close buddy enemy {1} was only on {opponent.currentHealth} health")
+            print(f"\n\nsoo close buddy enemy {enemyNum} was only on {opponent.currentHealth} health")
             exit()
 
 
 opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
-fight("your grandmother", ["your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"], ["melee"], ["melee", "ranged"], ["ranged"])
+fight("your grandmother", ["your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"],
+    ["melee"], ["melee", "ranged"], ["ranged"],
+    [[weapons["Liam's Fry"], 2], [weapons["Elliott's Calculator"], 1], [weapons["Rolling Pin"], 10], [heals["Stale Cookie"], 10]], 1)
 
 clear()
 print("level 2\na vicious dog")
@@ -595,4 +637,6 @@ sleep(2)
 
 
 opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
-fight("a vicious dog", ["the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"], ["melee"], ["melee", "ranged"], ["magic"])
+fight("a vicious dog", ["the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"],
+     ["melee"], ["melee", "ranged"], ["magic"],
+     "loot to be added", 2)

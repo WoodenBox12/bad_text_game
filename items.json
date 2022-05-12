@@ -1,6 +1,12 @@
 [
   {
-    // starter weapons
+    "Rolling Pin": [
+      "Rolling Pin",
+      "melee",
+      30,
+      8,
+      2
+    ],
 
     "Rio's Heel": [
       "Rio's High Heel",
@@ -73,7 +79,7 @@
       1.2
     ],
 
-    // starting classes weapons
+
 
     "Biff's Sword": [
       "Biff's Sword",
@@ -87,7 +93,7 @@
     "Nate's Battle Axe": [
       "Nate's Battle Axe",
       "melee/ranged",
-      38,
+      28,
       5,
       2,
       [ "you swing at %s dealing %s damage", "you throw your battle axe at %s dealing %s damage" ]
@@ -121,7 +127,7 @@
     ],
 
 
-    // mid game weapons
+
 
     "Jimmy's Stick": [
       "Jimmy's Stick",
@@ -133,6 +139,12 @@
   },
 
   {
+    "Stale Cookie": [
+      "Stale Cookie",
+      "heal",
+      50
+    ],
+
     "Apple": [
       "Apple",
       "heal",
