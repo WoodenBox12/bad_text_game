@@ -1,0 +1,28 @@
+{
+  "Rio's Heel": [
+    "Rio's High Heel",
+    "melee/ranged",
+    50,
+    5,
+    2,
+    [ "you attempt to cave in %s's skull dealing %s damage", "you throw Rio's high heel into %s's forehead dealing %s damage" ]
+  ],
+
+  "Caveman Club": [
+    "caveman club",
+    "melee",
+    40,
+    10,
+    3,
+    [ "you attempt to cave in %s's skull dealing %s damage" ]
+  ],
+
+  "Matt's Short Barrel": [
+    "Matt's Short Barreler",
+    "ranged",
+    44,
+    4,
+    4,
+    [ "", "you shoot %s dealing %s damage" ]
+  ]
+}

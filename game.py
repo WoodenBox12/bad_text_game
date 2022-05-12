@@ -1,7 +1,8 @@
-from random import randint
+from random import choice,randint
 from os import system, name
 from time import sleep
 from sys import exit
+from files import *
 
 #game made by woodenbox12   v1.3
 
@@ -37,7 +38,7 @@ jimmyStick = ["Jimmy's Stick", "melee/ranged", 250, 50, 3]
 
 rishabhsorb = ["Rishabh's Orb", "magic", 75, 60, 1.2]
 
-deviousBlade = ["Devious Blade", "melee/ranged/magic", 420, 50, 50, ["you slice %s's head in half with the Devious Blade dealing %s damage", "you throw the Devious Blade at %s's Skull causing it to break like an egg dealing %s damage", "the Devious Blade summoned a mystical creature to attack %s, they dealt %s damage"]] # cheats only
+deviousBlade = ["Dev-10us Blade", "melee/ranged/magic", 420, 50, 50, ["you slice %s's head in half with the Dev-10us Blade dealing %s damage", "you throw the Dev-10us Blade at %s's Skull causing it to break like an egg dealing %s damage", "the Dev-10us Blade summoned a mystical creature to attack %s, they dealt %s damage"]] # cheats only
 
 dan = ["Dan's Weapon", "ranged", 0, 0, 0]
 
@@ -231,7 +232,7 @@ class enemys:
 
         if self.distance == 0:
 
-            closeAttack = distance0[randint(0,len(distance0)-1)]   # returns random from the list
+            closeAttack = choice(distance0)   # returns random from the list
             
             if closeAttack == "melee":
 
@@ -251,7 +252,7 @@ class enemys:
 
         if self.distance == 1:
 
-            midAttack = distance1[randint(0,len(distance1)-1)]   # returns random from the list
+            midAttack = choice(distance1)   # returns random from the list
             
             print(midAttack)
 
@@ -273,7 +274,7 @@ class enemys:
 
         if self.distance == 2:
 
-            farAttack = distance2[randint(0,len(distance2)-1)]   # returns random from the list
+            farAttack = choice(distance2)   # returns random from the list
             
             if farAttack == "melee":
 
@@ -290,31 +291,6 @@ class enemys:
                 playerDamage = round(self.magicDamage * (randint(8, 12) / 10) * player.magicDefence)
                 print(attackMsg[2] %(playerDamage))
 
-        """
-        if self.distance == 0:
-        
-            playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
-            print(melee %(playerDamage))
-
-        elif self.distance == 1:
-
-            z = randint(0,1)
-
-            if z == 0:
-
-                playerDamage = round(self.meleeDamage * (randint(8, 12) / 10) * player.meleeDefence)
-                print(attackMsg[0] %playerDamage)
-
-            else:
-
-                playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
-                print(attackMsg[1] %playerDamage)
-
-        elif self.distance == 2:
-        
-            playerDamage = round(self.rangedDamage * (randint(8, 12) / 10) * player.rangedDefence)
-            print(attackMsg[1] %playerDamage)
-        """
         player.currentHealth -= playerDamage
         sleep(2)
 
@@ -430,7 +406,6 @@ clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")
 
-opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
 sleep(2)
 
 print("YOUR GRANDMOTHER")
@@ -450,122 +425,50 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
 
         choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
-        if choice.lower() == "t" or choice.lower() == "toward":
+        match choice.lower():
+
+            case "t" | "toward":
         
-            if opponent.distance == 0:
-
-                print("cannot move any closer")
-                sleep(2)
-
-            else:
-
-                opponent.distance -= 1
-                
-        elif choice.lower() == "a" or choice.lower() == "away":
-        
-            if opponent.distance == 2:
-
-                print("you attempt to run away but a mysterious force is preventing you")
-                sleep(2)
-
-            else:
-
-                opponent.distance += 1
-
-        elif choice.lower() == "i":
-    
-            player.Inventory()
-            continue
-   
-        elif choice.lower() == "melee":
-
-            if "melee" in player.mainWeapon[1]:
-
-                if opponent.distance == 2:
-
-                    print("too far away")
-                    sleep(2)
-
-                else:
-
-                    damage = player.mainWeapon[2]
-                    crit = False
-
-                    if opponent.distance == 1:
-
-                        damage = round(damage * (randint(8, 12) / 10))
-
-                    if randint(1,100) <= player.mainWeapon[3]:
-
-                        damage *= round(player.mainWeapon[4])
-                        crit = True
-
-                    print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
-
-                    if crit:
-                        print("Critical hit!")
-
-                    else:
-                        print("\n")
-
-                    opponent.currentHealth -= damage
-                    sleep(2)
-
-            else:
-                print("melee weapon not selected")
-                sleep(1)
-                continue
-
-        elif choice.lower() == "ranged":
-
-            if "ranged" in player.mainWeapon[1]:
-
                 if opponent.distance == 0:
 
-                    print("too close")
-                    sleep(1)
+                    print("cannot move any closer")
+                    sleep(2)
 
                 else:
 
-                    damage = player.mainWeapon[2]
-                    crit = False
+                    opponent.distance -= 1
+                
+            case "a" | "away":
+        
+                if opponent.distance == 2:
+
+                    print("you attempt to run away but a mysterious force is preventing you")
+                    sleep(2)
+
+                else:
+
+                    opponent.distance += 1
+
+            case "i":
+    
+                player.Inventory()
+                continue
+   
+            case "me" | "melee":
+
+                if "melee" in player.mainWeapon[1]:
 
                     if opponent.distance == 2:
 
-                        damage = round(damage * (randint(8, 12) / 10))
-
-                    if randint(1,100) <= player.mainWeapon[3]:
-
-                        damage *= round(player.mainWeapon[4])
-                        crit = True
-
-                    print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
-
-                    if crit:
-                        print("Critical hit!")
+                        print("too far away")
+                        sleep(2)
 
                     else:
-                        print("\n")
-
-                    opponent.currentHealth -= damage
-                    sleep(1)
-
-            else:
-
-                print("ranged weapon not selected")
-                sleep(2)
-                continue
-
-        elif choice.lower() == "magic":
-
-            if player.Type == " mage":
-
-                if "magic" in player.mainWeapon[1]:
 
                         damage = player.mainWeapon[2]
                         crit = False
 
-                        if opponent.distance == 0 or opponent.distance == 2:
+                        if opponent.distance == 1:
 
                             damage = round(damage * (randint(8, 12) / 10))
 
@@ -586,19 +489,93 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
                         sleep(2)
 
                 else:
-
-                    print("magic weapon not selected")
+                    print("melee weapon not selected")
                     sleep(1)
                     continue
 
-            else:
+            case "ra" | "ranged":
 
-                print("you have no magical powers")
-                sleep(1)
+                if "ranged" in player.mainWeapon[1]:
+
+                    if opponent.distance == 0:
+
+                        print("too close")
+                        sleep(1)
+
+                    else:
+
+                        damage = player.mainWeapon[2]
+                        crit = False
+
+                        if opponent.distance == 2:
+
+                            damage = round(damage * (randint(8, 12) / 10))
+
+                        if randint(1,100) <= player.mainWeapon[3]:
+
+                            damage *= round(player.mainWeapon[4])
+                            crit = True
+
+                        print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
+
+                        if crit:
+                            print("Critical hit!")
+
+                        else:
+                            print("\n")
+
+                        opponent.currentHealth -= damage
+                        sleep(1)
+
+                else:
+
+                    print("ranged weapon not selected")
+                    sleep(2)
+                    continue
+
+            case "ma" | "magic":
+
+                if player.Type == " mage":
+
+                    if "magic" in player.mainWeapon[1]:
+
+                            damage = player.mainWeapon[2]
+                            crit = False
+
+                            if opponent.distance == 0 or opponent.distance == 2:
+
+                                damage = round(damage * (randint(8, 12) / 10))
+
+                            if randint(1,100) <= player.mainWeapon[3]:
+
+                                damage *= round(player.mainWeapon[4])
+                                crit = True
+
+                            print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
+
+                            if crit:
+                                print("Critical hit!")
+
+                            else:
+                                print("\n")
+
+                            opponent.currentHealth -= damage
+                            sleep(2)
+
+                    else:
+
+                        print("magic weapon not selected")
+                        sleep(1)
+                        continue
+
+                else:
+
+                    print("you have no magical powers")
+                    sleep(1)
+                    continue
+
+            case _:
                 continue
-
-        else:
-            continue
 
         # logic to see if enemy dies
 
@@ -621,6 +598,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks):
             print(f"\n\nsoo close buddy enemy {1} was only on {opponent.currentHealth} health")
             exit()
 
+
+opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
 fight("your grandmother", ("your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"), ("melee",), ("melee", "ranged"), ("ranged",))
 
 clear()
