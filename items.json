@@ -1,5 +1,13 @@
 [
   {
+    "Dog Spit": [
+      "Dog Spit",
+      "ranged",
+      40,
+      10,
+      2
+    ],
+
     "Rolling Pin": [
       "Rolling Pin",
       "melee",

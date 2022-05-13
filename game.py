@@ -358,55 +358,57 @@ clear()
 
 characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>>")
 
-if characterSelect == "1":
+match characterSelect.lower():
 
-    knightLoadout = [
-        # name, item type, d/heal, crit%, crit multiplier
-        weapons["Biff's Sword"],
-        heals["Apple"],
-        ]
+    case "1":
 
-    player = character(" knight", 150, [0.7, 1.1, 1], knightLoadout)
+        knightLoadout = [
+            # name, item type, d/heal, crit%, crit multiplier
+            weapons["Biff's Sword"],
+            heals["Apple"],
+            ]
 
-elif characterSelect == "2":
+        player = character(" knight", 150, [0.7, 1.1, 1], knightLoadout)
 
-    barbarianLoadout = [
-        # name, item type, d/heal, crit%, crit multiplier
-        weapons["Nate's Battle Axe"],
-        heals["Apple"],
-        ]
+    case "2":
 
-    player = character(" barbarian", 120, [0.9, 0.8, 1], barbarianLoadout)
+        barbarianLoadout = [
+            # name, item type, d/heal, crit%, crit multiplier
+            weapons["Nate's Battle Axe"],
+            heals["Apple"],
+            ]
 
-elif characterSelect == "3":
+        player = character(" barbarian", 120, [0.9, 0.8, 1], barbarianLoadout)
 
-    archerLoadout = [
-        # name, item type, d/heal, crit%, crit multiplier
-        weapons["Ben's Bow"],
-        heals["Apple"],
-        ]
+    case "3":
 
-    player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)
+        archerLoadout = [
+            # name, item type, d/heal, crit%, crit multiplier
+            weapons["Ben's Bow"],
+            heals["Apple"],
+            ]
+
+        player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)
     
-elif characterSelect == "4":
+    case "4":
 
-    mageLoadout = [
-        # name, item type, d/heal, crit%, crit multiplier
-        weapons["Fire Bolt Spell"],
-        heals["Spotty Apple"],
-        ]
+        mageLoadout = [
+            # name, item type, d/heal, crit%, crit multiplier
+            weapons["Fire Bolt Spell"],
+            heals["Spotty Apple"],
+            ]
 
-    player = character(" mage", 60, [1, 1, 0.8], mageLoadout)
+        player = character(" mage", 60, [1, 1, 0.8], mageLoadout)
 
-elif characterSelect == "golly golly gosh":
+    case "golly golly gosh":
 
-    devLoadout = [
-        # name, item type, d/heal, crit%, crit multiplier
-        weapons["Dev-10s Blade"],
-        heals["Dev's Apple"],
-        ]
+        devLoadout = [
+            # name, item type, d/heal, crit%, crit multiplier
+            weapons["Dev-10s Blade"],
+            heals["Dev's Apple"],
+            ]
 
-    player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
+        player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
 
 sleep(2)
 clear()
@@ -422,7 +424,7 @@ sleep(2)
 
 print("YOUR GRANDMOTHER")
 
-sleep(1)
+sleep(1.5)
 clear()
 print('       ___ \n      (___) \n     /`   `\ \n    /  /"\  \ \n    \_/o o\_/ \n     (  _  ) \n      `\ /` \n     /\\\V//\ \n    / /_ _\ \ \n    \ \___/ / \n     \/===\/ \n     ||   || \n     ||   || \n     ||___|| \n     |_____| \n       ||| \n      / Y \ \n      `"`"`')
 sleep(2)
@@ -436,8 +438,6 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
     while True:
 
         clear()
-
-        print("log")
 
         choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
@@ -532,7 +532,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                             damage *= round(player.mainWeapon[4])
                             crit = True
 
-                        print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
+                        print(player.mainWeapon[5][1] %(enemyName, damage), end="    ")
 
                         if crit:
                             print("Critical hit!")
@@ -567,7 +567,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                                 damage *= round(player.mainWeapon[4])
                                 crit = True
 
-                            print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
+                            print(player.mainWeapon[5][2] %(enemyName, damage), end="    ")
 
                             if crit:
                                 print("Critical hit!")
@@ -604,8 +604,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
             for i in range(len(newItems)):
 
                 player.inventory.append(newItems[i])
-                print(f"you found {newItems[i]} on the floor next to {enemyName}'s carcus so you pick it up")
-                sleep(1)
+                print(f"you found {newItems[i][0]} on the floor next to {enemyName}'s carcus so you pick it up")
+                sleep(2)
 
             print(f"you defeated {enemyName} and gained {-opponent.currentHealth} health")
             sleep(2)
@@ -636,7 +636,7 @@ sleep(2)
 
 
 
-opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
+opponent = enemys(115, (35, 10, 100), (1, 1, 1), 2)
 fight("a vicious dog", ["the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"],
      ["melee"], ["melee", "ranged"], ["magic"],
-     "loot to be added", 2)
+     [[weapons["Dog Spit"], 4], [heals["Apple"], 10]], 2)
