@@ -83,9 +83,6 @@ class character:
     maxHealth = None
     currentHealth = None
 
-    meleeDefence = None
-    rangedDefence = None
-    magicDefence = None
 
     def heal(self, healAmount, pop=False , i=None, display=False):
 
@@ -185,7 +182,7 @@ class character:
 
         self.mainWeapon = self.inventory[0]
 
-        self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
+        self.defence = {"melee":defence[0], "ranged":defence[1], "magic":defence[2]}
 
         self.currentHealth = self.maxHealth = dificultyModifier(health, dificulty, False)
 
@@ -196,22 +193,25 @@ class enemys:
     maxHealth = None
     currentHealth = None
 
-    meleeDefence = None
-    rangedDefence = None
-    magicDefence = None
-
     distance = None
 
     def calculateScore(self, attacks):
 
         score = self.maxHealth / 10
+        totalAverage = 0
         averageAttack = 0
+        total = 0
 
         for i in range(len(attacks)):
 
             for j in range(len(attacks[i])):
 
+                total += 1
                 averageAttack += self.attackDamage[attacks[i][j]]
+
+            totalAverage += averageAttack / total
+
+        score += (totalAverage / 3) * 0.8
 
     def itemDrop(self, drops, numOfDrops):
 
@@ -251,26 +251,28 @@ class enemys:
 
     def enemyAttack(self, attackMsg, distance0, distance1, distance2):
 
-        if self.distance == 0:
+        match self.distance:
 
-            closeAttack = choice(distance0)   # returns random from the list
+            case 0:
+
+                closeAttack = choice(distance0)   # returns random from the list
             
-            playerDamage = round(self.attackDamage[closeAttack] * (randint(8, 12) / 10) * player.meleeDefence)
-            print(attackMsg[0] %(playerDamage))
+                playerDamage = round(self.attackDamage[closeAttack] * (randint(8, 12) / 10) * player.defence[closeAttack])
+                print(attackMsg[closeAttack] %(playerDamage))
 
-        if self.distance == 1:
+            case 1:
 
-            midAttack = choice(distance1)   # returns random from the list
+                midAttack = choice(distance1)   # returns random from the list
             
-            playerDamage = round(self.attackDamage[midAttack] * (randint(8, 12) / 10) * player.meleeDefence)
-            print(attackMsg[0] %(playerDamage))
+                playerDamage = round(self.attackDamage[midAttack] * (randint(8, 12) / 10) * player.defence[midAttack])
+                print(attackMsg[midAttack] %(playerDamage))
 
-        if self.distance == 2:
+            case 2:
 
-            farAttack = choice(distance2)   # returns random from the list
+                farAttack = choice(distance2)   # returns random from the list
             
-            playerDamage = round(self.attackDamage[farAttack] * (randint(8, 12) / 10) * player.meleeDefence)
-            print(attackMsg[0] %(playerDamage))
+                playerDamage = round(self.attackDamage[farAttack] * (randint(8, 12) / 10) * player.defence[farAttack])
+                print(attackMsg[farAttack] %(playerDamage))
 
         player.currentHealth -= playerDamage
         sleep(2)
@@ -293,7 +295,7 @@ class enemys:
 
         self.attackDamage = {"melee":damage[0],"ranged":damage[1],"magic":damage[2]}
 
-        self.meleeDefence, self.rangedDefence, self.magicDefence = defence[0], defence[1], defence[2]
+        self.defence = {"melee":defence[0], "ranged":defence[1], "magic":defence[2]}
 
 # dificulty select
 
@@ -410,6 +412,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
         clear()
 
+        print(f"Level {enemyNum}\n{enemyName}")
+
         choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
         match choice.lower():
@@ -452,7 +456,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     else:
 
-                        damage = player.mainWeapon[2]
+                        damage = round(player.mainWeapon[2]* opponent.defence["melee"])
                         crit = False
 
                         if opponent.distance == 1:
@@ -491,7 +495,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     else:
 
-                        damage = player.mainWeapon[2]
+                        damage = round(player.mainWeapon[2]* opponent.defence["ranged"])
                         crit = False
 
                         if opponent.distance == 2:
@@ -526,7 +530,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     if "magic" in player.mainWeapon[1]:
 
-                            damage = player.mainWeapon[2]
+                            damage = round(player.mainWeapon[2]* opponent.defence["melee"])
                             crit = False
 
                             if opponent.distance == 0 or opponent.distance == 2:
@@ -596,8 +600,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
             exit()
 
 
-opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
-fight("your grandmother", ["your grandmother batters you with a rolling pin dealing %s damage", "your grandmother throws cookies at you dealing %s damage", "your grandmother attacks you with her elderly wisdom dealing %s damage"],
+opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 1)
+fight("your grandmother", {"melee":"your grandmother batters you with a rolling pin dealing %s damage", "ranged":"your grandmother throws cookies at you dealing %s damage", "magic":"your grandmother attacks you with her elderly wisdom dealing %s damage"},
     ["melee"], ["melee", "ranged"], ["ranged"],
     [[weapons["Liam's Fry"], 2], [weapons["Elliott's Calculator"], 1], [weapons["Rolling Pin"], 10], [heals["Stale Cookie"], 10]], 1)
 
@@ -610,12 +614,12 @@ sleep(2)
 
 
 opponent = enemys(115, (35, 10, 100), (1, 1, 1), 2)
-fight("a vicious dog", ["the vicious dog swipes at you with its paw dealing %s damage", "the vicious dog violently spits at you dealing %s damage", "the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"],
+fight("a vicious dog", {"melee":"the vicious dog swipes at you with its paw dealing %s damage", "ranged":"the vicious dog violently spits at you dealing %s damage", "magic":"the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"},
      ["melee"], ["melee", "ranged"], ["magic"],
      [[weapons["Dog Spit"], 4], [heals["Apple"], 10]], 2)
 
 
-opponent = enemys(115, (10, 15, 30), (1, 1, 1), 2)
-fight("a magician", ["the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "the magician violently throws a rabbit at you at you dealing %s damage", "the magician flicked his wand dealing %s damage"],
+opponent = enemys(125, (10, 15, 30), (1, 1, 1), 2)
+fight("a magician", {"melee":"the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "ranged":"the magician violently throws a rabbit at you at you dealing %s damage", "magic":"the magician flicked his wand dealing %s damage"},
      ["melee"], ["ranged", "magic"], ["magic"],
      [[weapons["Wand"], 3], [heals["Apple"], 10]], 2)
