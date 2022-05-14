@@ -1,5 +1,13 @@
 [
   {
+    "Wand": [
+      "Magicians Wand",
+      "magic",
+      55,
+      10,
+      3
+    ],
+
     "Dog Spit": [
       "Dog Spit",
       "ranged",
