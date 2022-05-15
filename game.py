@@ -168,7 +168,7 @@ class character:
 
                 name = removeChars(self.inventory[i][0].lower(), "' ")
 
-                if choice == name:
+                if choice == name & name[i][1] == "heal":
                     
                     self.heal(self.inventory[i][2], True, i, True)
                     sleep(2)
@@ -240,12 +240,12 @@ class enemys:
                 if selector < currentPos:
 
                     drop.append(items[j])
-                    nextItem = True
+                    #nextItem = True
                     break
 
-            if nextItem:
+            #if nextItem:
 
-                break
+                #break
 
         return drop
 
@@ -576,6 +576,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
             newItems = opponent.itemDrop(possibleLoot, lootAmount)
 
+            print(newItems)
+
             for i in range(len(newItems)):
 
                 player.inventory.append(newItems[i])
@@ -600,7 +602,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
             exit()
 
 
-opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 1)
+opponent = enemys(100, (20, 15, 0), (1, 1, 1.5), 0)
 fight("your grandmother", {"melee":"your grandmother batters you with a rolling pin dealing %s damage", "ranged":"your grandmother throws cookies at you dealing %s damage", "magic":"your grandmother attacks you with her elderly wisdom dealing %s damage"},
     ["melee"], ["melee", "ranged"], ["ranged"],
     [[weapons["Liam's Fry"], 2], [weapons["Elliott's Calculator"], 1], [weapons["Rolling Pin"], 10], [heals["Stale Cookie"], 10]], 1)
@@ -613,9 +615,9 @@ sleep(2)
 
 
 
-opponent = enemys(115, (35, 10, 100), (1, 1, 1), 2)
+opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
 fight("a vicious dog", {"melee":"the vicious dog swipes at you with its paw dealing %s damage", "ranged":"the vicious dog violently spits at you dealing %s damage", "magic":"the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"},
-     ["melee"], ["melee", "ranged"], ["magic"],
+     ["melee"], ["ranged"], ["magic"],
      [[weapons["Dog Spit"], 4], [heals["Apple"], 10]], 2)
 
 
