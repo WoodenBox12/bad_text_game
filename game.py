@@ -4,13 +4,9 @@ from time import sleep
 from sys import exit
 from files import *
 
-#game made by woodenbox12   v1.3
+#game made by woodenbox12   v1.4
 
 # todo 
-# # the big error was my spelling ramged
-
-
-# fix healing to only use heals not weapons
 
 # make enemy move closer sometimes
 # custom crit messages
@@ -178,9 +174,11 @@ class character:
 
                 if choice == name:
                     
-                    self.heal(self.inventory[i][2], True, i, True)
-                    sleep(2)
-                    break
+                    if "heal" in self.inventory[i][1]:
+
+                        self.heal(self.inventory[i][2], True, i, True)
+                        sleep(2)
+                        break
 
         elif "golly" in choice:
 
@@ -435,7 +433,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
     global enemyNum 
     enemyNum += 1
 
-    while True:
+    while enemyNum <= 10:
 
         clear()
 

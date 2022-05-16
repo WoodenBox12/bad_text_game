@@ -5,7 +5,8 @@
       "magic",
       55,
       10,
-      3
+      3,
+      ["","","you wave your wand at %s dealing %s damage"]
     ],
 
     "Dog Spit": [
@@ -13,7 +14,8 @@
       "ranged",
       40,
       10,
-      2
+      2,
+      ["","you spit at %s dealing %s damage"]
     ],
 
     "Rolling Pin": [
@@ -21,7 +23,8 @@
       "melee",
       30,
       8,
-      2
+      2,
+      ["you batter %s with your rolling pin dealing %s damage"]
     ],
 
     "Rio's Heel": [
