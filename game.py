@@ -182,6 +182,32 @@ class character:
                     sleep(2)
                     break
 
+        elif "golly" in choice:
+
+            choice = choice[6:]
+            print("1")
+
+            if "weapon" in choice:
+
+                choice = choice[7:]
+                print("2")
+                try:
+                    player.inventory.append(weapons[choice])
+                    print("3")
+                except:
+                    print("item not found")
+                    sleep(2)
+
+            elif "heals" in choice:
+
+                choice = choice[6:]
+
+                try:
+                    player.inventory.append(heals[choice])
+                except:
+                    print("item not found")
+                    sleep(2)
+
     def __init__(self, Type, health, defence, startingItems):
 
         self.inventory = startingItems
