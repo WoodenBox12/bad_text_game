@@ -6,7 +6,11 @@ from files import *
 
 #game made by woodenbox12   v1.3
 
-# todo # the big error was my spelling ramged
+# todo 
+# # the big error was my spelling ramged
+
+
+# fix healing to only use heals not weapons
 
 # make enemy move closer sometimes
 # custom crit messages
@@ -42,37 +46,41 @@ def dificultyModifier( baseValue, dificulty, increase):
 
         if increase == True :
             
-            if dificulty == 1 :
-                return baseValue
+            match dificulty:
 
-            elif dificulty == 5 :
-                return int(round(baseValue * 1.2, 0))
+                case 1 :
+                    return baseValue
 
-            elif dificulty == 4 :
-                return int(round(baseValue * 1.15, 0))
+                case 5 :
+                    return int(round(baseValue * 1.2, 0))
 
-            elif dificulty == 3 :
-                return int(round(baseValue * 1.1, 0))
+                case 4 :
+                    return int(round(baseValue * 1.15, 0))
 
-            elif dificulty == 2 :
-                return int(round(baseValue * 1.05, 0))
+                case 3 :
+                    return int(round(baseValue * 1.1, 0))
+
+                case 2 :
+                    return int(round(baseValue * 1.05, 0))
 
         elif increase == False :
 
-            if dificulty == 1 :
-                return baseValue
+            match dificulty:
 
-            elif dificulty == 5 :
-                return int(round(baseValue * 0.6, 0))
+                case 1 :
+                    return baseValue
 
-            elif dificulty == 4 :
-                return int(round(baseValue * 0.7, 0))
+                case 5 :
+                    return int(round(baseValue * 0.6, 0))
 
-            elif dificulty == 3 :
-                return int(round(baseValue * 0.8, 0))
+                case 4 :
+                    return int(round(baseValue * 0.7, 0))
 
-            elif dificulty == 2 :
-                return int(round(baseValue * 0.9, 0))
+                case 3 :
+                    return int(round(baseValue * 0.8, 0))
+
+                case 2 :
+                    return int(round(baseValue * 0.9, 0))
 
 class character:
 
@@ -168,7 +176,7 @@ class character:
 
                 name = removeChars(self.inventory[i][0].lower(), "' ")
 
-                if choice == name & name[i][1] == "heal":
+                if choice == name:
                     
                     self.heal(self.inventory[i][2], True, i, True)
                     sleep(2)
@@ -607,21 +615,17 @@ fight("your grandmother", {"melee":"your grandmother batters you with a rolling 
     ["melee"], ["melee", "ranged"], ["ranged"],
     [[weapons["Liam's Fry"], 2], [weapons["Elliott's Calculator"], 1], [weapons["Rolling Pin"], 10], [heals["Stale Cookie"], 10]], 1)
 
-clear()
-print("level 2\na vicious dog")
-sleep(2)
-
-
-
-
-
 opponent = enemys(115, (35, 10, 100), (1, 1, 1), 1)
 fight("a vicious dog", {"melee":"the vicious dog swipes at you with its paw dealing %s damage", "ranged":"the vicious dog violently spits at you dealing %s damage", "magic":"the dog opened its third eye and blasted you with a mystical beam of pure energy dealing %s damage"},
-     ["melee"], ["ranged"], ["magic"],
+     ["melee"], ["melee","ranged"], ["magic"],
      [[weapons["Dog Spit"], 4], [heals["Apple"], 10]], 2)
-
 
 opponent = enemys(125, (10, 15, 30), (1, 1, 1), 2)
 fight("a magician", {"melee":"the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "ranged":"the magician violently throws a rabbit at you at you dealing %s damage", "magic":"the magician flicked his wand dealing %s damage"},
      ["melee"], ["ranged", "magic"], ["magic"],
      [[weapons["Wand"], 3], [heals["Apple"], 10]], 2)
+
+opponent = enemys(130, (10, 35, 0), (1, 1, 1), 2)
+fight("jack mackay", {"melee":"the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "ranged":"the magician violently throws a rabbit at you at you dealing %s damage", "magic":"the magician flicked his wand dealing %s damage"},
+     ["melee"], ["melee","ranged"], ["ranged"],
+     [[weapons["Jack's Rifle"], 3], [heals["Apple"], 10]], 2)
