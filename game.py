@@ -228,7 +228,6 @@ class enemys:
         weightPos = []
         currentPos = 0
         drop = []
-        nextItem = False
 
         for i in range(len(drops)):
 
@@ -248,12 +247,7 @@ class enemys:
                 if selector < currentPos:
 
                     drop.append(items[j])
-                    #nextItem = True
                     break
-
-            #if nextItem:
-
-                #break
 
         return drop
 
@@ -584,8 +578,6 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
             newItems = opponent.itemDrop(possibleLoot, lootAmount)
 
-            print(newItems)
-
             for i in range(len(newItems)):
 
                 player.inventory.append(newItems[i])
@@ -620,12 +612,12 @@ fight("a vicious dog", {"melee":"the vicious dog swipes at you with its paw deal
      ["melee"], ["melee","ranged"], ["magic"],
      [[weapons["Dog Spit"], 4], [heals["Apple"], 10]], 2)
 
-opponent = enemys(125, (10, 15, 30), (1, 1, 1), 2)
+opponent = enemys(125, (10, 15, 30), (1, 1, 0.8), 2)
 fight("a magician", {"melee":"the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "ranged":"the magician violently throws a rabbit at you at you dealing %s damage", "magic":"the magician flicked his wand dealing %s damage"},
      ["melee"], ["ranged", "magic"], ["magic"],
      [[weapons["Wand"], 3], [heals["Apple"], 10]], 2)
 
-opponent = enemys(130, (10, 35, 0), (1, 1, 1), 2)
-fight("jack mackay", {"melee":"the magician pulls a hammer out of his hat and hits you with it dealing %s damage", "ranged":"the magician violently throws a rabbit at you at you dealing %s damage", "magic":"the magician flicked his wand dealing %s damage"},
+opponent = enemys(130, (10, 35, 0), (0.9, 1, 1.2), 2)
+fight("jack mackay", {"melee":"jack stabbed you with his bayonet dealing %s damage", "ranged":"jack shoots you dealing %s damage", "magic":"jack confuses you wit his idiocy dealing %s damage"},
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Jack's Rifle"], 3], [heals["Apple"], 10]], 2)
