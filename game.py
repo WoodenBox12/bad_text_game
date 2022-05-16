@@ -150,9 +150,9 @@ class character:
                 print(self.inventory[i][0], end="    ")
                 print(f"health gain: {self.inventory[i][2]}")
             
-        choice = input(f"\nmain weapon is {self.mainWeapon[0]} \n+----------------------------------------------------+ \n| to change your main weapon type:    mw weapon-name | \n| to use a heal type:                  use item-name | \n+----------------------------------------------------+ \n>>").lower()
+        choice = input(f"\nmain weapon is {self.mainWeapon[0]} \n+----------------------------------------------------+ \n| to change your main weapon type:    mw weapon-name | \n| to use a heal type:                  use item-name | \n+----------------------------------------------------+ \n>>")
 
-        if "mw" in choice:
+        if "mw" in choice.lower():
 
             choice = choice[3:]
             choice = removeChars(choice, "' ")
@@ -167,7 +167,7 @@ class character:
 
             input(f"main weapon is now {self.mainWeapon[0]}")
 
-        elif "use" in choice:
+        elif "use" in choice.lower():
 
             choice = choice[4:]
             choice = removeChars(choice, "' ")
@@ -185,15 +185,14 @@ class character:
         elif "golly" in choice:
 
             choice = choice[6:]
-            print("1")
 
             if "weapon" in choice:
 
                 choice = choice[7:]
-                print("2")
                 try:
                     player.inventory.append(weapons[choice])
                     print("3")
+
                 except:
                     print("item not found")
                     sleep(2)
