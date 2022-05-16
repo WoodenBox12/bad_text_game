@@ -4,7 +4,7 @@ from time import sleep
 from sys import exit
 from files import *
 
-#game made by woodenbox12   v1.4
+#game made by woodenbox12   v1.3
 
 # todo 
 
