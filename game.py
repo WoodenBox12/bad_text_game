@@ -90,16 +90,17 @@ class character:
     Type = None
     maxHealth = None
     currentHealth = None
+
     xp = 0
+    xpReq = [1,200,250,300,350,400,450,500]
 
     def levelUp(self):
-        xpReq = [200,250,300,350,400,450,500]
         
         while True:
 
-            if self.xp >= xpReq[self.level]:
+            if self.xp >= self.xpReq[self.level]:
 
-                self.xp -= xpReq[self.level]
+                self.xp -= self.xpReq[self.level]
                 self.level += 1
 
                 self.maxHealth = round(self.maxHealth * 1.05)
@@ -107,8 +108,13 @@ class character:
                 self.damageMultiplier += 0.05
 
                 print(f"Leveled up, now on level {self.level}")
+
+                if self.level % 5 == 0:
+
+                    self.heal(500, display=True)
             
             else:
+                sleep(1)
                 break
 
 
@@ -466,7 +472,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
         print(f"Level {enemyNum}\n{enemyName}")
 
-        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | \n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
+        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | {player.xpReq[player.level]-player.xp} xp away from level {player.level + 1}\n|     /   _____   \     | heal to full health every 5 levels\n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
         match choice.lower():
 
@@ -518,7 +524,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                         if randint(1,100) <= player.mainWeapon[3]:
 
                             damage *= round(player.mainWeapon[4])
-                            player.xp += 20
+                            player.xp += 40
                             crit = True
 
                         print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
@@ -558,7 +564,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                         if randint(1,100) <= player.mainWeapon[3]:
 
                             damage *= round(player.mainWeapon[4])
-                            player.xp += 20
+                            player.xp += 40
                             crit = True
 
                         print(player.mainWeapon[5][1] %(enemyName, damage), end="    ")
@@ -594,7 +600,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                             if randint(1,100) <= player.mainWeapon[3]:
 
                                 damage *= round(player.mainWeapon[4])
-                                player.xp += 20
+                                player.xp += 40
                                 crit = True
 
                             print(player.mainWeapon[5][2] %(enemyName, damage), end="    ")
