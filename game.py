@@ -99,7 +99,7 @@ class character:
 
             if self.xp >= xpReq[self.level]:
 
-                xp -= xpReq[self.level]
+                self.xp -= xpReq[self.level]
                 self.level += 1
 
                 self.maxHealth = round(self.maxHealth * 1.05)
@@ -143,7 +143,7 @@ class character:
 
         clear()
             
-        weaponTypes = ("    damage type: ", "    damage: ", "    crit %: ", "    crit multiplier: ", "")
+        weaponTypes = ("    damage type: ", "    base damage: ", "    crit %: ", "    crit multiplier: ", "")
 
         print("items in backpack:\n")
 
