@@ -8,6 +8,8 @@ from files import *
 
 # todo 
 
+# make xp gain higher if higher dificulty
+
 # make enemy move closer sometimes
 # custom crit messages
 # make overhealed with decay possible   if magical 
@@ -82,11 +84,32 @@ class character:
 
     inventory = None
     mainWeapon = None
+    level = 1
+    damageMultiplier = 1
 
     Type = None
     maxHealth = None
     currentHealth = None
     xp = 0
+
+    def levelUp(self):
+        xpReq = [200,250,300,350,400,450,500]
+        
+        while True:
+
+            if self.xp >= xpReq[self.level]:
+
+                xp -= xpReq[self.level]
+                self.level += 1
+
+                self.maxHealth = round(self.maxHealth * 1.05)
+
+                self.damageMultiplier += 0.05
+
+                print(f"Leveled up, now on level {self.level}")
+            
+            else:
+                break
 
 
     def heal(self, healAmount, pop=False , i=None, display=False):
@@ -485,7 +508,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     else:
 
-                        damage = round(player.mainWeapon[2]* opponent.defence["melee"])
+                        damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
                         crit = False
 
                         if opponent.distance == 1:
@@ -495,15 +518,16 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                         if randint(1,100) <= player.mainWeapon[3]:
 
                             damage *= round(player.mainWeapon[4])
+                            player.xp += 20
                             crit = True
 
                         print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
 
                         if crit:
-                            print("Critical hit!")
+                            print("Critical hit!",end="\n\n")
 
                         else:
-                            print("\n")
+                            print("",end="\n\n")
 
                         opponent.currentHealth -= damage
                         sleep(2)
@@ -524,7 +548,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     else:
 
-                        damage = round(player.mainWeapon[2]* opponent.defence["ranged"])
+                        damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["ranged"])
                         crit = False
 
                         if opponent.distance == 2:
@@ -534,15 +558,16 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                         if randint(1,100) <= player.mainWeapon[3]:
 
                             damage *= round(player.mainWeapon[4])
+                            player.xp += 20
                             crit = True
 
                         print(player.mainWeapon[5][1] %(enemyName, damage), end="    ")
 
                         if crit:
-                            print("Critical hit!")
+                            print("Critical hit!",end="\n\n")
 
                         else:
-                            print("\n")
+                            print("",end="\n\n")
 
                         opponent.currentHealth -= damage
                         sleep(1)
@@ -559,7 +584,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     if "magic" in player.mainWeapon[1]:
 
-                            damage = round(player.mainWeapon[2]* opponent.defence["melee"])
+                            damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
                             crit = False
 
                             if opponent.distance == 0 or opponent.distance == 2:
@@ -569,15 +594,16 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                             if randint(1,100) <= player.mainWeapon[3]:
 
                                 damage *= round(player.mainWeapon[4])
+                                player.xp += 20
                                 crit = True
 
                             print(player.mainWeapon[5][2] %(enemyName, damage), end="    ")
 
                             if crit:
-                                print("Critical hit!")
+                                print("Critical hit!",end="\n\n")
 
                             else:
-                                print("\n")
+                                print("",end="\n\n")
 
                             opponent.currentHealth -= damage
                             sleep(2)
@@ -616,7 +642,9 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
             print(f"you defeated {enemyName} and gained {-opponent.currentHealth} health")
 
             player.xp += opponent.calculateScore([closeAttacks, midAttacks, farAttacks])
-            print(player.xp)
+            
+            player.levelUp()
+
 
             sleep(2)
             return
