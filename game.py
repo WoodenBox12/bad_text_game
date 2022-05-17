@@ -472,7 +472,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
         print(f"Level {enemyNum}\n{enemyName}")
 
-        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | {player.xpReq[player.level]-player.xp} xp away from level {player.level + 1}\n|     /   _____   \     | heal to full health every 5 levels\n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
+        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | {player.xpReq[player.level]-player.xp} xp away from level {player.level + 1}\n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
         match choice.lower():
 
@@ -516,6 +516,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                     else:
 
                         damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
+                        player.xp += 5
                         crit = False
 
                         if opponent.distance == 1:
@@ -557,6 +558,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                     else:
 
                         damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["ranged"])
+                        player.xp += 5
                         crit = False
 
                         if opponent.distance == 2:
@@ -593,6 +595,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
                     if "magic" in player.mainWeapon[1]:
 
                             damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
+                            player.xp += 5
                             crit = False
 
                             if opponent.distance == 0 or opponent.distance == 2:
@@ -651,14 +654,11 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
             player.xp += opponent.calculateScore([closeAttacks, midAttacks, farAttacks])
             
-            print(player.xp)
             player.levelUp()
 
 
             sleep(2)
-            return
-            
-            
+            return        
 
         # enemy turn
 
@@ -691,3 +691,8 @@ opponent = enemys(130, (10, 35, 0), (0.9, 1, 1.2), 2)
 fight("jack mackay", {"melee":"jack stabbed you with his bayonet dealing %s damage", "ranged":"jack shoots you dealing %s damage", "magic":"jack confuses you wit his idiocy dealing %s damage"},
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Jack's Rifle"], 3], [heals["Apple"], 10]], 2)
+
+opponent = enemys(145, (14, 40, 0), (1.1, 0.7, 1), 2)
+fight("a gifted archer", {"melee":"the archer stabbed your neck with his arrow dealing %s damage", "ranged":"the archer shoots you with his bow dealing %s damage", "magic":"the archer deals %s damage"},
+     ["melee"], ["melee","ranged"], ["ranged"],
+     [[weapons["Antique Bow"], 3], [heals["Apple"], 10]], 2)

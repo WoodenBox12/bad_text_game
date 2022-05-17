@@ -1,12 +1,21 @@
 [
   {
+    "Antique Bow": [
+      "Antique Bow",
+      "ranged",
+      45,
+      10,
+      2.5,
+      [ "", "you fire an arrow at %s dealing %s damage" ]
+    ],
+
     "Wand": [
       "Magicians Wand",
       "magic",
       55,
       10,
       3,
-      ["","","you wave your wand at %s dealing %s damage"]
+      [ "", "", "you wave your wand at %s dealing %s damage" ]
     ],
 
     "Dog Spit": [
@@ -15,7 +24,7 @@
       40,
       10,
       2,
-      ["","you spit at %s dealing %s damage"]
+      [ "", "you spit at %s dealing %s damage" ]
     ],
 
     "Rolling Pin": [
@@ -24,7 +33,7 @@
       30,
       8,
       2,
-      ["you batter %s with your rolling pin dealing %s damage"]
+      [ "you batter %s with your rolling pin dealing %s damage" ]
     ],
 
     "Rio's Heel": [
@@ -57,9 +66,9 @@
     "Jack's Rifle": [
       "Jack's Rifle",
       "melee/ranged",
-      100,
-      50,
-      -10,
+      1000,
+      55,
+      -2,
       [ "you stabbed %s with your bayonet dealing %s damage", "you shoot %s dealing %s damage" ]
     ],
 
