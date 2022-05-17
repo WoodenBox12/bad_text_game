@@ -86,6 +86,7 @@ class character:
     Type = None
     maxHealth = None
     currentHealth = None
+    xp = 0
 
 
     def heal(self, healAmount, pop=False , i=None, display=False):
@@ -228,12 +229,13 @@ class enemys:
 
     def calculateScore(self, attacks):
 
-        score = self.maxHealth / 10
+        score = self.maxHealth
         totalAverage = 0
         averageAttack = 0
-        total = 0
 
         for i in range(len(attacks)):
+
+            total = 0
 
             for j in range(len(attacks[i])):
 
@@ -242,7 +244,9 @@ class enemys:
 
             totalAverage += averageAttack / total
 
-        score += (totalAverage / 3) * 0.8
+        score += round((totalAverage / 3) * 9)
+
+        return score
 
     def itemDrop(self, drops, numOfDrops):
 
@@ -610,8 +614,14 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
             opponent.calculateScore([closeAttacks, midAttacks, farAttacks])
 
             print(f"you defeated {enemyName} and gained {-opponent.currentHealth} health")
+
+            player.xp += opponent.calculateScore([closeAttacks, midAttacks, farAttacks])
+            print(player.xp)
+
             sleep(2)
             return
+            
+            
 
         # enemy turn
 
