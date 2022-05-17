@@ -92,7 +92,7 @@ class character:
     currentHealth = None
 
     xp = 0
-    xpReq = [1,200,250,300,350,400,450,500]
+    xpReq = [1,200,240,390,345,400,450,500,550,600,650,700]
 
     def levelUp(self):
         
@@ -273,7 +273,7 @@ class enemys:
 
             totalAverage += averageAttack / total
 
-        score += round((totalAverage / 3) * 9)
+        score += round((totalAverage / 3) * 2)
 
         return score
 
@@ -511,6 +511,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                         print("too far away")
                         sleep(2)
+                        continue
 
                     else:
 
@@ -551,6 +552,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                         print("too close")
                         sleep(1)
+                        continue
 
                     else:
 
@@ -649,6 +651,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
             player.xp += opponent.calculateScore([closeAttacks, midAttacks, farAttacks])
             
+            print(player.xp)
             player.levelUp()
 
 
