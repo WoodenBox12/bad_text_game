@@ -10,6 +10,7 @@ from files import *
 
 # make xp gain higher if higher dificulty
 
+# fix a rule in item pickup
 # make enemy move closer sometimes
 # custom crit messages
 # make overhealed with decay possible   if magical 
@@ -92,18 +93,26 @@ class character:
     currentHealth = None
 
     xp = 0
-    xpReq = [1,200,240,390,345,400,450,500,550,600,650,700]
+    xpReq = [200,240,390,345,400,450,500,550,600,650,700]
 
     def levelUp(self):
         
         while True:
 
-            if self.xp >= self.xpReq[self.level]:
+            if self.xp >= self.xpReq[self.level - 1]:
 
-                self.xp -= self.xpReq[self.level]
+                self.xp -= self.xpReq[self.level - 1]
                 self.level += 1
 
-                self.maxHealth = round(self.maxHealth * 1.05)
+                if round(self.maxHealth * 1.08 - self.maxHealth) > 10:
+
+                    self.maxHealth = round(self.maxHealth * 1.08)
+                    self.currentHealth += round(self.maxHealth * 1.08 - self.maxHealth)
+
+                else:
+
+                    self.maxHealth += 10
+                    self.currentHealth += 10
 
                 self.damageMultiplier += 0.05
 
@@ -472,7 +481,7 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
         print(f"Level {enemyNum}\n{enemyName}")
 
-        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | {player.xpReq[player.level]-player.xp} xp away from level {player.level + 1}\n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
+        choice = input(f"+-----------------------+ \n| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}\n|      ___________      | {player.xpReq[player.level - 1]-player.xp} xp away from level {player.level + 1}\n|     /   _____   \     | \n|    /   /     \   \    | \n|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | \n|    \   \_____/   /    | \n|     \___________/     | \n|                       | \n+-----------------------+ \n|  a/away to move away  | \n|t/toward to move toward| \n|    i for inventory    | \n|                       | \n|   melee/ranged/magic  | \n|       for attack      | \n+-----------------------+ \n>>")
         
         match choice.lower():
 
@@ -665,6 +674,8 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
         else:
 
             opponent.enemyAttack( enemyAttackMsg, closeAttacks, midAttacks, farAttacks)
+
+        player.levelUp()
 
         if player.currentHealth <= 0:
 
