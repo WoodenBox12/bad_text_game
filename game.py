@@ -445,7 +445,7 @@ match characterSelect.lower():
         devLoadout = [
             # name, item type, d/heal, crit%, crit multiplier
             weapons["Dev-10s Blade"],
-            heals["Dev's Apple"],
+            heals["Dev Apple"],
             ]
 
         player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
@@ -699,7 +699,7 @@ fight("a magician", {"melee":"the magician pulls a hammer out of his hat and hit
      [[weapons["Wand"], 3], [heals["Apple"], 10]], 2)
 
 opponent = enemys(130, (10, 35, 0), (0.9, 1, 1.2), 2)
-fight("jack mackay", {"melee":"jack stabbed you with his bayonet dealing %s damage", "ranged":"jack shoots you dealing %s damage", "magic":"jack confuses you wit his idiocy dealing %s damage"},
+fight("jack mackay", {"melee":"jack stabbed you with his bayonet dealing %s damage", "ranged":"jack shoots you dealing %s damage", "magic":"jack confuses you with his idiocy dealing %s damage"},
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Jack's Rifle"], 3], [heals["Apple"], 10]], 2)
 
@@ -707,3 +707,8 @@ opponent = enemys(145, (14, 40, 0), (1.1, 0.7, 1), 2)
 fight("a gifted archer", {"melee":"the archer stabbed your neck with his arrow dealing %s damage", "ranged":"the archer shoots you with his bow dealing %s damage", "magic":"the archer deals %s damage"},
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Antique Bow"], 3], [heals["Apple"], 10]], 2)
+
+opponent = enemys(150, (20, 45, 0), (1, 1, 1.4), 2)
+fight("rio", {"melee":"rio caved in your skull with his high heel dealing %s damage", "ranged":"rio threw his high heel at you dealing %s damage", "magic":"rio confuses you with his dislesia dealing %s damage"},
+     ["melee"], ["melee","ranged"], ["ranged"],
+     [[weapons["Rio's Heel"], 5], [heals["Apple"], 10]], 2)
