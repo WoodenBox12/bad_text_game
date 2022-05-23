@@ -712,3 +712,5 @@ opponent = enemys(150, (20, 45, 0), (1, 1, 1.4), 2)
 fight("rio", {"melee":"rio caved in your skull with his high heel dealing %s damage", "ranged":"rio threw his high heel at you dealing %s damage", "magic":"rio confuses you with his dislesia dealing %s damage"},
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Rio's Heel"], 5], [heals["Apple"], 10]], 2)
+
+print("thanks for playing")
