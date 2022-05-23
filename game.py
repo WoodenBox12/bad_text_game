@@ -714,3 +714,5 @@ fight("rio", {"melee":"rio caved in your skull with his high heel dealing %s dam
      [[weapons["Rio's Heel"], 5], [heals["Apple"], 10]], 2)
 
 print("thanks for playing")
+
+print("withhelp from Elliott and Ben")
