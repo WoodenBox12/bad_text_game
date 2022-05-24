@@ -713,11 +713,11 @@ fight("rio", {"melee":"rio caved in your skull with his high heel dealing %s dam
      ["melee"], ["melee","ranged"], ["ranged"],
      [[weapons["Rio's Heel"], 5], [heals["Apple"], 10]], 2)
 
-opponent = enemys(170, (5, 12, 45), (1, 1, 1.4), 1)
+opponent = enemys(170, (5, 12, 45), (1.2, 1, 0.7), 1)
 fight("rishabh", {"melee":"rishabh caved in your skull with his pencil dealing %s damage", "ranged":"rishabh threw his orb at you dealing %s damage", "magic":"rishabh attacks you with the orbs mystical powers dealing %s damage"},
      ["melee","magic"], ["melee","ranged","magic"], ["magic"],
      [[weapons["The Orb"], 1], [heals["Apple"], 9]], 2)
 
 print("thanks for playing")
 
-print("withhelp from Elliott and Ben")
+print("made with help from Elliott and Ben")
