@@ -17,7 +17,7 @@ from files import *
 # enemy crit chance
 # end credits contain elliott and ben
 
-itemsPath = path.abspath("items.json")
+itemsPath = path.abspath("./data/items.json")
 
 weapons = readjs(itemsPath)[0]
 heals = readjs(itemsPath)[1]
@@ -38,7 +38,7 @@ def red(string):
 
 def removeChars(string, badChars):
     for char in badChars:
-	    string = string.replace(char, "")
+        string = string.replace(char, "")
     return string
 
 def dificultyModifier( baseValue, dificulty, increase):
@@ -125,7 +125,6 @@ class character:
             else:
                 sleep(1)
                 break
-
 
     def heal(self, healAmount, pop=False , i=None, display=False):
 
@@ -262,7 +261,7 @@ class enemys:
 
     maxHealth = None
     currentHealth = None
-
+    
     distance = None
 
     def calculateScore(self, attacks):
@@ -454,7 +453,6 @@ sleep(2)
 clear()
 
 print (f'''                     _ \n         .=========., | \n        /_,-.___.-._\ | \n        | [_]/o\[_] |7' \n  i=I=I=|____|_|____|I=I=I=i \n |/,*`*,*`**'/ \      ,-'`.\| \n|/          /...\   (__.-._)\| \n||||||||||||TTTTT||||||||||||| \n""""""""""""HHHHH""""""""""""" \nyour journey as a{player.Type} begins \nin your grandmothers house''')
-
 sleep(4)
 clear()
 
