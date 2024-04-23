@@ -17,7 +17,7 @@ from files import *
 # enemy crit chance
 # end credits contain elliott and ben
 
-itemsPath = path.abspath("./data/items.json")
+itemsPath = path.abspath("./items.json")
 
 weapons = readjs(itemsPath)[0]
 heals = readjs(itemsPath)[1]
@@ -367,26 +367,15 @@ class enemys:
 
 dificulty = input("select dificulty between 1 and 5 or random: ")
 
-if dificulty.upper() == "RANDOM":
+try:
+    if type(int(dificulty)) == int:
+        if 1 <= int(dificulty) <= 5:
+            dificulty = int(dificulty)
 
+        else:
+            dificulty = randint(1,5)
+except:
     dificulty = randint(1,5)
-
-else:
-    try:
-
-        if type(int(dificulty)) == int:
-    
-            if 1 <= int(dificulty) <= 5:
-
-                dificulty = int(dificulty)
-
-            else:
-
-                dificulty = randint(1,5)
-
-    except:
-
-        dificulty = randint(1,5)
 
 sleep(2)
 clear()
