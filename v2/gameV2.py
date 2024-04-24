@@ -1,6 +1,8 @@
 from data.appearance.unicode import inventory, battle
+from data.appearance.console import Console
 print(inventory)
 print(battle)
+print(Console.Colour("hello","1;31;40"))
 
 class Game:
 
