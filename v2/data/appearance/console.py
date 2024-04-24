@@ -3,7 +3,7 @@ from enum import Enum
     
 class Console:
 
-    def clear(self):
+    def Clear():
         if name == 'nt':
             _ = system('cls')
         else:

@@ -135,20 +135,14 @@ class character:
             return
 
         elif self.currentHealth + healAmount > self.maxHealth:
-
             self.currentHealth = self.maxHealth
-
-            if pop:
-
-                self.inventory.pop(i)
                         
         else:
-
             self.currentHealth += healAmount
             
-            if pop:
+        if pop:
 
-                self.inventory.pop(i)
+            self.inventory.pop(i)
 
         if display:
             print(f"now on {self.currentHealth}/{self.maxHealth}")
@@ -166,7 +160,6 @@ class character:
             if self.inventory[i][1] != "heal":
 
                 for j in range(len(self.inventory[i])):
-
 
                     if j == 5:
                         break

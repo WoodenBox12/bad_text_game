@@ -1,17 +1,17 @@
-inventory = """
-main weapon is %s 
+from data.appearance.console import Console
+
+inventory = f"""main weapon is %s 
 ╔════════════════════════════════════════════════════╗ 
 ║ to change your main weapon type:    mw weapon═name ║ 
 ║ to use a heal type:                  use item═name ║ 
 ╚════════════════════════════════════════════════════╝"""
 
-battle = """
-╔═══════════════════════╗ 
-║ 0 = player, {red('X')} = enemy ║ your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}
-║                       ║ {player.xpReq[player.level - 1]-player.xp} xp away from level {player.level + 1}
+battle = f"""╔═══════════════════════╗ 
+║ 0 = player, {Console.Colour("X", "1;31;40")} = enemy ║ your health: 
+║                       ║ 
 ║   ╭───────────────╮   ║ 
 ║   │   ╭───────╮   │   ║ 
-║   │   │   0 {opponent.Range(0)} │ {opponent.Range(1)} │ {opponent.Range(2)} ║ 
+║   │   │   0{Console.Colour("{:^3}", "1;31;40")}│{Console.Colour("{:^3}", "1;31;40")}│{Console.Colour("{:^3}", "1;31;40")}║ 
 ║   │   ╰───────╯   │   ║ 
 ║   ╰───────────────╯   ║ 
 ║                       ║ 
@@ -30,4 +30,31 @@ battle = """
 ║   │   │   0 X │ X │ X ║ ▩
 ║   │   ╰───────╯   │   ║ 
 ║   ╰───────────────╯   ║ 
+"""
+
+classes = """select player class
+╔═══╦═══════════════════╗ 
+║ 1 ║ Knight            ║ 
+╠═══╬═══════════════════╣ 
+║ 2 ║ Barbarian         ║ 
+╠═══╬═══════════════════╣ 
+║ 3 ║ Archer            ║ 
+╠═══╬═══════════════════╣ 
+║ 4 ║ Mage              ║ 
+╚═══╩═══════════════════╝
+"""
+
+
+experimentalinventory = """
+items
+main weapon is %s 
+
+║Name                ║DMG Type          ║DMG ║CRIT║MULT║
+╠════════════════════╬══════════════════╬════╬════╬════╣
+║Nate's Battle Axe   ║melee/ranged/magic║69  ║100%║2X  ║
+║                    ║                  ║    ║    ║    ║ 20 chars, 18 chars, 4 chars, 4 chars, 4 chars
+╠════════════════════╩══════════════════╩════╩════╩════╣
+║ to change your main weapon type:      mw weapon═name ║ 
+║ to use a heal type:                    use item═name ║ 
+╚══════════════════════════════════════════════════════╝
 """

@@ -1,18 +1,18 @@
-inventory = """
-main weapon is %s 
+from data.appearance.console import Console
+
+inventory = f"""main weapon is %s 
 +----------------------------------------------------+ 
 | to change your main weapon type:    mw weapon-name | 
 | to use a heal type:                  use item-name | 
 +----------------------------------------------------+ 
 >>"""
 
-battle = """
-+-----------------------+ 
-| 0 = player, {red('X')} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}
+battle = f"""+-----------------------+ 
+| 0 = player, {Console.Colour("X", "1;31;40")} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}
 |      ___________      | {player.xpReq[player.level - 1]-player.xp} xp away from level {player.level + 1}
 |     /   _____   \     | 
 |    /   /     \   \    | 
-|   |   |   0 {opponent.Range(0)} | {opponent.Range(1)} | {opponent.Range(2)} | 
+|   |   |   0{Console.Colour("{:^3}", "1;31;40")}|{Console.Colour("{:^3}", "1;31;40")}|{Console.Colour("{:^3}", "1;31;40")}| 
 |    \   \_____/   /    | 
 |     \___________/     | 
 |                       | 
