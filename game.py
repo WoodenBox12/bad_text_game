@@ -21,7 +21,7 @@ itemsPath = path.abspath("./items.json")
 
 weapons = readjs(itemsPath)[0]
 heals = readjs(itemsPath)[1]
-
+    
 
 def clear():
   
