@@ -87,19 +87,22 @@ class Game:
                         break
                     command += choice[i]
                 
-
-                match choice:
+                match command:
                     case "mw":
-                        print("mw")
-                        break
+                        weapon = choice[2:].translate(str.maketrans("", "", "!@#$' "))
+                        print(weapon)
+
+                        continue
                     case "use":
-                        print("use")
-                        break
+                        weapon = choice[3:].translate(str.maketrans("", "", "!@#$' "))
+                        print(weapon)
+                        continue
                     case "drop":
-                        break
-                        print("drop")
+                        weapon = choice[4:].translate(str.maketrans("", "", "!@#$' "))
+                        print(weapon)
+                        continue
                     case _:
-                        pass
+                        break
 
         def __init__(self, type: str, health: int, startingItems: list) -> None:
             print(startingItems)

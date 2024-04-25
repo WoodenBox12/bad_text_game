@@ -34,17 +34,17 @@ experimentalinventory = """
 items
 main weapon is %s 
 ║{:<20}║{:<18}║{:<4}║{:<4}║{:<4}║
-║Name                ║DMG Type          ║DMG ║CRIT║MULT║
-╠════════════════════╬══════════════════╬════╬════╬════╣
-║Nate's Battle Axe   ║melee/ranged/magic║69  ║100%║2X  ║
-║                    ║                  ║    ║    ║    ║ 20 chars, 18 chars, 4 chars, 4 chars, 4 chars
-║Apple               ║Heal              ║40  ║    ║    ║ how show this?
-║                    ║                  ║    ║    ║    ║
-║                    ║                  ║    ║    ║    ║
-╠════════════════════╩══════════════════╩════╩════╩════╣
-║ to change your main weapon type:      mw weapon═name ║ 
-║ to use a heal type:                    use item═name ║ 
-╚══════════════════════════════════════════════════════╝
+║Name                ║DMG Type          ║DMG ║CRIT║MULT║COUNT║ mabye dont include count just multiple entries (wont be many repeats)
+╠════════════════════╬══════════════════╬════╬════╬════╬═════╣ 
+║Nate's Battle Axe   ║melee/ranged/magic║69  ║100%║2X  ║     ║ 
+║                    ║                  ║    ║    ║    ║     ║ 20 chars, 18 chars, 4 chars, 4 chars, 4 chars, 5 chars
+║Apple               ║Heal              ║40  ║    ║    ║     ║ how show this?
+║                    ║                  ║    ║    ║    ║     ║ 
+║                    ║                  ║    ║    ║    ║     ║ 
+╠════════════════════╩══════════════════╩════╩════╩════╩═════╣
+║ to change your main weapon type:      mw weapon═name       ║ 
+║ to use a heal type:                    use item═name       ║ 
+╚════════════════════════════════════════════════════════════╝
 """
 class Inventory:
 
