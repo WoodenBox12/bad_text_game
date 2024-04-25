@@ -52,7 +52,8 @@ class Inventory:
     Divider = "╠══════════════════════════════╬══════════════════╬════╬════╬════╣"
     DataEntry = "║{:<30}║{:<18}║{:<4}║{:<4}║{:<4}║"
     Tail = """╠══════════════════════════════╩══════════════════╩════╩════╩════╣ 
+║ main weapon is {mw:<48}║ 
 ║ to change your main weapon type:                mw weapon name ║ 
 ║ to use a heal type:                              use item name ║ 
 ║ to drop an item type:                           drop item name ║ 
-╚════════════════════════════════════════════════════════════════╝"""# make 30 chars name
+╚════════════════════════════════════════════════════════════════╝"""

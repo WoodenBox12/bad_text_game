@@ -471,154 +471,136 @@ def fight(enemyName, enemyAttackMsg, closeAttacks, midAttacks, farAttacks, possi
 
                     print("cannot move any closer")
                     sleep(2)
-
-                else:
-
-                    opponent.distance -= 1
+                    continue
+                opponent.distance -= 1
                 
-            case "a" | "away":
+            case "a" | "away":   
         
                 if opponent.distance == 2:
 
                     print("you attempt to run away but a mysterious force is preventing you")
                     sleep(2)
-
-                else:
-
-                    opponent.distance += 1
+                    continue
+                opponent.distance += 1
 
             case "i":
-    
                 player.Inventory()
                 continue
    
             case "me" | "melee":
 
-                if "melee" in player.mainWeapon[1]:
+                if not ("melee" in player.mainWeapon[1]):
 
-                    if opponent.distance == 2:
-
-                        print("too far away")
-                        sleep(2)
-                        continue
-
-                    else:
-
-                        damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
-                        player.xp += 5
-                        crit = False
-
-                        if opponent.distance == 1:
-
-                            damage = round(damage * (randint(8, 12) / 10))
-
-                        if randint(1,100) <= player.mainWeapon[3]:
-
-                            damage *= round(player.mainWeapon[4])
-                            player.xp += 40
-                            crit = True
-
-                        print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
-
-                        if crit:
-                            print("Critical hit!",end="\n\n")
-
-                        else:
-                            print("",end="\n\n")
-
-                        opponent.currentHealth -= damage
-                        sleep(2)
-
-                else:
                     print("melee weapon not selected")
                     sleep(1)
                     continue
 
-            case "ra" | "ranged":
+                if opponent.distance == 2:
 
-                if "ranged" in player.mainWeapon[1]:
+                    print("too far away")
+                    sleep(1)
+                    continue
 
-                    if opponent.distance == 0:
+                damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
+                player.xp += 5
+                crit = False
 
-                        print("too close")
-                        sleep(1)
-                        continue
+                if opponent.distance == 1:
 
-                    else:
+                    damage = round(damage * (randint(8, 12) / 10))
 
-                        damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["ranged"])
-                        player.xp += 5
-                        crit = False
+                if randint(1,100) <= player.mainWeapon[3]:
 
-                        if opponent.distance == 2:
+                    damage *= round(player.mainWeapon[4])
+                    player.xp += 40
+                    crit = True
 
-                            damage = round(damage * (randint(8, 12) / 10))
+                print(player.mainWeapon[5][0] %(enemyName, damage), end="    ")
 
-                        if randint(1,100) <= player.mainWeapon[3]:
-
-                            damage *= round(player.mainWeapon[4])
-                            player.xp += 40
-                            crit = True
-
-                        print(player.mainWeapon[5][1] %(enemyName, damage), end="    ")
-
-                        if crit:
-                            print("Critical hit!",end="\n\n")
-
-                        else:
-                            print("",end="\n\n")
-
-                        opponent.currentHealth -= damage
-                        sleep(1)
+                if crit:
+                    print("Critical hit!",end="\n\n")
 
                 else:
+                    print("",end="\n\n")
+
+                opponent.currentHealth -= damage
+                sleep(2)
+
+            case "ra" | "ranged":
+
+                if not ("ranged" in player.mainWeapon[1]):
 
                     print("ranged weapon not selected")
                     sleep(2)
                     continue
 
-            case "ma" | "magic":
+                if opponent.distance == 0:
 
-                if player.Type == " mage":
+                    print("too close")
+                    sleep(1)
+                    continue
 
-                    if "magic" in player.mainWeapon[1]:
+                damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["ranged"])
+                player.xp += 5
+                crit = False
 
-                            damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
-                            player.xp += 5
-                            crit = False
+                if opponent.distance == 2:
 
-                            if opponent.distance == 0 or opponent.distance == 2:
+                    damage = round(damage * (randint(8, 12) / 10))
 
-                                damage = round(damage * (randint(8, 12) / 10))
+                if randint(1,100) <= player.mainWeapon[3]:
 
-                            if randint(1,100) <= player.mainWeapon[3]:
+                    damage *= round(player.mainWeapon[4])
+                    player.xp += 40
+                    crit = True
 
-                                damage *= round(player.mainWeapon[4])
-                                player.xp += 40
-                                crit = True
+                print(player.mainWeapon[5][1] %(enemyName, damage), end="    ")
 
-                            print(player.mainWeapon[5][2] %(enemyName, damage), end="    ")
-
-                            if crit:
-                                print("Critical hit!",end="\n\n")
-
-                            else:
-                                print("",end="\n\n")
-
-                            opponent.currentHealth -= damage
-                            sleep(2)
-
-                    else:
-
-                        print("magic weapon not selected")
-                        sleep(1)
-                        continue
+                if crit:
+                    print("Critical hit!",end="\n\n")
 
                 else:
+                    print("",end="\n\n")
 
+                opponent.currentHealth -= damage
+                sleep(1)
+
+            case "ma" | "magic":
+
+                if not (player.Type == " mage"):
                     print("you have no magical powers")
                     sleep(1)
                     continue
+
+                if not ("magic" in player.mainWeapon[1]):
+                    print("magic weapon not selected")
+                    sleep(1)
+                    continue
+
+                damage = round(player.mainWeapon[2] * player.damageMultiplier * opponent.defence["melee"])
+                player.xp += 5
+                crit = False
+
+                if opponent.distance == 0 or opponent.distance == 2:
+
+                    damage = round(damage * (randint(8, 12) / 10))
+
+                if randint(1,100) <= player.mainWeapon[3]:
+
+                    damage *= round(player.mainWeapon[4])
+                    player.xp += 40
+                    crit = True
+
+                print(player.mainWeapon[5][2] %(enemyName, damage), end="    ")
+
+                if crit:
+                    print("Critical hit!",end="\n\n")
+
+                else:
+                    print("",end="\n\n")
+
+                opponent.currentHealth -= damage
+                sleep(2)
 
             case _:
                 continue
@@ -699,5 +681,4 @@ fight("rishabh", {"melee":"rishabh caved in your skull with his pencil dealing %
      [[weapons["The Orb"], 1], [heals["Apple"], 9]], 2)
 
 print("thanks for playing")
-
 print("made with help from Elliott and Ben")

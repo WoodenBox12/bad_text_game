@@ -3,6 +3,16 @@ from enum import Enum
     
 class Console:
 
+    def GetCommand():
+        choice = input(">>").lower().strip()
+        command = ""        
+        for i in range(len(choice)):
+            if choice[i] == " ":
+                break
+            command += choice[i]
+        rest = choice[len(command):].translate(str.maketrans("", "", "!@#$' "))
+        return command, rest
+
     def Clear():
         if name == 'nt':
             _ = system('cls')

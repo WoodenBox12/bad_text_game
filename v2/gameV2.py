@@ -1,26 +1,20 @@
 from data.appearance.unicode import Inventory, Setup, battle
 from data.appearance.console import Console
+from data.items import Items
+
 from random import choice,randint
 from files import *
 from os import path
 
 # add distance changing item that is defended from attack
 # make damage from weapons be different depending on distance precise falloff in weapon stats weapon stats
-# remake items.json with new format and more weapon data
 
+# make automated easily expandable command system 
+# make inventory sortable by different fields
 
-# Weapons:
-#  Id
-#  in game name
-#  melee/ranged/magic
-#  damage, crit%, crit multiplier
-#  damage multipliers for different distances
-#  single use boolean
-#
-#  more different use messages
 #
 #
-#  use effect
+# use effect for weapons
 #
 # Misc:
 #
@@ -29,14 +23,6 @@ from os import path
 #
 #
 
-Console.Clear()
-print(Console.Colour("hello", "1;31;40"))
-
-
-itemsPath = path.abspath("./v2/data/items.json")
-
-weapons = readjs(itemsPath)[0]
-heals = readjs(itemsPath)[1]
 
 class Game:
 
@@ -44,75 +30,74 @@ class Game:
 
     class Character:
 
-        Inventory = [[],[],[]]#[[weapons],[heals],[other]]
-        MainWeapon = None
-        Level = 1
-        DamageMultiplier = 1
-        Magical = False
-        Type = None
-        MaxHealth = None
-        CurrentHealth = None
+        Inventory: list[list] = [[],[],[]]#[[weapons],[heals],[other]]
+        MainWeapon: str = None
+        Level: int = 1
+        DamageMultiplier: int = 1
+        Magical: bool = False
+        Type: bytes = None
+        MaxHealth: int = None
+        CurrentHealth: int = None
 
-        xp = 0
-        xpReq = [200,240,390,345,400,450,500,550,600,650,700]
+        xp: int= 0
+        xpReq: list[int]= [200,240,390,345,400,450,500,550,600,650,700]
 
         def AddInventory(self, items: list):
-            print(items)
             for i in range(len(items)):
-                if ("melee" in items[i][1]) | ("magic" in items[i][1]) | ("ranged" in items[i][1]):
+                if items[i].Type > 0b00011111:# weapon
                     self.Inventory[0].append(items[i])
-                elif items[i][1] == "heal":
+                elif items[i].Type & 0b00010000 == 0b00010000:# heal
                     self.Inventory[1].append(items[i])
                 else:
-                    self.Inventory[2].append(items[i])
+                    self.Inventory[2].append(items[i])# other
+
+        def BitmaskToString(self, Bitmask: bytes) -> str:
+            outStr =""
+            names = ["melee", "ranged", "magic", "heal", "other", "", "", ""]
+            for i in range(0,8):
+                if Bitmask & (128>>i) == (128>>i):
+                    outStr += names[i] + "/"
+            return outStr.strip("/")
 
         def DisplayInventory(self):
             while True:
                 Console.Clear()
-                
                 print(Inventory.WeaponHeader)
                 print(Inventory.Divider)
                 for i in range(len(self.Inventory[0])):                
                     print(Inventory.DataEntry.format(
-                        self.Inventory[0][i][0],
-                        self.Inventory[0][i][1],
-                        self.Inventory[0][i][2],
-                        self.Inventory[0][i][3],
-                        self.Inventory[0][i][4]))
-                print(Inventory.Tail)
-                choice = input(">>").lower().strip()
-                command = ""
-                for i in range(len(choice)):
-                    if choice[i] == " ":
-                        break
-                    command += choice[i]
+                        self.Inventory[0][i].Name,
+                        self.BitmaskToString(self.Inventory[0][i].Type),# make function to convert to string
+                        self.Inventory[0][i].Damage,
+                        "{}%".format(self.Inventory[0][i].CritChance),
+                        self.Inventory[0][i].CritDamage))
+                print(Inventory.Tail.format(mw=self.MainWeapon.Name))
                 
+
+                command, weapon = Console.GetCommand()
+
                 match command:
                     case "mw":
-                        weapon = choice[2:].translate(str.maketrans("", "", "!@#$' "))
                         print(weapon)
-
+                        input()
                         continue
                     case "use":
-                        weapon = choice[3:].translate(str.maketrans("", "", "!@#$' "))
                         print(weapon)
+                        input()
                         continue
                     case "drop":
-                        weapon = choice[4:].translate(str.maketrans("", "", "!@#$' "))
                         print(weapon)
+                        input()
                         continue
                     case _:
                         break
 
         def __init__(self, type: str, health: int, startingItems: list) -> None:
-            print(startingItems)
             self.AddInventory(startingItems)
 
             self.Type = type
 
-            self.MainWeapon = self.Inventory[0]
-
-            #self.Defence = {"melee":defence[0], "ranged":defence[1], "magic":defence[2]} rethink storage
+            self.MainWeapon = self.Inventory[0][0]
 
             self.CurrentHealth = self.MaxHealth = health
            
@@ -130,9 +115,46 @@ class Game:
 
     def Battle(self):# simulate battle? mabye use a class   but initialising a class when player and oppenent already exist seems like a waste (mabye just pass into function)
         distance = 0
-        print(battle.format("X"*(distance==0), "X"*(distance==1), "X"*(distance==2)))
-        self.Player.DisplayInventory()
-        pass
+        
+        
+        while True:
+            Console.Clear()
+            print(battle.format("X"*(distance==0), "X"*(distance==1), "X"*(distance==2)))
+            command, rest = Console.GetCommand()
+
+            match command:
+                case "t" | "toward":
+                    if distance == 0:
+                        input("unable to closer\n")
+                        continue
+                    distance -= 1
+                    input("moved closer\n")
+
+                case "a" | "away":
+                    if distance == 2:
+                        input("you attempt to run away but a mysterious force is preventing you\n")
+                        continue
+                    distance += 1
+                    input("moved further away\n")
+
+                case "i" | "inventory":
+                    self.Player.DisplayInventory()
+                
+                case "me" | "melee":
+                    pass
+                
+                case "ra" | "ranged":
+                    pass
+                
+                case "ma" | "magic":
+                    pass
+                
+                case "seppuku":
+                    
+                    pass
+
+                case _:
+                    pass
 
 
     class battle:
@@ -142,6 +164,7 @@ class Game:
 
     
     def SelectDifficulty(self):
+        Console.Clear()
         dificulty = input("select dificulty between 1 and 5 or random: ")
 
         try:
@@ -155,14 +178,12 @@ class Game:
     
     def SelectClass(self):
         while True:
+            Console.Clear()
             print(Setup.Classes)
             match input(">>"):
                 case "1":
-                    weaponlist = []
-                    for i in weapons.keys():
-                        weaponlist.append(weapons[i])
-
-                    self.Player = self.Character(" knight", 150, weaponlist)
+                    
+                    self.Player = self.Character(" knight", 150, Items.weapons)
                     break
                 case "2":
                     pass
