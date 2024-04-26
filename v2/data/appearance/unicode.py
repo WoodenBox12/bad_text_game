@@ -41,6 +41,7 @@ main weapon is %s
 ║Apple               ║Heal              ║40  ║    ║    ║     ║ how show this?
 ║                    ║                  ║    ║    ║    ║     ║ 
 ║                    ║                  ║    ║    ║    ║     ║ 
+║Heal Name           ║Type              ║AMNT║    ║    ║     ║ 
 ╠════════════════════╩══════════════════╩════╩════╩════╩═════╣
 ║ to change your main weapon type:      mw weapon═name       ║ 
 ║ to use a heal type:                    use item═name       ║ 
@@ -49,8 +50,10 @@ main weapon is %s
 class Inventory:
 
     WeaponHeader = "║Name                          ║DMG Type          ║DMG ║CRIT║MULT║"
+    HealHeader = "║Heal Name                     ║Type              ║AMNT║    ║    ║"
     Divider = "╠══════════════════════════════╬══════════════════╬════╬════╬════╣"
-    DataEntry = "║{:<30}║{:<18}║{:<4}║{:<4}║{:<4}║"
+    WeaponEntry = "║{:<30}║{:<18}║{:<4}║{:<4}║{:<4}║"
+    HealEntry = "║{:<30}║{:<18}║{:<4}║    ║    ║"
     Tail = """╠══════════════════════════════╩══════════════════╩════╩════╩════╣ 
 ║ main weapon is {mw:<48}║ 
 ║ to change your main weapon type:                mw weapon name ║ 

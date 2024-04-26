@@ -140,4 +140,4 @@ class Items:
 
 
 
-    weapons: list[Weapon] = [AntiqueBow, Wand, DogSpit, RollingPin, CavemanClub, SawnOff, Rifle, Cube, FryingPan, Dev10usBlade]
+    weapons: list = [AntiqueBow, Wand, DogSpit, RollingPin, CavemanClub, SawnOff, Rifle, Cube, FryingPan, Dev10usBlade]
