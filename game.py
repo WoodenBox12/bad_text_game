@@ -435,7 +435,7 @@ sleep(2)
 clear()
 
 print (f'''                     _ \n         .=========., | \n        /_,-.___.-._\ | \n        | [_]/o\[_] |7' \n  i=I=I=|____|_|____|I=I=I=i \n |/,*`*,*`**'/ \      ,-'`.\| \n|/          /...\   (__.-._)\| \n||||||||||||TTTTT||||||||||||| \n""""""""""""HHHHH""""""""""""" \nyour journey as a{player.Type} begins \nin your grandmothers house''')
-sleep(4)
+sleep(2)
 clear()
 
 print("level 1\n\nas you walk out the house you come across an enemy\n")

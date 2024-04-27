@@ -2,7 +2,7 @@ from data.appearance.unicode import Inventory, Setup, battle
 from data.appearance.console import Console
 from data.items import Items
 
-from math import isqrt
+from math import isqrt, floor
 from random import choice, choices, randint
 from files import *
 from os import path
@@ -38,7 +38,7 @@ class Character:
     Level: int
 
     def LevelUp(self) -> None:# https://www.desmos.com/calculator/ak3w2tjndn for equation    not finished yet
-        NewLevel = (isqrt(self.Xp) / 50) + (self.Xp / 200) + 1
+        NewLevel = floor((isqrt(self.Xp) / 50) + (self.Xp / 200)) + 1
         if self.Level < NewLevel:
             self.Level = NewLevel
             input(f"Leveled up, now on level {self.Level}\n")
@@ -60,7 +60,7 @@ class Character:
                 outStr += names[i] + "/"
         return outStr.strip("/")
 
-# mabye add search function with a function partameter
+    # mabye add search function with a function partameter
 
     def SwapMainWeapon(self, weapon: str) -> None:
         for i in range(len(self.Inventory[0])):
@@ -151,14 +151,26 @@ class Character:
 
 class Enemy:
 
-    maxHealth = None
-    currentHealth = None
+    MaxHealth: int
+    CurrentHealth: int
+
+    Distance: int
+
+    def CalculateScore(self):# some score making function for player xp gain
+        score = self.MaxHealth
+
+        return score
 
     def ItemDrop(self, items: list, weights: list[int], dropCount: int) -> list[str]:
         return choices(items, weights, k=dropCount)
 
-    def __init__(self) -> None:
+    def Attack(self):
         pass
+
+    def __init__(self, distance: int, health: int) -> None:
+        self.Distance = distance
+
+        self.currentHealth = self.maxHealth = health
 
 class Game:
 
@@ -167,26 +179,26 @@ class Game:
     Cheats: bool
 
     def Battle(self):# simulate battle? mabye use a class   but initialising a class when player and oppenent already exist seems like a waste (mabye just pass into function)
-        distance = 0
+        self.Opponent = Enemy(0)
 
         while True:
             Console.Clear()
-            print(battle.format("X"*(distance==0), "X"*(distance==1), "X"*(distance==2)))
+            print(battle.format("X"*(self.Opponent.Distance==0), "X"*(self.Opponent.Distance==1), "X"*(self.Opponent.Distance==2)))
             command, rest = Console.GetCommand()
 
             match command:
                 case "t" | "toward":
-                    if distance == 0:
+                    if self.Opponent.Distance == 0:
                         input("unable to closer\n")
                         continue
-                    distance -= 1
+                    self.Opponent.Distance -= 1
                     input("moved closer\n")
 
                 case "a" | "away":
-                    if distance == 2:
+                    if self.Opponent.Distance == 2:
                         input("you attempt to run away but a mysterious force is preventing you\n")
                         continue
-                    distance += 1
+                    self.Opponent.Distance += 1
                     input("moved further away\n")
 
                 case "i" | "inventory":
