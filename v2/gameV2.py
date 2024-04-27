@@ -2,7 +2,8 @@ from data.appearance.unicode import Inventory, Setup, battle
 from data.appearance.console import Console
 from data.items import Items
 
-from random import choice,randint
+from math import isqrt
+from random import choice, choices, randint
 from files import *
 from os import path
 
@@ -27,15 +28,20 @@ class Character:
 
     Inventory: list[list] = [[],[],[]]#[[weapons],[heals],[other]]
     MainWeapon: str
-    Level: int
     DamageMultiplier: int
     Magical: bool
     Type: bytes
     MaxHealth: int
     CurrentHealth: int
 
-    xp: int= 0
-    xpReq: list[int]= [200,240,390,345,400,450,500,550,600,650,700]
+    Xp: int
+    Level: int
+
+    def LevelUp(self) -> None:# https://www.desmos.com/calculator/ak3w2tjndn for equation    not finished yet
+        NewLevel = (isqrt(self.Xp) / 50) + (self.Xp / 200) + 1
+        if self.Level < NewLevel:
+            self.Level = NewLevel
+            input(f"Leveled up, now on level {self.Level}\n")
 
     def AddInventory(self, items: list) -> None:
         for i in range(len(items)):
@@ -46,15 +52,17 @@ class Character:
             else:
                 self.Inventory[2].append(items[i])# other
 
-    def BitmaskToString(self, Bitmask: bytes) -> str:
+    def BitmaskToString(self, bitmask: bytes) -> str:
         outStr =""
         names = ["melee", "ranged", "magic", "heal", "other", "", "", ""]
         for i in range(0,8):
-            if Bitmask & (128>>i) == (128>>i):
+            if bitmask & (128>>i) == (128>>i):
                 outStr += names[i] + "/"
         return outStr.strip("/")
 
-    def SwapMainWeapon(self, weapon) -> None:
+# mabye add search function with a function partameter
+
+    def SwapMainWeapon(self, weapon: str) -> None:
         for i in range(len(self.Inventory[0])):
             if self.Inventory[0][i].Name.lower().translate(str.maketrans("", "", "!@#$' ")) == weapon:
                 self.MainWeapon = self.Inventory[0][i]
@@ -62,7 +70,7 @@ class Character:
                 return
         input(f"unable to change main weapon\n")
 
-    def UseItem(self, item) -> None:
+    def UseItem(self, item: str) -> None:
         for i in range(len(self.Inventory[1])):# for heals
             if self.Inventory[1][i].Name.lower().translate(str.maketrans("", "", "!@#$' ")) == item:
                 
@@ -76,7 +84,7 @@ class Character:
                 # decrement UsesLeft if use count is added
             input("no code here my guy\n")
 
-    def DropItem(self, item) -> None:
+    def DropItem(self, item: str) -> None:
         for i in range(len(self.Inventory[1])):# for heals
             if self.Inventory[1][i].Name.lower().translate(str.maketrans("", "", "!@#$' ")) == item:# mabye add more code to drop items
                 self.Inventory[1].pop(i)
@@ -131,6 +139,7 @@ class Character:
 
         self.DamageMultiplier = 1
         self.Level = 1
+        self.Xp = 0
 
         self.Magical = magical
 
@@ -145,6 +154,9 @@ class Enemy:
     maxHealth = None
     currentHealth = None
 
+    def ItemDrop(self, items: list, weights: list[int], dropCount: int) -> list[str]:
+        return choices(items, weights, k=dropCount)
+
     def __init__(self) -> None:
         pass
 
@@ -152,12 +164,11 @@ class Game:
 
     Player: Character
     Opponent: Enemy
-
+    Cheats: bool
 
     def Battle(self):# simulate battle? mabye use a class   but initialising a class when player and oppenent already exist seems like a waste (mabye just pass into function)
         distance = 0
-        
-        
+
         while True:
             Console.Clear()
             print(battle.format("X"*(distance==0), "X"*(distance==1), "X"*(distance==2)))

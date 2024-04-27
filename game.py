@@ -169,7 +169,7 @@ class character:
                 print()
 
         print("\nheals:\n")
-        "".translate(None, )
+        #"".translate(None, )
         for i in range(len(self.inventory)):
 
             if self.inventory[i][1] == "heal":

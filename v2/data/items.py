@@ -141,3 +141,5 @@ class Items:
 
 
     weapons: list = [AntiqueBow, Wand, DogSpit, RollingPin, CavemanClub, SawnOff, Rifle, Cube, FryingPan, Dev10usBlade]
+
+    # make a search by item name function
