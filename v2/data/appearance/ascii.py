@@ -7,7 +7,7 @@ inventory = f"""main weapon is %s
 +----------------------------------------------------+ 
 >>"""
 
-battle = f"""+-----------------------+ 
+battle = """+-----------------------+ 
 | 0 = player, {Console.Colour("X", "1;31;40")} = enemy | your health: {player.currentHealth}/{player.maxHealth}    their health: {opponent.currentHealth}/{opponent.maxHealth}
 |      ___________      | {player.xpReq[player.level - 1]-player.xp} xp away from level {player.level + 1}
 |     /   _____   \     | 

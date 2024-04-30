@@ -95,8 +95,7 @@ class character:
     xp = 0
     xpReq = [200,240,390,345,400,450,500,550,600,650,700]
 
-    def levelUp(self):
-        
+    def levelUp(self):        
         while True:
 
             if self.xp >= self.xpReq[self.level - 1]:
@@ -105,7 +104,6 @@ class character:
                 self.level += 1
 
                 if round(self.maxHealth * 1.08 - self.maxHealth) > 10:
-
                     self.maxHealth = round(self.maxHealth * 1.08)
                     self.currentHealth += round(self.maxHealth * 1.08 - self.maxHealth)
 
@@ -121,10 +119,7 @@ class character:
                 if self.level % 5 == 0:
 
                     self.heal(500, display=True)
-            
-            else:
-                sleep(1)
-                break
+
 
     def heal(self, healAmount, pop=False , i=None, display=False):
 
@@ -311,40 +306,25 @@ class enemys:
     def enemyAttack(self, attackMsg, distance0, distance1, distance2):
 
         match self.distance:
-
             case 0:
-
-                closeAttack = choice(distance0)   # returns random from the list
-            
-                playerDamage = round(self.attackDamage[closeAttack] * (randint(8, 12) / 10) * player.defence[closeAttack])
-                print(attackMsg[closeAttack] %(playerDamage))
+                attack = choice(distance0)   # returns random from the list
 
             case 1:
-
-                midAttack = choice(distance1)   # returns random from the list
-            
-                playerDamage = round(self.attackDamage[midAttack] * (randint(8, 12) / 10) * player.defence[midAttack])
-                print(attackMsg[midAttack] %(playerDamage))
+                attack = choice(distance1)   # returns random from the list
 
             case 2:
-
-                farAttack = choice(distance2)   # returns random from the list
+                attack = choice(distance2)   # returns random from the list
             
-                playerDamage = round(self.attackDamage[farAttack] * (randint(8, 12) / 10) * player.defence[farAttack])
-                print(attackMsg[farAttack] %(playerDamage))
+        damage = round(self.attackDamage[attack] * (randint(8, 12) / 10) * player.defence[attack])
+        print(attackMsg[attack] %(damage))
 
-        player.currentHealth -= playerDamage
-        sleep(2)
+        player.currentHealth -= damage
+        sleep(1)
 
     def Range(self, slotNum):
-
         if slotNum == self.distance:
-
             return red("X")
-
-        else:
-
-            return " "
+        return " "
 
     def __init__(self, health, damage, defence, startRange):
         
@@ -370,7 +350,7 @@ try:
 except:
     dificulty = randint(1,5)
 
-sleep(2)
+sleep(1)
 clear()
 
 
@@ -382,56 +362,37 @@ characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 f
 match characterSelect.lower():
 
     case "1":
-
         knightLoadout = [
-            # name, item type, d/heal, crit%, crit multiplier
             weapons["Biff's Sword"],
             heals["Apple"],
-            ]
-
+        ]
         player = character(" knight", 150, [0.7, 1.1, 1], knightLoadout)
-
     case "2":
-
         barbarianLoadout = [
-            # name, item type, d/heal, crit%, crit multiplier
             weapons["Nate's Battle Axe"],
             heals["Apple"],
-            ]
-
+        ]
         player = character(" barbarian", 120, [0.9, 0.8, 1], barbarianLoadout)
-
     case "3":
-
         archerLoadout = [
-            # name, item type, d/heal, crit%, crit multiplier
             weapons["Ben's Bow"],
             heals["Apple"],
-            ]
-
-        player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)
-    
+        ]
+        player = character("n archer", 80, [1.2, 0.7, 1], archerLoadout)    
     case "4":
-
         mageLoadout = [
-            # name, item type, d/heal, crit%, crit multiplier
             weapons["Fire Bolt Spell"],
             heals["Spotty Apple"],
-            ]
-
+        ]
         player = character(" mage", 60, [1, 1, 0.8], mageLoadout)
-
     case "golly golly gosh":
-
         devLoadout = [
-            # name, item type, d/heal, crit%, crit multiplier
             weapons["Dev-10s Blade"],
             heals["Dev Apple"],
-            ]
-
+        ]
         player = character(" Dev", 500, [0.5, 0.5, 0.5], devLoadout)
 
-sleep(2)
+sleep(1)
 clear()
 
 print (f'''                     _ \n         .=========., | \n        /_,-.___.-._\ | \n        | [_]/o\[_] |7' \n  i=I=I=|____|_|____|I=I=I=i \n |/,*`*,*`**'/ \      ,-'`.\| \n|/          /...\   (__.-._)\| \n||||||||||||TTTTT||||||||||||| \n""""""""""""HHHHH""""""""""""" \nyour journey as a{player.Type} begins \nin your grandmothers house''')

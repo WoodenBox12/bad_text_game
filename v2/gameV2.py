@@ -45,7 +45,7 @@ class Character:
 
     def AddInventory(self, items: list) -> None:
         for i in range(len(items)):
-            if items[i].Type > 0b00011111:# weapon
+            if items[i].Type & 0b11100000 >= 0b00100000:# weapon
                 self.Inventory[0].append(items[i])
             elif items[i].Type & 0b00010000 == 0b00010000:# heal
                 self.Inventory[1].append(items[i])
@@ -82,7 +82,7 @@ class Character:
                 input(f"now on {self.CurrentHealth}/{self.MaxHealth}\n")
                 return
                 # decrement UsesLeft if use count is added
-            input("no code here my guy\n")
+        input("no code here my guy\n")
 
     def DropItem(self, item: str) -> None:
         for i in range(len(self.Inventory[1])):# for heals
@@ -90,7 +90,8 @@ class Character:
                 self.Inventory[1].pop(i)
                 input(f"item dropped\n")
                 return
-            
+        input("no code here my guy\n")           
+
     def Heal(self, amount: int) -> None:
         self.CurrentHealth += amount
 
@@ -122,7 +123,7 @@ class Character:
             print(Inventory.Tail.format(mw=self.MainWeapon.Name))
                 
 
-            command, item = Console.GetCommand()
+            command, item = Console.GetCommand(input(">>"))
 
             match command:
                 case "mw":
@@ -155,6 +156,8 @@ class Enemy:
     CurrentHealth: int
 
     Distance: int
+    Attacks: list[list[str]]
+    Damages: list[int]
 
     def CalculateScore(self):# some score making function for player xp gain
         score = self.MaxHealth
@@ -164,13 +167,22 @@ class Enemy:
     def ItemDrop(self, items: list, weights: list[int], dropCount: int) -> list[str]:
         return choices(items, weights, k=dropCount)
 
-    def Attack(self):
-        pass
+    def Attack(self,):# return int of damage dealt     must attack within certain constraints
+        match self.Distance:#  how to include player resistances?
+            case 0:
+                attack = choice(self.Attacks[0])
+            case 1:
+                attack = choice(self.Attacks[1])
+            case 2:
+                attack = choice(self.Attacks[2])
 
-    def __init__(self, distance: int, health: int) -> None:
+    def __init__(self, distance: int, health: int, attacks: list[list[str]], damages: list[int]) -> None:
         self.Distance = distance
 
         self.currentHealth = self.maxHealth = health
+
+        self.Attacks = attacks
+        self.Damages = damages
 
 class Game:
 
@@ -179,12 +191,12 @@ class Game:
     Cheats: bool
 
     def Battle(self):# simulate battle? mabye use a class   but initialising a class when player and oppenent already exist seems like a waste (mabye just pass into function)
-        self.Opponent = Enemy(0)
+        self.Opponent = Enemy(0, 100, [["melee"],["melee", "ranged"],["ranged"]], [30, 25, 20])
 
         while True:
             Console.Clear()
             print(battle.format("X"*(self.Opponent.Distance==0), "X"*(self.Opponent.Distance==1), "X"*(self.Opponent.Distance==2)))
-            command, rest = Console.GetCommand()
+            command, rest = Console.GetCommand(input(">>"))
 
             match command:
                 case "t" | "toward":
@@ -203,19 +215,39 @@ class Game:
 
                 case "i" | "inventory":
                     self.Player.DisplayInventory()
-                
+
                 case "me" | "melee":
                     pass
-                
+
                 case "ra" | "ranged":
                     pass
-                
+
                 case "ma" | "magic":
                     pass
-                
-                case "seppuku":
-                    
+
+                case "seppuku":                   
                     pass
+
+                case "devPlayer":# change commands fix it
+                    field,  temp= Console.GetCommand(rest)
+                    strType, value= Console.GetCommand(temp)
+
+                    match strType:
+                        case "str":
+                            castValue = value
+                        case "bool":
+                            castValue = (value == "True")
+                        case "int":
+                            castValue = int(value)
+                        case "float":
+                            castValue = float(value)
+
+                    self.Player.__setattr__(field, castValue)
+                    input("Player.{} is now set to {} (type:{})\n".format(field,castValue,type(castValue)))
+
+                case "devEnemy":
+                    field, value = Console.GetCommand(rest)
+                    #self.Opponent.__setattr__(field, value)
 
                 case _:
                     pass
@@ -246,16 +278,30 @@ class Game:
             print(Setup.Classes)
             match input(">>"):
                 case "1":
-                    Loadout =  [Items.AntiqueBow, Items.Apple]
+                    knightLoadout = [Items.Sword, Items.Apple]
 
-                    self.Player = Character(" knight", 150, Loadout, False)
+                    self.Player = Character(" knight", 150, knightLoadout, False)
                     break
                 case "2":
-                    pass
+                    barbarianLoadout = [Items.BattleAxe, Items.Apple]
+
+                    self.Player = Character(" barbarian", 120, barbarianLoadout, False)
+                    break
                 case "3":
-                    pass
+                    archerLoadout = [Items.Bow, Items.Apple]
+
+                    self.Player = Character("n archer", 80, archerLoadout, False)
+                    break
                 case "4":
-                    pass
+                    mageLoadout = [Items.FireBolt, Items.Apple]
+
+                    self.Player = Character(" mage", 80, mageLoadout, True)
+                    break
+                case "dev":
+                    devLoadout = [Items.Dev10usBlade, Items.DevApple]
+
+                    self.Player = Character(" dev", 500, devLoadout, True)
+                    break
                 case _:
                     pass
             

@@ -1,4 +1,4 @@
-
+# change single use to Uses: int    (-1 for infinite) or mabye move uses to bitmask
 class Item:
     Name: str
     Type: bytes
@@ -129,6 +129,33 @@ class Items:
         [ "the Dev-10us Blade summoned a mystical creature to attack {enemyName}, they dealt {damage} damage", ]
     )
 
+    Sword = Weapon(
+        "B1ff's Sword", 0b10000000, 22, 5, 2, False,
+        [ "you swing at {enemyName} dealing {damage} damage", ],
+        None,
+        None
+    )
+
+    BattleAxe = Weapon(
+        "Nate's Battle Axe", 0b11000000, 28, 5, 2, False,
+        [ "you swing at {enemyName} dealing {damage} damage", ],
+        [ "you throw your battle axe at {enemyName} dealing {damage} damage", ],
+        None
+    )
+
+    Bow = Weapon(
+        "Ben's Bow", 0b01000000, 30, 10, 2.5, False,
+        None,
+        [ "you fire arrows at {enemyName} dealing {damage} damage", ],
+        None
+    )
+
+    FireBolt = Weapon(
+        "Fire Bolt Spell", 0b00100000, 35, 12, 2, False,
+        None,
+        None,
+        [ "fire bolts are blasted towards %s dealing %s damage", ]
+    )
 
     Apple = Heal(
         "Apple", 0b00010000, 40, True
@@ -138,7 +165,9 @@ class Items:
         "Stale Cookie", 0b00010000, 50, True
     )
 
-
+    DevApple = Heal(
+        "Dev Apple", 0b00010000, 500, False
+    )
 
     weapons: list = [AntiqueBow, Wand, DogSpit, RollingPin, CavemanClub, SawnOff, Rifle, Cube, FryingPan, Dev10usBlade]
 

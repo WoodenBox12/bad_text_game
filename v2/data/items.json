@@ -148,7 +148,7 @@
       "ranged",
       30,
       10,
-      2.5,
+      2.5,  
       [ "", "you fire arrows at %s dealing %s damage" ]
     ],
 

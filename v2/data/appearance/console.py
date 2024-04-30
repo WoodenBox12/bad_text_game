@@ -3,8 +3,8 @@ from enum import Enum
     
 class Console:
 
-    def GetCommand():
-        choice = input(">>").lower().strip()
+    def GetCommand(choice: str):
+        choice = choice.lower().strip()
         command = ""        
         for i in range(len(choice)):
             if choice[i] == " ":
@@ -12,6 +12,12 @@ class Console:
             command += choice[i]
         rest = choice[len(command):].translate(str.maketrans("", "", "!@#$' "))
         return command, rest
+    
+        """parts: list= choice.split()
+        parts.pop(0)
+        return parts"""
+
+
 
     def Clear():
         if name == 'nt':
@@ -19,7 +25,7 @@ class Console:
         else:
             _ = system('clear')
 
-    def Colour(text,code) -> str:
+    def Colour(text: str,code: str) -> str:
 
         return f"\33[{code}m{text}\33[0m"
     
