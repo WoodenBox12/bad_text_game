@@ -1,17 +1,17 @@
 from os import system, name
 from enum import Enum
-    
+
 class Console:
 
     def GetCommand(choice: str):
-        choice = choice.lower().strip()
+        choice = choice.strip()
         command = ""        
         for i in range(len(choice)):
             if choice[i] == " ":
                 break
             command += choice[i]
-        rest = choice[len(command):].translate(str.maketrans("", "", "!@#$' "))
-        return command, rest
+        rest = choice[len(command):]
+        return command.lower(), rest
     
         """parts: list= choice.split()
         parts.pop(0)

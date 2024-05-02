@@ -1,7 +1,7 @@
 from data.appearance.console import Console
 
 battle = f"""╔═══════════════════════╗ 
-║ 0 = player, {Console.Colour("X", "1;31;40")} = enemy ║ your health: 
+║ 0 = player, {Console.Colour("X", "1;31;40")} = enemy ║ your health: {"{}"}/{"{}"}    their health: {"{}"}/{"{}"}
 ║                       ║ 
 ║   ╭───────────────╮   ║ 
 ║   │   ╭───────╮   │   ║ 
@@ -49,11 +49,13 @@ main weapon is %s
 """
 class Inventory:
 
+    Title = "{:^66}"
     WeaponHeader = "║Name                          ║DMG Type          ║DMG ║CRIT║MULT║"
     HealHeader = "║Heal Name                     ║Type              ║AMNT║    ║    ║"
     Divider = "╠══════════════════════════════╬══════════════════╬════╬════╬════╣"
     WeaponEntry = "║{:<30}║{:<18}║{:<4}║{:<4}║{:<4}║"
     HealEntry = "║{:<30}║{:<18}║{:<4}║    ║    ║"
+    EndDivider = "╚══════════════════════════════╩══════════════════╩════╩════╩════╝"
     Tail = """╠══════════════════════════════╩══════════════════╩════╩════╩════╣ 
 ║ main weapon is {mw:<48}║ 
 ║ to change your main weapon type:                mw weapon name ║ 

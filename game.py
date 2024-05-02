@@ -20,8 +20,7 @@ from files import *
 itemsPath = path.abspath("./items.json")
 
 weapons = readjs(itemsPath)[0]
-heals = readjs(itemsPath)[1]
-    
+heals = readjs(itemsPath)[1]    
 
 def clear():
   
@@ -95,48 +94,36 @@ class character:
     xp = 0
     xpReq = [200,240,390,345,400,450,500,550,600,650,700]
 
-    def levelUp(self):        
+    def levelUp(self):# has ability to overheal (no check in place)
         while True:
-
             if self.xp >= self.xpReq[self.level - 1]:
-
                 self.xp -= self.xpReq[self.level - 1]
                 self.level += 1
-
-                if round(self.maxHealth * 1.08 - self.maxHealth) > 10:
-                    self.maxHealth = round(self.maxHealth * 1.08)
-                    self.currentHealth += round(self.maxHealth * 1.08 - self.maxHealth)
-
-                else:
-
-                    self.maxHealth += 10
-                    self.currentHealth += 10
-
                 self.damageMultiplier += 0.05
 
                 print(f"Leveled up, now on level {self.level}")
 
-                if self.level % 5 == 0:
+                if round(self.maxHealth * 1.08 - self.maxHealth) > 10:
+                    self.maxHealth = round(self.maxHealth * 1.08)
+                    self.currentHealth += round(self.maxHealth * 1.08 - self.maxHealth)
+                    return
 
-                    self.heal(500, display=True)
-
+                self.maxHealth += 10
+                self.currentHealth += 10
 
     def heal(self, healAmount, pop=False , i=None, display=False):
-
         if self.currentHealth == self.maxHealth:
-
             if display:
                 print("cannot heal    already on max health")
             return
 
         elif self.currentHealth + healAmount > self.maxHealth:
             self.currentHealth = self.maxHealth
-                        
+
         else:
             self.currentHealth += healAmount
             
         if pop:
-
             self.inventory.pop(i)
 
         if display:
@@ -147,89 +134,67 @@ class character:
         clear()
             
         weaponTypes = ("    damage type: ", "    base damage: ", "    crit %: ", "    crit multiplier: ", "")
-
+        healPos = []
         print("items in backpack:\n")
 
         for i in range(len(self.inventory)):
-
-            if self.inventory[i][1] != "heal":
-
-                for j in range(len(self.inventory[i])):
-
-                    if j == 5:
-                        break
-
-                    print(self.inventory[i][j], end=weaponTypes[j])
-
-                print()
+            if self.inventory[i][1] == "heal":
+                healPos.append(i)
+                continue
+            for j in range(len(self.inventory[i])):
+                if j == 5:
+                    break
+                print(self.inventory[i][j], end=weaponTypes[j])
+            print()
 
         print("\nheals:\n")
-        #"".translate(None, )
-        for i in range(len(self.inventory)):
 
-            if self.inventory[i][1] == "heal":
-
-                print(self.inventory[i][0], end="    ")
-                print(f"health gain: {self.inventory[i][2]}")
+        for i in healPos:
+            print(self.inventory[i][0], end="    ")
+            print(f"health gain: {self.inventory[i][2]}")
             
         choice = input(f"\nmain weapon is {self.mainWeapon[0]} \n+----------------------------------------------------+ \n| to change your main weapon type:    mw weapon-name | \n| to use a heal type:                  use item-name | \n+----------------------------------------------------+ \n>>")
 
-        if "mw" in choice.lower():
+        command = ""        
+        for i in range(len(choice)):
+            if choice[i] == " ":
+                break
+            command += choice[i]
 
-            choice = choice[3:]
-            choice = removeChars(choice, "' ")
+        rest = removeChars(choice[len(command):], "' ")
 
-            for i in range(len(self.inventory)):
+        match command.lower():
+            case "mw":
+                for i in range(len(self.inventory)):
+                    name = removeChars(self.inventory[i][0].lower(), "' ")
+                    if rest == name:                    
+                        self.mainWeapon = self.inventory[i]
 
-                name = removeChars(self.inventory[i][0].lower(), "' ")
-
-                if choice == name:
-                    
-                    self.mainWeapon = self.inventory[i]
-
-            input(f"main weapon is now {self.mainWeapon[0]}")
-
-        elif "use" in choice.lower():
-
-            choice = choice[4:]
-            choice = removeChars(choice, "' ")
-
-            for i in range(len(self.inventory)):
-
-                name = removeChars(self.inventory[i][0].lower(), "' ")
-
-                if choice == name:
-                    
-                    if "heal" in self.inventory[i][1]:
-
+                input(f"main weapon is now {self.mainWeapon[0]}")
+            case "use":
+                for i in range(len(self.inventory)):
+                    name = removeChars(self.inventory[i][0].lower(), "' ")
+                    if (rest == name ) & (self.inventory[i][1] == "heal"):                    
                         self.heal(self.inventory[i][2], True, i, True)
                         sleep(2)
                         break
-
-        elif "golly" in choice:
-
-            choice = choice[6:]
-
-            if "weapon" in choice:
-
-                choice = choice[7:]
-                try:
-                    player.inventory.append(weapons[choice])
-                    print("3")
-
-                except:
-                    print("item not found")
-                    sleep(2)
-
-            elif "heals" in choice:
-
-                choice = choice[6:]
-
-                try:
-                    player.inventory.append(heals[choice])
-                except:
-                    print("item not found")
-                    sleep(2)
+            case "golly":
+                if "weapon" in rest:
+                    choice = choice[7:]
+                    try:
+                        player.inventory.append(weapons[choice])
+                    except:
+                        print("item not found")
+                        sleep(1)
+                elif "heals" in rest:
+                    choice = choice[6:]
+                    try:
+                        player.inventory.append(heals[choice])
+                    except:
+                        print("item not found")
+                        sleep(1)
+            case _:
+                return
 
     def __init__(self, Type, health, defence, startingItems):
 
@@ -337,7 +302,6 @@ class enemys:
         self.defence = {"melee":defence[0], "ranged":defence[1], "magic":defence[2]}
 
 # dificulty select
-
 dificulty = input("select dificulty between 1 and 5 or random: ")
 
 try:
@@ -353,10 +317,7 @@ except:
 sleep(1)
 clear()
 
-
-
 # choose starter weapon
-
 characterSelect = input("select player class\n1 for knight\n2 for barbarian\n3 for archer\n4 for mage\n>>")
 
 match characterSelect.lower():

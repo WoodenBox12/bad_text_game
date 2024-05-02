@@ -100,7 +100,20 @@ class Character:
 
     def DisplayInventory(self):
         while True:
-            Console.Clear()
+            Console.Clear()# mabye add pages to change inventory view
+
+            print(Inventory.Title.format("Heals"))
+            print(Inventory.HealHeader)
+            print(Inventory.Divider)
+            for i in range(len(self.Inventory[1])):
+                print(Inventory.HealEntry.format(
+                    self.Inventory[1][i].Name,
+                    self.BitmaskToString(self.Inventory[1][i].Type),
+                    self.Inventory[1][i].Amount
+                ))
+            print(Inventory.EndDivider)
+            
+            print(Inventory.Title.format("Weapons"))
             print(Inventory.WeaponHeader)
             print(Inventory.Divider)
             for i in range(len(self.Inventory[0])):                
@@ -111,19 +124,12 @@ class Character:
                     "{}%".format(self.Inventory[0][i].CritChance),
                     self.Inventory[0][i].CritDamage
                 ))
-            print(Inventory.Divider)
-            print(Inventory.HealHeader)
-            print(Inventory.Divider)
-            for i in range(len(self.Inventory[1])):
-                print(Inventory.HealEntry.format(
-                    self.Inventory[1][i].Name,
-                    self.BitmaskToString(self.Inventory[1][i].Type),
-                    self.Inventory[1][i].Amount
-                ))
+
+            
             print(Inventory.Tail.format(mw=self.MainWeapon.Name))
                 
-
             command, item = Console.GetCommand(input(">>"))
+            item = item.translate(str.maketrans("", "", "!@#$' "))
 
             match command:
                 case "mw":
@@ -151,13 +157,13 @@ class Character:
         self.CurrentHealth = self.MaxHealth = health
 
 class Enemy:
-
-    MaxHealth: int
-    CurrentHealth: int
-
-    Distance: int
-    Attacks: list[list[str]]
-    Damages: list[int]
+     
+    MaxHealth: int     
+    CurrentHealth: int     
+     
+    Distance: int     
+    Attacks: list[list[str]]     
+    Damages: list[int]     
 
     def CalculateScore(self):# some score making function for player xp gain
         score = self.MaxHealth
@@ -179,29 +185,51 @@ class Enemy:
     def __init__(self, distance: int, health: int, attacks: list[list[str]], damages: list[int]) -> None:
         self.Distance = distance
 
-        self.currentHealth = self.maxHealth = health
+        self.CurrentHealth = self.MaxHealth = health
 
         self.Attacks = attacks
         self.Damages = damages
+        
+class FieldEditor:
+    def ChangeField(object: object, field: str, strType: str, value: str):
+        match strType:
+            case "str":
+                castValue = value
+            case "bool":
+                castValue = (value == "True")
+            case "int":
+                castValue = int(value)
+            case "float":
+                castValue = float(value)
+
+        if hasattr(object, field):
+            setattr(object, field, castValue)
+            input("{}.{} is now set to {} (type:{})\n".format(type(object).__name__, field, castValue, type(castValue).__name__))
+            return
+        input("{}.{} is not a recognised field\n".format(type(object).__name__, field))
+
+    def __init__(self) -> None:
+        pass
 
 class Game:
 
     Player: Character
     Opponent: Enemy
-    Cheats: bool
+    Cheats: bool= False
 
     def Battle(self):# simulate battle? mabye use a class   but initialising a class when player and oppenent already exist seems like a waste (mabye just pass into function)
         self.Opponent = Enemy(0, 100, [["melee"],["melee", "ranged"],["ranged"]], [30, 25, 20])
 
         while True:
             Console.Clear()
-            print(battle.format("X"*(self.Opponent.Distance==0), "X"*(self.Opponent.Distance==1), "X"*(self.Opponent.Distance==2)))
+            print(battle.format(self.Player.CurrentHealth, self.Player.MaxHealth, self.Opponent.CurrentHealth, self.Opponent.MaxHealth,
+                "X"*(self.Opponent.Distance==0), "X"*(self.Opponent.Distance==1), "X"*(self.Opponent.Distance==2)))
             command, rest = Console.GetCommand(input(">>"))
 
             match command:
                 case "t" | "toward":
                     if self.Opponent.Distance == 0:
-                        input("unable to closer\n")
+                        input("unable to move closer\n")
                         continue
                     self.Opponent.Distance -= 1
                     input("moved closer\n")
@@ -228,38 +256,22 @@ class Game:
                 case "seppuku":                   
                     pass
 
-                case "devPlayer":# change commands fix it
-                    field,  temp= Console.GetCommand(rest)
-                    strType, value= Console.GetCommand(temp)
+                case "edit":
+                    if not self.Cheats:
+                        input("cheats not enabled\n")
+                        continue
+                    temp = rest.split()
+                    obj, field, strType, value = temp[0], temp[1], temp[2], temp[3]
 
-                    match strType:
-                        case "str":
-                            castValue = value
-                        case "bool":
-                            castValue = (value == "True")
-                        case "int":
-                            castValue = int(value)
-                        case "float":
-                            castValue = float(value)
-
-                    self.Player.__setattr__(field, castValue)
-                    input("Player.{} is now set to {} (type:{})\n".format(field,castValue,type(castValue)))
-
-                case "devEnemy":
-                    field, value = Console.GetCommand(rest)
-                    #self.Opponent.__setattr__(field, value)
+                    if (obj.lower() == "player") | (obj.lower() == "character"):
+                        FieldEditor.ChangeField(self.Player,field, strType, value)
+                        continue
+                    FieldEditor.ChangeField(self.Opponent,field, strType, value)
 
                 case _:
                     pass
 
-
-    class battle:
-
-        def __init__(self) -> None:
-            pass
-
-    
-    def SelectDifficulty(self):
+    def SelectDifficulty(self) -> None:
         Console.Clear()
         dificulty = input("select dificulty between 1 and 5 or random: ")
 
@@ -271,8 +283,8 @@ class Game:
             pass
         finally:
             dificulty = randint(1,5)
-    
-    def SelectClass(self):
+
+    def SelectClass(self) -> None:
         while True:
             Console.Clear()
             print(Setup.Classes)
@@ -304,17 +316,16 @@ class Game:
                     break
                 case _:
                     pass
-            
-    def Setup(self):
+
+    def Setup(self) -> None:
         self.SelectDifficulty()
         self.SelectClass()
 
-    def __init__(self) -> None:
-        pass
-    
+    def __init__(self, cheats) -> None:
+        self.Cheats = cheats
 
 def Main():
-    game = Game()
+    game = Game(True)
     game.Setup()
     game.Battle()
 
